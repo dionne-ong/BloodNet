@@ -62,6 +62,7 @@
                 android:id="@+id/tv_content_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textPersonName"
                 android:hint="@string/prompt_name"/>
 
 
@@ -106,12 +107,13 @@
                 android:tint="@color/textSecondaryColor" />
 
 
-            <EditText
-                android:id="@+id/tv_content_bday"
+            <Button style="@style/Widget.AppCompat.EditText"
+                android:textAlignment="textStart"
+                android:id="@+id/btn_content_bday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_birthdate"
-                android:inputType="date"/>
+                android:text="@string/prompt_birthdate"
+                android:textColor="@color/textSecondaryColor"/>
 
         </LinearLayout>
 
