@@ -30,4 +30,8 @@
     <string name="prompt_gender">Gender</string>
     <string name="prompt_birthdate">Birthdate</string>
 
+    <!-- Credit -->
+    <string name="about_bloodnet">About BloodNet</string>
+    <string name="credit_medical_icons">Medical Icons by Creative Stall from the Noun Project</string>
+
 </resources>

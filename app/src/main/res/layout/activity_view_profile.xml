@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.mobapde.bloodnet.ViewProfileActivity">
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/iv_hpic"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/iv_hpic"
+        android:weightSum="2">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.4"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/tv">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name: "/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Contact Number: "/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Birthday: "/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gender: "/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Blood Type: "/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Email Address: "/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Password: "/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:id="@+id/tv_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="7dp"
+            android:layout_toRightOf="@+id/tv">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rachel de Jesus"
+                android:id="@+id/tv_content_name"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0917 628 0552 "
+                android:id="@+id/tv_content_num"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="10/25/97"
+                android:id="@+id/tv_content_bday"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="F"
+                android:id="@+id/tv_content_gender"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="O+"
+                android:id="@+id/tv_content_btype"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="degimaong@gmail.com"
+                android:layout_marginTop="20dp"
+                android:id="@+id/tv_content_email" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="********"
+                android:id="@+id/tv_content_pw" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
