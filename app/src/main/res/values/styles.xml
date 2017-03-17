@@ -12,9 +12,10 @@
         <item name="android:textColorPrimary">@color/textMainColor</item>
         <item name="android:textColorSecondary">@color/textMainColor</item>
         <item name="actionMenuTextColor">@color/textMainColor</item>
-       <!-- <item name="actionOverflowButtonStyle">@style/ActionButtonOverflowStyle</item>
+        <!-- <item name="actionOverflowButtonStyle">@style/ActionButtonOverflowStyle</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item> -->
     </style>
+
     <style name="PopupBarStyle" parent="Theme.AppCompat">
         <item name="android:backgroundTint">@color/textMainColor</item>
         <item name="android:textColorPrimary">@color/textPrimaryColor</item>
@@ -22,6 +23,9 @@
 
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>
