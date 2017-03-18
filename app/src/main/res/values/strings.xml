@@ -49,6 +49,12 @@
     <string name="prompt_bloodtype">Blood Type</string>
     <string name="prompt_quantity">Number of Bags</string>
     <string name="prompt_photo">Upload Photo</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 
 
 </resources>

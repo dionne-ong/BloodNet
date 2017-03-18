@@ -1,31 +1,31 @@
 package edu.mobapde.bloodnet;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MyPledgeActivity extends AppCompatActivity {
+/**
+ * Created by Luisa Gilig on 18/03/2017.
+ */
 
-    Button btnStartDonation, btnCancel;
-    Toolbar tbEdit;
+public class MyPostActivity extends AppCompatActivity {
+    Button btnEdit, btnDelete;
     TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate;
+    Toolbar tbEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_pledge);
 
-        btnStartDonation = (Button) findViewById(R.id.b_submit);
-        btnCancel = (Button) findViewById(R.id.b_cancel);
+        btnEdit = (Button) findViewById(R.id.b_submit);
+        btnDelete = (Button) findViewById(R.id.b_cancel);
+        tbEdit = (Toolbar) findViewById(R.id.tb_edit);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvHospital = (TextView) findViewById(R.id.tv_hospital);
         tvAddress = (TextView) findViewById(R.id.tv_address);
@@ -34,33 +34,32 @@ public class MyPledgeActivity extends AppCompatActivity {
         tvQuantity = (TextView) findViewById(R.id.tv_bags);
         tvDate = (TextView) findViewById(R.id.tv_posteddate);
 
-        btnStartDonation.setText("Start Donation");
-        btnCancel.setText("Cancel");
-        // whatever's in the db
-        tvName.setText("Winnie The Pooh");
-        tvHospital.setText("Chinese General Hospital");
-        tvAddress.setText("286 Blumentritt Rd, Sampaloc,Manila, Metro Manila");
-        tvContactNum.setText("09178075984");
-        tvBloodType.setText("B+");
+        btnEdit.setText("Edit");
+        btnDelete.setText("Delete");
+        //whatever is in the db
+        tvName.setText("Someone Else");
+        tvHospital.setText("At Some Hospital");
+        tvAddress.setText("At Some Street");
+        tvContactNum.setText("090000000");
+        tvBloodType.setText("O+");
         tvQuantity.setText("2");
-        tvDate.setText("Posted on " + "February 10, 2017");
+        tvDate.setText("Posted on " + "February 18, 2017");
 
 
-        tbEdit = (Toolbar) findViewById(R.id.tb_edit);
         setSupportActionBar(tbEdit);
-        getSupportActionBar().setTitle("My Pledge");
+        getSupportActionBar().setTitle("My Post");
 
 
-        btnStartDonation.setOnClickListener(new View.OnClickListener() {
+        btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
-                i.setClass(getBaseContext(), RequirementsActivity.class);
+                i.setClass(getBaseContext(), EditPostActivity.class);
                 startActivity(i);
             }
         });
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
+        btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -74,5 +73,4 @@ public class MyPledgeActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.edit_profile_menu, menu);
         return true;
     }
-
 }

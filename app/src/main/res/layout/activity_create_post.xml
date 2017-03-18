@@ -44,7 +44,7 @@
                 android:id="@+id/tv_content_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_name"/>
+                />
 
 
         </LinearLayout>
@@ -66,14 +66,28 @@
                 android:src="@drawable/ic_pin_drop_black_24px"
                 android:tint="@color/textSecondaryColor" />
 
-
-            <EditText
-
-                android:id="@+id/tv_content_location"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_location"
-                android:inputType="date"/>
+                android:orientation="vertical">
+
+                <EditText
+
+                    android:id="@+id/tv_content_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+                <EditText
+
+                    android:id="@+id/tv_content_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -98,7 +112,6 @@
                 android:id="@+id/tv_content_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_contact"
                 android:inputType="phone" />
 
         </LinearLayout>
@@ -121,8 +134,7 @@
             <EditText
                 android:id="@+id/tv_content_btype"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_blood_type"/>
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
@@ -143,10 +155,9 @@
                 android:tint="@color/textSecondaryColor" />
 
             <EditText
-                android:id="@+id/tv_content_gender"
+                android:id="@+id/tv_content_quantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_quantity"
                 android:inputType="number"/>
 
         </LinearLayout>
@@ -168,11 +179,9 @@
                 android:tint="@color/textSecondaryColor" />
 
             <EditText
-                android:id="@+id/tv_photo"
+                android:id="@+id/tv_content_photo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_photo"
-                android:inputType="number"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
