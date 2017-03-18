@@ -3,8 +3,8 @@
     package="edu.mobapde.bloodnet">
 
     <!-- Camera -->
-    <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
-    <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -34,7 +34,7 @@
         <activity android:name=".ViewProfileActivity" />
         <activity
             android:name=".EditProfileFABActivity"
-            android:label="@string/title_activity_edit_profile_fab"
+            android:label="@string/title_activity_edit_profile_fab"/>
         <activity android:name=".MyPostActivity" />
         <activity android:name=".EditPostActivity" />
         <activity android:name=".MyPledgeActivity" />
@@ -43,7 +43,18 @@
         <activity
             android:name=".NavigationDrawerActivity"
             android:label="@string/title_activity_navigation_drawer"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"/>
+
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="edu.mobapde.bloodnet.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
     </application>
 
 </manifest>

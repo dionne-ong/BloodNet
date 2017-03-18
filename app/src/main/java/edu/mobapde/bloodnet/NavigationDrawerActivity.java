@@ -83,7 +83,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         switch (viewId) {
             case R.id.nav_profile:
-                fragment = new MyPledge();
+                fragment = new MyProfile();
                 title  = "Profile";
                 break;
             case R.id.nav_posts:
