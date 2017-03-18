@@ -2,11 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.mobapde.bloodnet">
 
+    <!-- Camera -->
+    <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
+    <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
     <application
         android:allowBackup="true"
         android:fullBackupContent="false"
@@ -28,7 +31,11 @@
         <activity android:name=".FilterPostActivity" />
         <activity android:name=".ViewHospitalActivity" />
         <activity android:name=".ViewPatientActivity" />
-        <activity android:name=".ViewProfileActivity"></activity>
+        <activity android:name=".ViewProfileActivity" />
+        <activity
+            android:name=".EditProfileFABActivity"
+            android:label="@string/title_activity_edit_profile_fab"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
