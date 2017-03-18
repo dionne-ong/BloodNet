@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 
 import edu.mobapde.bloodnet.EditProfileActivity;
+import edu.mobapde.bloodnet.EditProfileFABActivity;
 
 /**
  * Created by psion on 3/18/2017.
@@ -25,7 +26,7 @@ public class DatePickerFragment extends DialogFragment{
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog dialog = new DatePickerDialog(getActivity(), (EditProfileActivity)getActivity(), year, month, day);
+        DatePickerDialog dialog = new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener)getActivity(), year, month, day);
         dialog.getDatePicker().setMaxDate((new Date()).getTime());
 
         // Create a new instance of  and return it

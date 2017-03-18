@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -39,16 +40,16 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_view_profile_fab" />
+    <include layout="@layout/content_profile_fab" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_view_profile"
+        android:id="@+id/fab_edit_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         android:tint="@color/textMainColor"
-        app:srcCompat="@drawable/ic_mode_edit_black_24px" />
+        app:srcCompat="@drawable/ic_add_a_photo_black_24px" />
 
 </android.support.design.widget.CoordinatorLayout>
