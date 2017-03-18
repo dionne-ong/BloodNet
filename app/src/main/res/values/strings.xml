@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">BloodNet</string>
     <string name="menu_save">Save</string>
+    <string name="menu_cancel">Cancel</string>
     <string name="title_activity_sign_in">Sign in</string>
 
     <!-- Image Description -->
@@ -30,6 +31,13 @@
     <string name="prompt_gender">Gender</string>
     <string name="prompt_birthdate">Birthdate</string>
 
+    <!-- Credit -->
+    <string name="about_bloodnet">About BloodNet</string>
+    <string name="credit_medical_icons">Medical Icons by Creative Stall from the Noun Project</string>
+
+    <!--  edit profiles placeholder text -->
+    <string name="title_activity_edit_profile_fab">My Profile</string>
+    <string name="action_settings">Settings</string>
     <!-- Buttons -->
     <string name="button_startdonation">Start Donation</string>
     <string name="button_cancel">Cancel</string>

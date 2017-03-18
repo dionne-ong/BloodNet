@@ -7,13 +7,30 @@
     android:orientation="vertical"
     tools:context="edu.mobapde.bloodnet.LogInActivity"
     android:layout_margin="20dp">
-
-    <ImageView
-        android:contentDescription="@string/image_logo"
-        android:id="@+id/iv_logo"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@mipmap/temp_logo" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <ImageView
+            android:contentDescription="@string/image_logo"
+            android:id="@+id/iv_logo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:src="@mipmap/temp_logo" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textAlignment="center"
+            android:textSize="48dp"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/tv_app_name"/>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,4 +103,12 @@
             android:text="@string/action_register" />
     </LinearLayout>
 
+    <ImageButton style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_help_outline_black_24px"
+        android:tint="@color/colorPrimaryDark"
+        android:contentDescription="@string/about_bloodnet"
+        android:layout_gravity="bottom|end"
+        android:id="@+id/btn_logo"/>
 </LinearLayout>

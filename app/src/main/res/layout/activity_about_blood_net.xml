@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_about_blood_net"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.mobapde.bloodnet.AboutBloodNetActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ToolBarStyle"
+        app:popupTheme="@style/PopupBarStyle"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <ImageView
+            android:contentDescription="@string/image_logo"
+            android:id="@+id/iv_logo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:src="@mipmap/temp_logo" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textAlignment="center"
+            android:textSize="48dp"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/tv_app_name"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_medical_cross_outline"
+            android:tint="@color/colorAccent"
+            android:contentDescription="@string/credit_medical_icons"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/credit_medical_icons"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginLeft="10dp"
+            android:textAlignment="center"/>
+    </LinearLayout>
+</LinearLayout>
