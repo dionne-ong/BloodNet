@@ -33,8 +33,7 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
-                i.setClass(getBaseContext(), TempNavigationActivity.class);
-
+                i.setClass(getBaseContext(), NavigationDrawerActivity.class);
                 startActivity(i);
             }
         });

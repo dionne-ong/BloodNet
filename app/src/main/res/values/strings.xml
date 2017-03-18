@@ -38,5 +38,31 @@
     <!--  edit profiles placeholder text -->
     <string name="title_activity_edit_profile_fab">My Profile</string>
     <string name="action_settings">Settings</string>
+    <!-- Buttons -->
+    <string name="button_startdonation">Start Donation</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_ok">Ok</string>
+
+    <!-- Requirements Details -->
+    <string name="prompt_requirements">Requirements</string>
+    <string name="requirement_1">I am feeling healthy and well.</string>
+    <string name="requirement_2">I am at least 110 lbs.</string>
+    <string name="requirement_3">I have had no alcohol intake in the last 24 hours.</string>
+    <string name="requirement_4">I have had at least 7 hours of sleep.</string>
+    <string name="requirement_5">I have taken no medication in the last 24 hours.</string>
+    <string name="requirement_6">I have had something to eat prior the blood donation.</string>
+
+    <!-- Post Details -->
+    <string name="prompt_location">Location</string>
+    <string name="prompt_bloodtype">Blood Type</string>
+    <string name="prompt_quantity">Number of Bags</string>
+    <string name="prompt_photo">Upload Photo</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
 
 </resources>
