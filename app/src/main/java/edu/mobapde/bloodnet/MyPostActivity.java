@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +16,8 @@ import android.widget.TextView;
 
 public class MyPostActivity extends AppCompatActivity {
     Button btnEdit, btnDelete;
-    TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate;
-    Toolbar tbEdit;
+    TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvPledged;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +26,13 @@ public class MyPostActivity extends AppCompatActivity {
 
         btnEdit = (Button) findViewById(R.id.b_submit);
         btnDelete = (Button) findViewById(R.id.b_cancel);
-        tbEdit = (Toolbar) findViewById(R.id.tb_edit);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvHospital = (TextView) findViewById(R.id.tv_hospital);
         tvAddress = (TextView) findViewById(R.id.tv_address);
         tvContactNum = (TextView) findViewById(R.id.tv_number);
         tvBloodType = (TextView) findViewById(R.id.tv_bloodtype);
         tvQuantity = (TextView) findViewById(R.id.tv_bags);
-        tvDate = (TextView) findViewById(R.id.tv_posteddate);
+        tvPledged = (TextView) findViewById(R.id.tv_posteddate);
 
         btnEdit.setText("Edit");
         btnDelete.setText("Delete");
@@ -43,11 +43,8 @@ public class MyPostActivity extends AppCompatActivity {
         tvContactNum.setText("090000000");
         tvBloodType.setText("O+");
         tvQuantity.setText("2");
-        tvDate.setText("Posted on " + "February 18, 2017");
-
-
-        setSupportActionBar(tbEdit);
-        getSupportActionBar().setTitle("My Post");
+        tvPledged.setText("4 " + "have pledged to donate");
+        tvPledged.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
 
 
         btnEdit.setOnClickListener(new View.OnClickListener() {

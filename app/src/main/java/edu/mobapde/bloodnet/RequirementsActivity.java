@@ -30,7 +30,7 @@ public class RequirementsActivity extends AppCompatActivity {
         btn_Ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(RequirementsActivity.this, MyPledgeActivity.class);
+                Intent i = new Intent(RequirementsActivity.this, NavigationDrawerActivity.class);
                 i.putExtra("button","Done");
                 startActivity(i);
             }

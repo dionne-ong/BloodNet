@@ -17,15 +17,12 @@ public class EditPostActivity extends AppCompatActivity{
 
     Button btnSave, btnCancel;
     TextView tvName, tvLocation, tvContactNumber, tvBloodType, tvQuantity, tvPhoto, tvAddress;
-    Toolbar tbEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
-        tbEdit = (Toolbar) findViewById(R.id.tb_edit);
-        setSupportActionBar(tbEdit);
-        getSupportActionBar().setTitle("My Post");
+
 
         btnCancel = (Button) findViewById(R.id.b_cancel);
         btnSave = (Button) findViewById(R.id.b_submit);
@@ -34,7 +31,6 @@ public class EditPostActivity extends AppCompatActivity{
         tvContactNumber = (TextView) findViewById(R.id.tv_content_num);
         tvBloodType = (TextView) findViewById(R.id.tv_content_btype);
         tvQuantity = (TextView) findViewById(R.id.tv_content_quantity);
-        tvPhoto = (TextView) findViewById(R.id.tv_content_photo);
         tvAddress = (TextView) findViewById(R.id.tv_content_address);
 
         //whatever is in the database
@@ -44,7 +40,6 @@ public class EditPostActivity extends AppCompatActivity{
         tvContactNumber.setHint("090000000");
         tvBloodType.setHint("O+");
         tvQuantity.setHint("2");
-        tvPhoto.setHint("Some Link");
         btnCancel.setText("Cancel");
         btnSave.setText("Save");
 

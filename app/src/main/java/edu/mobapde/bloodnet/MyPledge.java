@@ -59,7 +59,9 @@ public class MyPledge extends android.support.v4.app.Fragment{
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent();
+                i.setClass(getActivity(), ViewPostActivity.class);
+                startActivity(i);
             }
         });
 

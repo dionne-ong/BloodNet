@@ -34,7 +34,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //displayView(R.id.nav_news);
+        displayView(0);
     }
 
     @Override
@@ -97,6 +97,10 @@ public class NavigationDrawerActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_logout:
+                break;
+
+            default:
+                fragment = new TempNav();
                 break;
 
         }

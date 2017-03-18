@@ -45,6 +45,7 @@
         <activity android:name=".MyPledgeActivity" />
         <activity android:name=".RequirementsActivity" />
         <activity android:name=".CreatePostActivity" />
+        <activity android:name=".ViewPostActivity" />
         <activity
             android:name=".NavigationDrawerActivity"
             android:label="@string/title_activity_navigation_drawer"

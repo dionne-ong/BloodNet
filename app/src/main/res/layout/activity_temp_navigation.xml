@@ -14,12 +14,12 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View Profile"
+        android:text="Create Post"
         android:id="@+id/btn_view_profile"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit My Profile"
+        android:text="View A Post"
         android:id="@+id/btn_edit_profile"/>
     <Button
         android:layout_width="match_parent"
