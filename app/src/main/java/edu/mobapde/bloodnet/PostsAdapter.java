@@ -68,7 +68,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     }
 
     public static class PostViewHolder extends RecyclerView.ViewHolder{
-        TextView tvName, tvBtype, tvDatePost;
+        TextView tvName, tvBtype, tvDatePost, tvHospital;
         LinearLayout container;
         public PostViewHolder(View itemView){
             super(itemView);
@@ -76,6 +76,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
             tvName = (TextView) itemView.findViewById(R.id.tv_name_p);
             tvBtype = (TextView) itemView.findViewById(R.id.tv_btype_p);
             tvDatePost = (TextView) itemView.findViewById(R.id.tv_datepost_p);
+            tvHospital = (TextView) itemView.findViewById(R.id.tv_hospital_p);
         }
     }
 }
