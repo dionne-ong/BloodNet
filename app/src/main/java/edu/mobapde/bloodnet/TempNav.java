@@ -15,7 +15,7 @@ import android.widget.Button;
 
 public class TempNav extends Fragment {
     View MyView;
-    Button bViewProfile, bEditProfile, bFilterPost;
+    Button bViewProfile, bEditProfile, bFilterPost,  bViewHospital;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,7 +42,27 @@ public class TempNav extends Fragment {
             }
         });
 
+        bFilterPost = (Button) MyView.findViewById(R.id.btn_filter_post);
+        bFilterPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent();
+                i.setClass(getActivity(), FilterPostActivity.class);
 
+                startActivity(i);
+            }
+        });
+
+        bViewHospital = (Button) MyView.findViewById(R.id.btn_view_hospital);
+        bViewHospital.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent i = new Intent();
+                  i.setClass(getActivity(), ViewHospitalActivity.class);
+
+                  startActivity(i);
+              }
+          });
 
         return MyView;
     }

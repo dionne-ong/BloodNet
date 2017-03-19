@@ -65,8 +65,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/actvity_padding"
                     >
 
@@ -90,8 +89,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/actvity_padding">
                     <ImageView
                         android:layout_width="wrap_content"
@@ -113,8 +111,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/actvity_padding"
                     >
                     <ImageView
@@ -136,8 +133,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/actvity_padding">
                     <ImageView
                         android:layout_width="wrap_content"
@@ -160,8 +156,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/actvity_padding">
                     <ImageView
                         android:layout_width="wrap_content"

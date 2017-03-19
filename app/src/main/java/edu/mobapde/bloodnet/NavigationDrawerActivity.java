@@ -87,7 +87,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
                 title  = "Profile";
                 break;
             case R.id.nav_posts:
-                fragment = new MyPledge();
+                fragment = new ViewPostListActivity();
                 title = "Posts";
                 break;
 

@@ -26,14 +26,10 @@
         android:layout_height="wrap_content"
         android:text="Filter Post"
         android:id="@+id/btn_filter_post"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="View Hospital"
         android:id="@+id/btn_view_hospital"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="View Patient"
-        android:id="@+id/btn_view_patient"/>
 </LinearLayout>

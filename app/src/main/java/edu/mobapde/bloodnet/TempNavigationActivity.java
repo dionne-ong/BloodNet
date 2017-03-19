@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class TempNavigationActivity extends AppCompatActivity {
 
@@ -54,27 +55,27 @@ public class TempNavigationActivity extends AppCompatActivity {
             }
         });
 
-        btnViewPatient = (Button) findViewById(R.id.btn_view_patient);
-        btnViewPatient.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent();
-                i.setClass(getBaseContext(), ViewPatientActivity.class);
-
-                startActivity(i);
-            }
-        });
-
-
-        btnViewHospital = (Button) findViewById(R.id.btn_view_hospital);
-        btnViewHospital.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent();
-                i.setClass(getBaseContext(), ViewHospitalActivity.class);
-
-                startActivity(i);
-            }
-        });
+//        btnViewPatient = (Button) findViewById(R.id.btn_view_patient);
+//        btnViewPatient.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent();
+//                i.setClass(getBaseContext(), ViewPatientActivity.class);
+//
+//                startActivity(i);
+//            }
+//        });
+//
+//
+//        btnViewHospital = (Button) findViewById(R.id.btn_view_hospital);
+//        btnViewHospital.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent();
+//                i.setClass(getBaseContext(), ViewHospitalActivity.class);
+//
+//                startActivity(i);
+//            }
+//        });
     }
 }
