@@ -1,6 +1,7 @@
 package edu.mobapde.bloodnet;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +25,7 @@ public class MyPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_pledge);
 
+        Typeface face= Typeface.createFromAsset(getAssets(),"fonts/Raleway-Light.ttf");
         btnEdit = (Button) findViewById(R.id.b_submit);
         btnDelete = (Button) findViewById(R.id.b_cancel);
         tvName = (TextView) findViewById(R.id.tv_name);
@@ -38,11 +40,12 @@ public class MyPostActivity extends AppCompatActivity {
         btnDelete.setText("Delete");
         //whatever is in the db
         tvName.setText("Someone Else");
+        tvName.setTypeface(face);
         tvHospital.setText("At Some Hospital");
         tvAddress.setText("At Some Street");
         tvContactNum.setText("090000000");
         tvBloodType.setText("O+");
-        tvQuantity.setText("2");
+        tvQuantity.setText("2 Bags");
         tvPledged.setText("4 " + "have pledged to donate");
         tvPledged.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
 

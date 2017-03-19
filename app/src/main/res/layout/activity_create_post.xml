@@ -22,7 +22,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:id="@+id/img_bar_picture"
+                android:id="@+id/img_bar_picture_post"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
@@ -85,6 +85,27 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:contentDescription="@string/prompt_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_hospital_buildings"
+                    android:tint="@color/textSecondaryColor" />
+
+                <EditText
+                    android:id="@+id/tv_content_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
 
                 <ImageView
                     android:contentDescription="@string/prompt_birthdate"
@@ -94,19 +115,6 @@
                     android:src="@drawable/ic_pin_drop_black_24px"
                     android:tint="@color/textSecondaryColor" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <EditText
-
-                        android:id="@+id/tv_content_location"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        />
-
-
                     <EditText
 
                         android:id="@+id/tv_content_address"
@@ -114,7 +122,6 @@
                         android:layout_height="wrap_content"
                         />
 
-                </LinearLayout>
 
 
             </LinearLayout>
@@ -176,8 +183,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="7dp"
-                    android:src="@drawable/ic_accessibility_black_24px"
-                    android:tint="@color/textSecondaryColor" />
+                    android:src="@drawable/ic_blood_transfusio"
+                    android:tint="@color/textSecondaryColor"/>
 
                 <EditText
                     android:id="@+id/tv_content_quantity"

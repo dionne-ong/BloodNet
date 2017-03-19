@@ -1,6 +1,7 @@
 package edu.mobapde.bloodnet;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
@@ -21,7 +22,7 @@ public class ViewPostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_pledge);
-
+        Typeface face= Typeface.createFromAsset(getAssets(),"fonts/Raleway-Light.ttf");
         btnPledged = (Button) findViewById(R.id.b_submit);
         btnCancel = (Button) findViewById(R.id.b_cancel);
         tvName = (TextView) findViewById(R.id.tv_name);
@@ -36,11 +37,12 @@ public class ViewPostActivity extends AppCompatActivity {
         btnCancel.setVisibility(View.INVISIBLE);
         //whatever is in the db
         tvName.setText("Someone Else");
+        tvName.setTypeface(face);
         tvHospital.setText("At Some Hospital");
         tvAddress.setText("At Some Street");
         tvContactNum.setText("090000000");
         tvBloodType.setText("O+");
-        tvQuantity.setText("2");
+        tvQuantity.setText("2 Bags");
         tvDate.setText("Posted on " + "February 18, 2017");
 
 

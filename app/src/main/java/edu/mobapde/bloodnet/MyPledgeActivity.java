@@ -2,6 +2,7 @@ package edu.mobapde.bloodnet;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -33,16 +34,18 @@ public class MyPledgeActivity extends AppCompatActivity {
         tvBloodType = (TextView) findViewById(R.id.tv_bloodtype);
         tvQuantity = (TextView) findViewById(R.id.tv_bags);
         tvDate = (TextView) findViewById(R.id.tv_posteddate);
+        Typeface face= Typeface.createFromAsset(getAssets(),"fonts/Raleway-Light.ttf");
 
         btnStartDonation.setText("Start Donation");
         btnCancel.setText("Cancel");
         // whatever's in the db
         tvName.setText("Winnie The Pooh");
+        tvName.setTypeface(face);
         tvHospital.setText("Chinese General Hospital");
         tvAddress.setText("286 Blumentritt Rd, Sampaloc,Manila, Metro Manila");
         tvContactNum.setText("09178075984");
         tvBloodType.setText("B+");
-        tvQuantity.setText("2");
+        tvQuantity.setText("2 Bags");
         tvDate.setText("Posted on " + "February 10, 2017");
 
 
