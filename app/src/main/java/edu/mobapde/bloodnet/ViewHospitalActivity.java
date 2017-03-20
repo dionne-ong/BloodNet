@@ -7,10 +7,11 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.mobapde.bloodnet.models.Post;
 
 public class ViewHospitalActivity extends AppCompatActivity {
 

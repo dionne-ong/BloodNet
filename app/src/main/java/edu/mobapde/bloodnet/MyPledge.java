@@ -38,7 +38,7 @@ public class MyPledge extends android.support.v4.app.Fragment{
         tvQuantity = (TextView) MyView.findViewById(R.id.tv_bags);
         tvDate = (TextView) MyView.findViewById(R.id.tv_posteddate);
         tvName = (TextView) MyView.findViewById(R.id.tv_name);
-        Typeface face= Typeface.createFromAsset(getActivity().getAssets(),"fonts/Raleway Thin.ttf");
+        Typeface face= Typeface.createFromAsset(getActivity().getAssets(),"fonts/Raleway-Light.ttf");
 
         tvName.setText("Winnie The Pooh");
         tvName.setTypeface(face);

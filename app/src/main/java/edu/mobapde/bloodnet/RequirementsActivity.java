@@ -30,18 +30,15 @@ public class RequirementsActivity extends AppCompatActivity {
         btn_Ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(RequirementsActivity.this, NavigationDrawerActivity.class);
-                i.putExtra("button","Done");
-                startActivity(i);
+
+                finish();
             }
         });
 
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent();
-                i.setClass(getBaseContext(), MyPledgeActivity.class);
-                startActivity(i);
+               finish();
             }
         });
 

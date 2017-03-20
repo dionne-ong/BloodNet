@@ -1,4 +1,4 @@
-package edu.mobapde.bloodnet;
+package edu.mobapde.bloodnet.models;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -33,6 +33,20 @@ public class Post {
         this.neededBags = neededBags;
         this.pledgedBags = pledgedBags;
         this.datePosted = datePosted;
+    }
+
+    public Post(int id, User user, String hospitalName, String hospitalAddress, int neededBags, int pledgedBags, GregorianCalendar datePosted){
+        this.id = id;
+        this.userId = user.getId();
+        this.patientName = user.getName();
+        this.bloodType = user.getBloodType();
+        this.contactNum = user.getContactNum();
+        this.hospitalName = hospitalName;
+        this.hospitalAddress = hospitalAddress;
+        this.neededBags = neededBags;
+        this.pledgedBags = pledgedBags;
+        this.datePosted = datePosted;
+
     }
 
 

@@ -10,6 +10,8 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import edu.mobapde.bloodnet.models.Post;
+
 /**
  * Created by Luisa Gilig on 19/03/2017.
  */

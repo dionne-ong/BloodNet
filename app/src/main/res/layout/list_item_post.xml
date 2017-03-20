@@ -47,6 +47,5 @@
             android:textColor="@color/colorPrimary"
             android:id="@+id/tv_btype_p"/>
 
-
     </LinearLayout>
 </LinearLayout>

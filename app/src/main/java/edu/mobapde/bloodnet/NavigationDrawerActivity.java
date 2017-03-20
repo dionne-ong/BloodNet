@@ -1,5 +1,6 @@
 package edu.mobapde.bloodnet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -88,19 +89,21 @@ public class NavigationDrawerActivity extends AppCompatActivity
                 break;
             case R.id.nav_posts:
                 fragment = new ViewPostListActivity();
-                title = "Posts";
+                title = "My Posts";
                 break;
 
             case R.id.nav_pledge:
-                fragment = new MyPledge();
-                title = "Pledge";
+                fragment = new ViewPledgeListActivity();
+                title = "My Pledge";
                 break;
 
             case R.id.nav_logout:
+                fragment = new Logout();
+                //title = "";
                 break;
 
             default:
-                fragment = new TempNav();
+                fragment = new FilterPostActivity();
                 break;
 
         }

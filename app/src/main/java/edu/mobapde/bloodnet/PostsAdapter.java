@@ -4,14 +4,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
+import java.text.SimpleDateFormat;
 import java.util.List;
+
+import edu.mobapde.bloodnet.models.Post;
 
 /**
  * Created by cdejesus on 3/16/2017.
@@ -37,8 +36,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     public void onBindViewHolder(final PostViewHolder holder, int position) {
         Post post = postsList.get(position);
         holder.tvName.setText(post.getPatientName());
-        holder.tvBtype.setText("(" + post.getBloodType() + ")");
-        holder.tvDatePost.setText("Posted: " + post.getDatePosted());
+        holder.tvBtype.setText(post.getBloodType());
+        SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
+        holder.tvDatePost.setText("Posted on " + format.format(post.getDatePosted().getTime()));
+        holder.tvHospital.setText(post.getHospitalName());
 
         holder.container.setTag(post.getId());
         holder.container.setOnClickListener(new View.OnClickListener() {

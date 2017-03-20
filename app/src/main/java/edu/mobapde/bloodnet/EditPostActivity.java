@@ -62,19 +62,14 @@ public class EditPostActivity extends AppCompatActivity{
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent();
-                i.setClass(getBaseContext(), MyPostActivity.class);
-                startActivity(i);
-
+                finish();
             }
         });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent();
-                i.setClass(getBaseContext(), MyPostActivity.class);
-                startActivity(i);
+                finish();
             }
         });
 

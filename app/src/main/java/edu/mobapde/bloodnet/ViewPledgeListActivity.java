@@ -1,9 +1,9 @@
 package edu.mobapde.bloodnet;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,51 +15,51 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import edu.mobapde.bloodnet.models.Post;
+import edu.mobapde.bloodnet.models.Pledge;
 
 /**
  * Created by Luisa Gilig on 19/03/2017.
  */
 
-public class ViewPostListActivity extends Fragment{
-    private List<Post> postsList = new ArrayList<>();
+public class ViewPledgeListActivity extends Fragment{
+    private List<Pledge> pledgeList = new ArrayList<>();
     private ArrayList<String> selection = new ArrayList<String>();
-    private MyPostAdapter pAdapter;
-    RecyclerView rvPosts;
+    private MyPledgeAdapter pAdapter;
+    RecyclerView rvPledge;
     View MyView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         MyView = inflater.inflate(R.layout.activity_view_post_list, container, false);
-        rvPosts = (RecyclerView) MyView.findViewById(R.id.rv_posts);
+        rvPledge = (RecyclerView) MyView.findViewById(R.id.rv_posts);
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        rvPosts.setLayoutManager(pLayoutManager);
-        rvPosts.setItemAnimator(new DefaultItemAnimator());
-        rvPosts.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        rvPledge.setLayoutManager(pLayoutManager);
+        rvPledge.setItemAnimator(new DefaultItemAnimator());
+        rvPledge.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
-        Post post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital A", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
-        postsList.add(post);
+        Pledge pledge = new Pledge(2,5);
+        pledgeList.add(pledge);
 
-        post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital B", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
-        postsList.add(post);
+        pledge = new Pledge(3,4);
+        pledgeList.add(pledge);
 
-        post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital C", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
-        postsList.add(post);
-        pAdapter = new MyPostAdapter(postsList);
+        pledge = new Pledge(1,2);
+        pledgeList.add(pledge);
+        pAdapter = new MyPledgeAdapter(pledgeList);
 
         pAdapter.setOnItemClickListener(new MyPostAdapter.OnItemClickListener(){
             @Override
             public void onItemClick(int id) {
                 Intent i = new Intent();
                 //go to post
-                i.setClass(getActivity(), MyPostActivity.class);
+                i.setClass(getActivity(), MyPledgeActivity.class);
                 i.putExtra("id", id);
                 startActivity(i);
             }
 
         });
-        rvPosts.setAdapter(pAdapter);
+        rvPledge.setAdapter(pAdapter);
 
         return MyView;
     }
