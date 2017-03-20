@@ -88,6 +88,7 @@ public class LogInActivity extends AppCompatActivity {
                                         Toast.makeText(LogInActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
                                 } else {
+                                    Toast.makeText(LogInActivity.this, "Logging In...", Toast.LENGTH_SHORT);
                                     Intent intent = new Intent(LogInActivity.this, NavigationDrawerActivity.class);
                                     startActivity(intent);
                                     finish();
