@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -24,6 +25,7 @@ import edu.mobapde.bloodnet.models.Post;
 public class ViewPostListActivity extends Fragment{
     private List<Post> postsList = new ArrayList<>();
     private ArrayList<String> selection = new ArrayList<String>();
+    Button btnCreate;
     private MyPostAdapter pAdapter;
     RecyclerView rvPosts;
     View MyView;
@@ -38,14 +40,21 @@ public class ViewPostListActivity extends Fragment{
         rvPosts.setItemAnimator(new DefaultItemAnimator());
         rvPosts.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
-        Post post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital A", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
+        Post post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital B", "30 IDK St. Who Cares Ave.", 2, 0, new GregorianCalendar());
         postsList.add(post);
 
         post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital B", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
         postsList.add(post);
+        btnCreate  = (Button) MyView.findViewById(R.id.b_create);
 
-        post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital C", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
-        postsList.add(post);
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent();
+                i.setClass(getActivity(), CreatePostActivity.class);
+                startActivity(i);
+            }
+        });
         pAdapter = new MyPostAdapter(postsList);
 
         pAdapter.setOnItemClickListener(new MyPostAdapter.OnItemClickListener(){

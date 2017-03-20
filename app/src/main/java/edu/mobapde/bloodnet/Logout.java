@@ -23,37 +23,48 @@ import com.google.firebase.auth.FirebaseUser;
 public class Logout extends Fragment {
     Button btnLogout;
     FirebaseAuth auth;
-
+    FirebaseAuth.AuthStateListener authListener;
 
     View MyView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         MyView = inflater.inflate(R.layout.activity_logout, container, false);
-//        auth = FirebaseAuth.getInstance();
-//        btnLogout = (Button) MyView.findViewById(R.id.b_logout);
-//        // this listener will be called when there is change in firebase user session
-//        FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                FirebaseUser user = firebaseAuth.getCurrentUser();
-//                if (user == null) {
-//                    // user auth state is changed - user is null
-//                    // launch login activity
-//                    startActivity(new Intent(MyView.getContext(), LogInActivity.class));
-//                    getActivity().finish();
-//                }
-//            }
-//        };
+        auth = FirebaseAuth.getInstance();
+        btnLogout = (Button) MyView.findViewById(R.id.b_logout);
+        // this listener will be called when there is change in firebase user session
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) {
+                    // user auth state is changed - user is null
+                    // launch login activity
+                    startActivity(new Intent(getActivity(), LogInActivity.class));
+                    getActivity().finish();
+                }
+            }
+        };
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//            auth.signOut();
-                Toast.makeText(getActivity(), "Logging Out...", Toast.LENGTH_SHORT);
+                auth.signOut();
             }
         });
 
 
         return MyView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(authListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        auth.removeAuthStateListener(authListener);
     }
 }

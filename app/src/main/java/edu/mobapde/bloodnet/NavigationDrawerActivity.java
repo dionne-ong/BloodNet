@@ -28,7 +28,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-        if (auth.getCurrentUser() != null) {
+        if (auth.getCurrentUser() == null) {
             startActivity(new Intent(NavigationDrawerActivity.this, LogInActivity.class));
             finish();
         }
@@ -108,7 +108,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
             case R.id.nav_logout:
                 fragment = new Logout();
-                //title = "";
+                title = "Logout";
 
                 break;
 

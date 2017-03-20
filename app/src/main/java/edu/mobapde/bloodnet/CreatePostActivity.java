@@ -69,6 +69,7 @@ public class CreatePostActivity extends AppCompatActivity {
                 Intent i = new Intent();
                 i.setClass(getBaseContext(), MyPostActivity.class);
                 startActivity(i);
+                finish();
             }
         });
 

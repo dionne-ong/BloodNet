@@ -2,6 +2,7 @@ package edu.mobapde.bloodnet;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,17 +15,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import edu.mobapde.bloodnet.models.Pledge;
+
 public class MyPledgeActivity extends AppCompatActivity {
 
     Button btnStartDonation, btnCancel;
     Toolbar tbEdit;
     TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate;
+    Pledge pledge;
+
+
+    public static final int REQUEST_CODE_DONATE = 301;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_pledge);
-
         btnStartDonation = (Button) findViewById(R.id.b_submit);
         btnCancel = (Button) findViewById(R.id.b_cancel);
         tvName = (TextView) findViewById(R.id.tv_name);
@@ -36,9 +42,44 @@ public class MyPledgeActivity extends AppCompatActivity {
         tvDate = (TextView) findViewById(R.id.tv_posteddate);
         Typeface face= Typeface.createFromAsset(getAssets(),"fonts/Raleway-Light.ttf");
 
-        btnStartDonation.setText("Start Donation");
-        btnCancel.setText("Cancel");
-        // whatever's in the db
+        int id = getIntent().getIntExtra(Pledge.PLEDGE_EXTRA, -1);
+        if(id != -1){
+            pledge = new Pledge(1,2, true);
+        }else{
+            pledge = new Pledge(1,2, true);
+        }
+
+
+        if(pledge.getDonated()){
+            btnStartDonation.setText("Start Donation");
+            btnCancel.setText("Cancel");
+
+            btnStartDonation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent();
+                    i.setClass(getBaseContext(), RequirementsActivity.class);
+                    startActivity(i);
+                }
+            });
+
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent();
+                    i.setClass(getBaseContext(), ViewPostActivity.class);
+                    startActivity(i);
+                }
+            });
+
+
+        }else{
+            btnCancel.setText("Donated");
+            btnCancel.setTextColor(Color.parseColor("#F44336"));
+            btnCancel.setEnabled(false);
+            btnStartDonation.setVisibility(View.GONE);
+
+        } // whatever's in the db
         tvName.setText("Winnie The Pooh");
         tvName.setTypeface(face);
         tvHospital.setText("Chinese General Hospital");
@@ -55,7 +96,7 @@ public class MyPledgeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent();
                 i.setClass(getBaseContext(), RequirementsActivity.class);
-                startActivity(i);
+                startActivityForResult(i, REQUEST_CODE_DONATE);
             }
         });
 
@@ -76,4 +117,22 @@ public class MyPledgeActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode){
+            case REQUEST_CODE_DONATE:
+                if(resultCode == RESULT_OK){
+                    pledge.setDonated(false);
+                    btnCancel.setText("Donated");
+                    btnCancel.setTextColor(Color.parseColor("#F44336"));
+                    btnCancel.setEnabled(false);
+                    btnStartDonation.setVisibility(View.GONE);
+
+                }
+                break;
+            default:
+        }
+
+    }
 }

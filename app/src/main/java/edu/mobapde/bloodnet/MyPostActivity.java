@@ -36,17 +36,18 @@ public class MyPostActivity extends AppCompatActivity {
         tvQuantity = (TextView) findViewById(R.id.tv_bags);
         tvPledged = (TextView) findViewById(R.id.tv_posteddate);
 
+
         btnEdit.setText("Edit");
         btnDelete.setText("Delete");
         //whatever is in the db
-        tvName.setText("Someone Else");
+        tvName.setText("Luisa Gilig");
         tvName.setTypeface(face);
-        tvHospital.setText("At Some Hospital");
-        tvAddress.setText("At Some Street");
-        tvContactNum.setText("090000000");
+        tvHospital.setText("Hospital A");
+        tvAddress.setText("2191 Something Street, Manila City");
+        tvContactNum.setText("09172134385");
         tvBloodType.setText("O+");
         tvQuantity.setText("2 Bags");
-        tvPledged.setText("4 " + "have pledged to donate");
+        tvPledged.setText("0 " + "have pledged to donate");
         tvPledged.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
 
 

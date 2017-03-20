@@ -50,10 +50,10 @@ public class EditPostActivity extends AppCompatActivity{
         tvAddress = (TextView) findViewById(R.id.tv_content_address);
 
         //whatever is in the database
-        tvName.setHint("Someone Else");
-        tvLocation.setHint("At Some Hospital");
-        tvAddress.setHint("At Some Street");
-        tvContactNumber.setHint("090000000");
+        tvName.setHint("Luisa Gilig");
+        tvLocation.setHint("Hospital A");
+        tvAddress.setHint("2191 Something Street, Manila City");
+        tvContactNumber.setHint("09172134385");
         tvBloodType.setHint("O+");
         tvQuantity.setHint("2");
         btnCancel.setText("Cancel");

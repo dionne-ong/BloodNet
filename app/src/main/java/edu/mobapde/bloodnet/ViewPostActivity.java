@@ -36,14 +36,14 @@ public class ViewPostActivity extends AppCompatActivity {
         btnPledged.setText("Pledge");
         btnCancel.setVisibility(View.INVISIBLE);
         //whatever is in the db
-        tvName.setText("Someone Else");
+        tvName.setText("Winnie The Pooh");
         tvName.setTypeface(face);
-        tvHospital.setText("At Some Hospital");
-        tvAddress.setText("At Some Street");
-        tvContactNum.setText("090000000");
-        tvBloodType.setText("O+");
+        tvHospital.setText("Chinese General Hospital");
+        tvAddress.setText("286 Blumentritt Rd, Sampaloc,Manila, Metro Manila");
+        tvContactNum.setText("09178075984");
+        tvBloodType.setText("B+");
         tvQuantity.setText("2 Bags");
-        tvDate.setText("Posted on " + "February 18, 2017");
+        tvDate.setText("Posted on " + "February 10, 2017");
 
 
         btnPledged.setOnClickListener(new View.OnClickListener() {

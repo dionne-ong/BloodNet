@@ -2,6 +2,7 @@ package edu.mobapde.bloodnet;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,9 +43,38 @@ public class MyPledge extends android.support.v4.app.Fragment{
 
         tvName.setText("Winnie The Pooh");
         tvName.setTypeface(face);
-        btnStartDonation.setText("Start Donation");
-        btnCancel.setText("Cancel");
-        // whatever's in the db
+
+//        if(){
+//            btnStartDonation.setText("Start Donation");
+//            btnCancel.setText("Cancel");
+//
+//            btnStartDonation.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent i = new Intent();
+//                    i.setClass(getActivity(), RequirementsActivity.class);
+//                    startActivity(i);
+//                }
+//            });
+//
+//            btnCancel.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent i = new Intent();
+//                    i.setClass(getActivity(), ViewPostActivity.class);
+//                    startActivity(i);
+//                }
+//            });
+//
+//
+//        }else{
+//            btnCancel.setText("Donated");
+//            btnCancel.setTextColor(Color.parseColor("#F44336"));
+//            btnCancel.setEnabled(false);
+//            btnStartDonation.setVisibility(View.GONE);
+//
+//        }
+//        // whatever's in the db
         tvHospital.setText("Chinese General Hospital");
         tvAddress.setText("286 Blumentritt Rd, Sampaloc,Manila, Metro Manila");
         tvContactNum.setText("09178075984");
@@ -52,23 +82,6 @@ public class MyPledge extends android.support.v4.app.Fragment{
         tvQuantity.setText("2 bags");
         tvDate.setText("Posted on " + "February 10, 2017");
 
-        btnStartDonation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent();
-                i.setClass(getActivity(), RequirementsActivity.class);
-                startActivity(i);
-            }
-        });
-
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent();
-                i.setClass(getActivity(), ViewPostActivity.class);
-                startActivity(i);
-            }
-        });
 
         return MyView;
     }

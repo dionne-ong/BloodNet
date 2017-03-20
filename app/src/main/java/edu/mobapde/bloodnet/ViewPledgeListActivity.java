@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -22,6 +23,7 @@ import edu.mobapde.bloodnet.models.Pledge;
  */
 
 public class ViewPledgeListActivity extends Fragment{
+    Button bCreate;
     private List<Pledge> pledgeList = new ArrayList<>();
     private ArrayList<String> selection = new ArrayList<String>();
     private MyPledgeAdapter pAdapter;
@@ -37,14 +39,15 @@ public class ViewPledgeListActivity extends Fragment{
         rvPledge.setLayoutManager(pLayoutManager);
         rvPledge.setItemAnimator(new DefaultItemAnimator());
         rvPledge.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-
-        Pledge pledge = new Pledge(2,5);
+        bCreate = (Button)MyView.findViewById(R.id.b_create);
+        bCreate.setVisibility(View.GONE);
+        Pledge pledge = new Pledge(2,5,false);
         pledgeList.add(pledge);
 
-        pledge = new Pledge(3,4);
+        pledge = new Pledge(3,4, false);
         pledgeList.add(pledge);
 
-        pledge = new Pledge(1,2);
+        pledge = new Pledge(1,2,false);
         pledgeList.add(pledge);
         pAdapter = new MyPledgeAdapter(pledgeList);
 
