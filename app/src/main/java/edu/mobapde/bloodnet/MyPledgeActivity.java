@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,8 +22,9 @@ public class MyPledgeActivity extends AppCompatActivity {
 
     Button btnStartDonation, btnCancel;
     Toolbar tbEdit;
-    TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate;
+    TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate, tvSliderText;
     Pledge pledge;
+    SlideButton sb;
 
 
     public static final int REQUEST_CODE_DONATE = 301;
@@ -31,6 +33,8 @@ public class MyPledgeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_pledge);
+        sb = (SlideButton) findViewById(R.id.unlockButton);
+        tvSliderText = (TextView) findViewById(R.id.slider_text);
         btnStartDonation = (Button) findViewById(R.id.b_submit);
         btnCancel = (Button) findViewById(R.id.b_cancel);
         tvName = (TextView) findViewById(R.id.tv_name);
@@ -41,7 +45,8 @@ public class MyPledgeActivity extends AppCompatActivity {
         tvQuantity = (TextView) findViewById(R.id.tv_bags);
         tvDate = (TextView) findViewById(R.id.tv_posteddate);
         Typeface face= Typeface.createFromAsset(getAssets(),"fonts/Raleway-Light.ttf");
-
+        sb.setVisibility(View.GONE);
+        tvSliderText.setVisibility(View.GONE);
         int id = getIntent().getIntExtra(Pledge.PLEDGE_EXTRA, -1);
         if(id != -1){
             pledge = new Pledge(1,2, true);

@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 /**
@@ -33,8 +35,8 @@ public class ViewPostActivity extends AppCompatActivity {
         tvQuantity = (TextView) findViewById(R.id.tv_bags);
         tvDate = (TextView) findViewById(R.id.tv_posteddate);
 
-        btnPledged.setText("Pledge");
-        btnCancel.setVisibility(View.INVISIBLE);
+        btnPledged.setVisibility(View.GONE);
+        btnCancel.setVisibility(View.GONE);
         //whatever is in the db
         tvName.setText("Winnie The Pooh");
         tvName.setTypeface(face);
@@ -46,14 +48,15 @@ public class ViewPostActivity extends AppCompatActivity {
         tvDate.setText("Posted on " + "February 10, 2017");
 
 
-        btnPledged.setOnClickListener(new View.OnClickListener() {
+        ((SlideButton) findViewById(R.id.unlockButton)).setSlideButtonListener(new SlideButtonListener() {
             @Override
-            public void onClick(View v) {
+            public void handleSlide() {
                 Intent i = new Intent();
                 i.setClass(getBaseContext(), MyPledgeActivity.class);
                 startActivity(i);
             }
         });
+
     }
 
     @Override

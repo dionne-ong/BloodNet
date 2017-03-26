@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="edu.mobapde.bloodnet.MyPledge">
+        >
 
         <LinearLayout
             android:id="@+id/activity_edit_profile"
@@ -206,9 +206,41 @@
                     android:id="@+id/b_cancel"
                     />
 
+                <RelativeLayout
+                    android:paddingTop = "10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <edu.mobapde.bloodnet.SlideButton
+                        android:id="@+id/unlockButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:max="100"
+                        android:background="@color/colorPrimary"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:progressDrawable="@android:color/transparent"
+                        android:thumb="@drawable/ic_chevron_right_white_24px" />
+
+                    <TextView
+                        android:paddingTop = "10dp"
+                        android:textStyle="bold"
+                        android:id="@+id/slider_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="Slide To Pledge Your Donation"
+                        android:textColor="#fff"
+                       />
+
+                </RelativeLayout>
+
+
             </LinearLayout>
 
         </LinearLayout>
+
 
     </android.support.v4.widget.NestedScrollView>
 

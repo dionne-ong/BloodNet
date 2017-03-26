@@ -2,6 +2,7 @@ package edu.mobapde.bloodnet;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -25,7 +26,7 @@ import edu.mobapde.bloodnet.models.Post;
 public class ViewPostListActivity extends Fragment{
     private List<Post> postsList = new ArrayList<>();
     private ArrayList<String> selection = new ArrayList<String>();
-    Button btnCreate;
+    FloatingActionButton btnCreate;
     private MyPostAdapter pAdapter;
     RecyclerView rvPosts;
     View MyView;
@@ -38,14 +39,13 @@ public class ViewPostListActivity extends Fragment{
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         rvPosts.setLayoutManager(pLayoutManager);
         rvPosts.setItemAnimator(new DefaultItemAnimator());
-        rvPosts.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
         Post post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital B", "30 IDK St. Who Cares Ave.", 2, 0, new GregorianCalendar());
         postsList.add(post);
 
         post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital B", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
         postsList.add(post);
-        btnCreate  = (Button) MyView.findViewById(R.id.b_create);
+        btnCreate  = (FloatingActionButton) MyView.findViewById(R.id.fab);
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override

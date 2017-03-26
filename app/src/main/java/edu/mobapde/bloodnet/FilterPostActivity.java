@@ -102,7 +102,6 @@ public class FilterPostActivity extends Fragment {
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         rvPosts.setLayoutManager(pLayoutManager);
         rvPosts.setItemAnimator(new DefaultItemAnimator());
-        rvPosts.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
         Post post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital A", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
         postsList.add(post);
@@ -130,54 +129,4 @@ public class FilterPostActivity extends Fragment {
 
         return MyView;
     }
-
-    /**
-    public void selectItem(View v){
-        boolean checked = ((CheckBox) v).isChecked();
-        switch (v.getId()){
-            case R.id.cb_a: if(checked){
-                selection.add("A");
-            }else{
-                selection.remove("A");
-            } break;
-            case R.id.cb_a2: if(checked){
-                selection.add("A-");
-            }else{
-                selection.remove("A-");
-            } break;
-
-            case R.id.cb_b: if(checked){
-                selection.add("B");
-            }else{
-                selection.remove("B");
-            } break;
-            case R.id.cb_b2: if(checked){
-                selection.add("B-");
-            }else{
-                selection.remove("B-");
-            } break;
-            case R.id.cb_ab: if(checked){
-                selection.add("AB");
-            }else{
-                selection.remove("AB");
-            } break;
-            case R.id.cb_ab2: if(checked){
-                selection.add("AB-");
-            }else{
-                selection.remove("AB-");
-            } break;
-
-            case R.id.cb_o: if(checked){
-                selection.add("O");
-            }else{
-                selection.remove("O");
-            } break;
-            case R.id.cb_o2: if(checked){
-                selection.add("O-");
-            }else{
-                selection.remove("O-");
-            } break;
-        }
-    }
-     */
 }

@@ -3,6 +3,7 @@ package edu.mobapde.bloodnet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,7 +24,7 @@ import edu.mobapde.bloodnet.models.Pledge;
  */
 
 public class ViewPledgeListActivity extends Fragment{
-    Button bCreate;
+    FloatingActionButton bCreate;
     private List<Pledge> pledgeList = new ArrayList<>();
     private ArrayList<String> selection = new ArrayList<String>();
     private MyPledgeAdapter pAdapter;
@@ -38,8 +39,7 @@ public class ViewPledgeListActivity extends Fragment{
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         rvPledge.setLayoutManager(pLayoutManager);
         rvPledge.setItemAnimator(new DefaultItemAnimator());
-        rvPledge.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-        bCreate = (Button)MyView.findViewById(R.id.b_create);
+        bCreate = (FloatingActionButton)MyView.findViewById(R.id.fab);
         bCreate.setVisibility(View.GONE);
         Pledge pledge = new Pledge(2,5,false);
         pledgeList.add(pledge);
