@@ -23,7 +23,7 @@ public class Pledge {
         // user = db.get (userId);
         // post = db.get (postId);
         this.donated = isDonated;
-        user = new User(2, "Winnie The Pooh", "B+", "09178075984", "F", new GregorianCalendar(1997, 11, 8));
+        user = new User("Winnie The Pooh", "B+", "09178075984", "F", new GregorianCalendar(1997, 11, 8).getTimeInMillis());
         post = new Post(5, user, "Chinese General Hospital", "286 Blumentritt Rd, Sampaloc, Manila, Metro Manila", 5, 3, new GregorianCalendar());
     }
 
