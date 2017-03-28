@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:padding="0dp"
+    android:layout_marginLeft="10dp"
     android:id="@+id/sub_item">
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Blood Type:"
-            android:id="@+id/tv_title_btype"/>
+            android:id="@+id/tv_title_btype"
+            android:textSize="16sp"/>
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,16 +39,20 @@
             android:text="AB"
             android:id="@+id/cb_AB"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/section_rhfactor">
+        android:id="@+id/section_rhfactor"
+        android:weightSum="1">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="RH Factor:"
-            android:id="@+id/tv_title_rhfactor"/>
+            android:id="@+id/tv_title_rhfactor"
+            android:textSize="16sp"
+            android:layout_weight="0.04" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -57,6 +57,7 @@ public class FilterPostActivity extends Fragment {
         View subItem = item.getSubItemView(0);
         subItem = subItem.findViewById(R.id.sub_item);
 
+
         rvPosts = (RecyclerView) MyView.findViewById(R.id.rv_posts);
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         rvPosts.setLayoutManager(pLayoutManager);
