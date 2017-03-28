@@ -8,10 +8,14 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
+import edu.mobapde.bloodnet.models.Pledge;
+
 public class RequirementsActivity extends AppCompatActivity {
 
     Button btn_Ok, btn_Cancel;
     Toolbar tbEdit;
+
+    Pledge pledge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +24,11 @@ public class RequirementsActivity extends AppCompatActivity {
         tbEdit = (Toolbar) findViewById(R.id.tb_edit);
         setSupportActionBar(tbEdit);
         getSupportActionBar().setTitle("Requirements");
+
+        //pledge = getExtra();
+        pledge = new Pledge(1,2, false);
+
+
 
         btn_Ok = (Button) findViewById(R.id.b_submit);
         btn_Cancel = (Button) findViewById(R.id.b_cancel);
@@ -30,18 +39,15 @@ public class RequirementsActivity extends AppCompatActivity {
         btn_Ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(RequirementsActivity.this, MyPledgeActivity.class);
-                i.putExtra("button","Done");
-                startActivity(i);
+                pledge.setDonated(true);
+                finish();
             }
         });
 
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent();
-                i.setClass(getBaseContext(), MyPledgeActivity.class);
-                startActivity(i);
+               finish();
             }
         });
 

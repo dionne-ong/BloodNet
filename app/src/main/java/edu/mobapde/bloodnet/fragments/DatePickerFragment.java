@@ -8,8 +8,6 @@ import java.util.Date;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
-
-import edu.mobapde.bloodnet.EditProfileActivity;
 import edu.mobapde.bloodnet.EditProfileFABActivity;
 
 /**

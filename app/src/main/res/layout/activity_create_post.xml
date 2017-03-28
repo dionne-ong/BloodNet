@@ -1,207 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_create_post"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="edu.mobapde.bloodnet.CreatePostActivity">
+    android:fitsSystemWindows="true">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tb_edit"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ToolBarStyle"
-        app:popupTheme="@style/PopupBarStyle"/>
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    <LinearLayout
-        android:id="@+id/editcontent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_padding_left"
-        android:paddingRight="@dimen/activity_padding_right">
-
-        <LinearLayout
-            android:layout_marginTop="10dp"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:contentDescription="@string/prompt_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="7dp"
-                android:src="@drawable/ic_person_black_24dp"
-                android:tint="@color/textSecondaryColor" />
-
-            <EditText
-                android:id="@+id/tv_content_name"
+                android:id="@+id/img_bar_picture_post"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:scaleType="centerCrop"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"/>
 
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                android:theme="@style/ToolBarStyle"
+                app:popupTheme="@style/PopupBarStyle" />
 
-        </LinearLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
 
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="edu.mobapde.bloodnet.CreatePostActivity">
         <LinearLayout
+            android:id="@+id/editcontent"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-
-            android:layout_marginTop="10dp">
-
-
-            <ImageView
-                android:contentDescription="@string/prompt_birthdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="7dp"
-                android:src="@drawable/ic_pin_drop_black_24px"
-                android:tint="@color/textSecondaryColor" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="@dimen/activity_padding_left"
+            android:paddingRight="@dimen/activity_padding_right">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:contentDescription="@string/prompt_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_person_black_24dp"
+                    android:tint="@color/textSecondaryColor" />
 
                 <EditText
+                    android:id="@+id/tv_content_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
 
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:contentDescription="@string/prompt_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_hospital_buildings"
+                    android:tint="@color/textSecondaryColor" />
+
+                <EditText
                     android:id="@+id/tv_content_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
 
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-                <EditText
 
-                    android:id="@+id/tv_content_address"
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:contentDescription="@string/prompt_birthdate"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    />
+                    android:padding="7dp"
+                    android:src="@drawable/ic_pin_drop_black_24px"
+                    android:tint="@color/textSecondaryColor" />
+
+                    <EditText
+
+                        android:id="@+id/tv_content_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+
+
 
             </LinearLayout>
 
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+                <ImageView
+                    android:contentDescription="@string/prompt_contact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_call_black_24dp"
+                    android:tint="@color/textSecondaryColor" />
+
+                <EditText
+                    android:id="@+id/tv_content_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:contentDescription="@string/prompt_blood_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_opacity_black_24px"
+                    android:tint="@color/textSecondaryColor" />
+
+                <EditText
+                    android:id="@+id/tv_content_btype"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
 
 
-            <ImageView
-                android:contentDescription="@string/prompt_contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="7dp"
-                android:src="@drawable/ic_call_black_24dp"
-                android:tint="@color/textSecondaryColor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/tv_content_num"
+                <ImageView
+                    android:contentDescription="@string/prompt_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_blood_transfusio"
+                    android:tint="@color/textSecondaryColor"/>
+
+                <EditText
+                    android:id="@+id/tv_content_quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"/>
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/b_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone" />
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/textMainColor" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-            <ImageView
-                android:contentDescription="@string/prompt_blood_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="7dp"
-                android:src="@drawable/ic_opacity_black_24px"
-                android:tint="@color/textSecondaryColor" />
-
-            <EditText
-                android:id="@+id/tv_content_btype"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-            <ImageView
-                android:contentDescription="@string/prompt_gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="7dp"
-                android:src="@drawable/ic_accessibility_black_24px"
-                android:tint="@color/textSecondaryColor" />
-
-            <EditText
-                android:id="@+id/tv_content_quantity"
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"/>
+                android:id="@+id/b_cancel"
+                android:layout_marginBottom="20dp"
+                />
 
         </LinearLayout>
 
+    </android.support.v4.widget.NestedScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_edit_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
+        android:tint="@color/textMainColor"
+        app:srcCompat="@drawable/ic_add_a_photo_black_24px" />
 
-            <ImageView
-                android:contentDescription="@string/prompt_gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="7dp"
-                android:src="@drawable/ic_insert_photo_black_24px"
-                android:tint="@color/textSecondaryColor" />
-
-            <EditText
-                android:id="@+id/tv_content_photo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/b_submit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/textMainColor" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/b_cancel"
-            android:layout_marginBottom="20dp"
-            />
-
-    </LinearLayout>
-
-
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

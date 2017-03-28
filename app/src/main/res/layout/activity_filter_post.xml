@@ -18,87 +18,72 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="65dp">
+        android:gravity="center">
         <CheckBox
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:text="A+"
-            android:id="@+id/cb_a1"/>
+            android:text="A"
+            android:id="@+id/cb_a"/>
+
         <CheckBox
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="AB"
+            android:id="@+id/cb_ab"
+            android:layout_below="@+id/cb_a" />
+
+        <CheckBox
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="AB-"
+            android:layout_below="@+id/cb_a2"
+            android:layout_toRightOf="@+id/cb_ab"
+            android:id="@+id/cb_ab2"/>
+
+        <CheckBox
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="O"
+            android:layout_below="@+id/cb_b"
+            android:layout_toRightOf="@+id/cb_ab2"
+            android:id="@+id/cb_o"/>
+        <CheckBox
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="O-"
+            android:layout_below="@+id/cb_b2"
+            android:layout_toRightOf="@+id/cb_o"
+            android:id="@+id/cb_o2"/>
+
+        <CheckBox
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="B-"
+            android:id="@+id/cb_b2"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/cb_b" />
+
+
+        <CheckBox
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="B"
+            android:id="@+id/cb_b"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/cb_a2" />
+
+        <CheckBox
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:text="A-"
             android:id="@+id/cb_a2"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/cb_ab1" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="B+"
-            android:id="@+id/cb_b1"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/cb_ab2" />
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="B-"
-            android:layout_toRightOf="@+id/cb_b1"
-            android:id="@+id/cb_b2"/>
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AB+"
-            android:layout_below="@+id/cb_a1"
-            android:id="@+id/cb_ab1"/>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AB-"
-            android:layout_below="@+id/cb_a2"
-            android:layout_toRightOf="@+id/cb_ab1"
-            android:id="@+id/cb_ab2"/>
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="O+"
-            android:layout_below="@+id/cb_b1"
-            android:layout_toRightOf="@+id/cb_ab2"
-            android:id="@+id/cb_o1"/>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="O-"
-            android:layout_below="@+id/cb_b2"
-            android:layout_toRightOf="@+id/cb_o1"
-            android:id="@+id/cb_o2"/>
+            android:layout_toRightOf="@+id/cb_a" />
     </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/rv_posts"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Luisa Gilig"
-            android:id="@+id/tv_name_p"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="(B+)"
-            android:layout_toRightOf="@+id/tv_name_p"
-            android:id="@+id/tv_btype_p"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Posted: February 27, 2017"
-            android:id="@+id/tv_datepost_p"
-            android:layout_below="@+id/tv_name_p"/>
-    </RelativeLayout>
 
 </LinearLayout>
