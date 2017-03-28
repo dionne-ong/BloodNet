@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 
 import edu.mobapde.bloodnet.models.User;
 
@@ -55,19 +56,19 @@ public class MyProfile extends Fragment {
         tvGender = (TextView) MyView.findViewById(R.id.tv_content_gender);
         tvBType = (TextView) MyView.findViewById(R.id.tv_content_btype);
 
-        userRef.child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i("DB", "[FIREBASE] Reading database...");
                 User u = dataSnapshot.getValue(User.class);
-                Log.i("DB", "[FIREBASE] Reading database... 2");
                 tvName.setText(u.getName());
                 tvEmail.setText(auth.getCurrentUser().getEmail());
                 tvContact.setText(u.getContactNum());
-                SimpleDateFormat format = new SimpleDateFormat("mmm dd, yyyy");
+                SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
                 String date = "";
-                if(u.getBirthdate()!=null){
-                    date = format.format(u.getBirthdate().getTime());
+                if(u.getBirthdate()!=-1){
+                    GregorianCalendar a = new GregorianCalendar();
+                    a.setTimeInMillis(u.getBirthdate());
+                    date = format.format(a.getTime());
                 }
                 tvBirthdate.setText(date);
                 tvGender.setText(u.getGender());

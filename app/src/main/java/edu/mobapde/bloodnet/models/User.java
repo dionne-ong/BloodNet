@@ -2,6 +2,10 @@ package edu.mobapde.bloodnet.models;
 
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
 import java.util.Calendar;
 
 import edu.mobapde.bloodnet.utils.StringUtils;
@@ -18,12 +22,14 @@ public class User {
     private String bloodType;
     private String contactNum;
     private String gender;
-    private Calendar birthdate;
+    private long birthdate;
 
 
-    public User(){};
+    public User(){
+        this.birthdate = -1;
+    };
 
-    public User(int id, String name, String bloodType, String contactNum, String gender, Calendar birthdate) {
+    public User(String name, String bloodType, String contactNum, String gender, long birthdate) {
         this.name = name;
         this.bloodType = bloodType;
         this.contactNum = contactNum;
@@ -63,11 +69,17 @@ public class User {
         this.gender = gender;
     }
 
-    public Calendar getBirthdate() {
+    public long getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Calendar birthdate) {
+    public void setBirthdate(long birthdate) {
         this.birthdate = birthdate;
+    }
+
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
     }
 }

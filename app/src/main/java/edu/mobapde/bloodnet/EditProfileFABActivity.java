@@ -28,8 +28,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.antonioleiva.materializeyourapp.widgets.SquareImageView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,14 +47,19 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import edu.mobapde.bloodnet.fragments.DatePickerFragment;
+import edu.mobapde.bloodnet.models.User;
 
 public class EditProfileFABActivity extends AppCompatActivity
         implements DatePickerDialog.OnDateSetListener  {
 
     ImageView imgBarPicture;
     FloatingActionButton fab;
-    EditText etBirthdate;
     Button bSave, bCancel;
+    FirebaseAuth auth;
+    DatabaseReference userRef;
+    EditText etName, etEmail, etContact, etBirthdate, etGender, etBType;
+    Calendar birthdate;
+    SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
     public static final int REQUEST_CODE_TAKE_PHOTO = 101;
 
     @Override
@@ -67,6 +79,40 @@ public class EditProfileFABActivity extends AppCompatActivity
             fab.setEnabled(false);
             ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
         }
+        auth = FirebaseAuth.getInstance();
+        userRef = FirebaseDatabase.getInstance().getReference()
+                    .child(getResources().getString(R.string.db_user_reference))
+                    .child(auth.getCurrentUser().getUid());
+
+        etName = (EditText) findViewById(R.id.tv_content_name);
+        etEmail = (EditText) findViewById(R.id.tv_content_email);
+        etContact = (EditText) findViewById(R.id.tv_content_num);
+        etBirthdate = (EditText) findViewById(R.id.tv_content_bday);
+        etGender = (EditText) findViewById(R.id.tv_content_gender);
+        etBType = (EditText) findViewById(R.id.tv_content_btype);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User u = dataSnapshot.getValue(User.class);
+                etName.setText(u.getName());
+                etEmail.setText(auth.getCurrentUser().getEmail());
+                etContact.setText(u.getContactNum());
+                String date = "";
+                if(u.getBirthdate()!=-1){
+                    birthdate = new GregorianCalendar();
+                    birthdate.setTimeInMillis(u.getBirthdate());
+                    date = format.format(birthdate.getTime());
+                }
+                etBirthdate.setText(date);
+                etGender.setText(u.getGender());
+                etBType.setText(u.getBloodType());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +132,26 @@ public class EditProfileFABActivity extends AppCompatActivity
         bSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               finish();
+                User newData = new User();
+                newData.setName(etName.getText().toString());
+                if(birthdate!=null) {
+                    newData.setBirthdate(birthdate.getTimeInMillis());
+                }
+                newData.setBloodType(etBType.getText().toString());
+                newData.setContactNum(etContact.getText().toString());
+                newData.setGender(etGender.getText().toString());
+                Log.i("DB", "[FIREBASE] "+newData.toString());
+                userRef.setValue(newData, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        if(databaseError!=null)
+                            Log.e("DB", "[FIREBASE] Error updating data. "+databaseError.getMessage());
+                        else{
+                            Log.i("DB", "[FIREBASE] Updates data.");
+                        }
+                    }
+                });
+                finish();
             }
         });
 
@@ -153,9 +218,8 @@ public class EditProfileFABActivity extends AppCompatActivity
     public void onDateSet(DatePicker view, int year, int month, int day) {
         //do some stuff for example write on log and update TextField on activity
         Log.w("DatePicker","Date = " + year);
-        Calendar date = new GregorianCalendar(year, month, day);
-        SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy");
-        etBirthdate.setText(format.format(date.getTime()));
+        birthdate = new GregorianCalendar(year, month, day);
+        etBirthdate.setText(format.format(birthdate.getTime()));
         etBirthdate.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.textPrimaryColor));
     }
 }
