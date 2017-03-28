@@ -37,7 +37,7 @@ public class FilterPostActivity extends Fragment {
     RecyclerView rvPosts;
     CarouselView carouselView;
 
-    int[] sampleImages = {R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4, R.drawable.image5};
+    int[] sampleImages = {R.drawable.image3, R.drawable.image9, R.drawable.image7, R.drawable.image10, R.drawable.image4};
 
     @Nullable
     @Override

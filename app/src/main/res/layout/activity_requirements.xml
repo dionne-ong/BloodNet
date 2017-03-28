@@ -17,7 +17,6 @@
         android:theme="@style/ToolBarStyle"
         app:popupTheme="@style/PopupBarStyle"/>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,50 +24,29 @@
         android:paddingLeft="@dimen/activity_padding_left"
         android:paddingRight="@dimen/activity_padding_right"
         >
-        <CheckBox
-            android:text="@string/requirement_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBox"
-            android:padding="15dp"
-            android:layout_marginTop="10dp"/>
 
         <CheckBox
             android:text="@string/requirement_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/checkBox1"
+            android:padding="15dp"/>
+
+        <CheckBox
+            android:text="@string/requirement_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/checkBox2"
-            android:padding="15dp"/>
-
-        <CheckBox
-            android:text="@string/requirement_3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBox3"
-            android:padding="15dp"/>
-
-        <CheckBox
-            android:text="@string/requirement_4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBox4"
-            android:padding="15dp"/>
-
-        <CheckBox
-            android:text="@string/requirement_5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkBox5"
-            android:padding="15dp"/>
+            android:padding="15dp"
+            android:layout_marginTop="10dp"/>
 
         <CheckBox
             android:text="@string/requirement_6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/checkBox6"
+            android:id="@+id/checkBox3"
             android:padding="15dp"
             android:layout_marginBottom="10dp"/>
-
 
         <Button
             android:id="@+id/b_submit"
@@ -85,8 +63,5 @@
             />
 
     </LinearLayout>
-
-
-
 
 </LinearLayout>
