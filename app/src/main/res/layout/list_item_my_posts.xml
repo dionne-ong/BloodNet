@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="4dp"
+    android:layout_margin="5dp">
+
+<LinearLayout
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/container_p"
+    android:padding="@dimen/activity_padding_right">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="0.80"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Winnie The Pooh"
+            android:textSize="25dp"
+            android:id="@+id/tv_name_p"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/activity_text_size"
+            android:text= "Chinese General Hospital"
+            android:id="@+id/tv_hospital_p"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Posted February 27,2017"
+            android:id="@+id/tv_datepost_p" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="0.2">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "4"
+            android:textSize="43dp"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/tv_numofpledges_p"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pledges"
+            android:id="@+id/tv_pledge"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
+</android.support.v7.widget.CardView>

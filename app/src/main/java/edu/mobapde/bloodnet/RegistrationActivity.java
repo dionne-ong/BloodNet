@@ -2,22 +2,37 @@ package edu.mobapde.bloodnet;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    Button btnSignUp, btnCancel;
-
+    private Button btnSignUp, btnCancel;
+    private EditText etEmail, etPassword, etConfirmPassword;
+    ProgressBar progressBar;
+    private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
+        //Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
 
         TextView tv=(TextView)findViewById(R.id.tv_app_name);
         Typeface face= Typeface.createFromAsset(getAssets(),"fonts/Raleway Thin.ttf");
@@ -25,16 +40,81 @@ public class RegistrationActivity extends AppCompatActivity {
 
         btnSignUp = (Button) findViewById(R.id.btn_signup);
         btnCancel = (Button) findViewById(R.id.btn_cancel);
+        etEmail = (EditText) findViewById(R.id.tv_content_email);
+        etPassword = (EditText) findViewById(R.id.tv_content_pw);
+        etConfirmPassword = (EditText) findViewById(R.id.tv_content_confirm_pw);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent();
-                i.setClass(getBaseContext(), EditProfileActivity.class);
 
+                String email = etEmail.getText().toString().trim();
+                String password = etPassword.getText().toString().trim();
+                String confirm = etConfirmPassword.getText().toString().trim();
+
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (password.length() < 6) {
+                    Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(confirm)){
+                    Toast.makeText(getApplicationContext(), "Confirm password!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(!confirm.contentEquals(password)){
+                    Toast.makeText(getApplicationContext(), "Confirm password incorrect, please match it with your password.", Toast.LENGTH_LONG);
+                    return;
+                }
+
+                progressBar.setVisibility(View.VISIBLE);
+                //create user
+                auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(RegistrationActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                progressBar.setVisibility(View.GONE);
+                                // If sign in fails, display a message to the user. If sign in succeeds
+                                // the auth state listener will be notified and logic to handle the
+                                // signed in user can be handled in the listener.
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(RegistrationActivity.this, "Registration failed. " + task.getException().getLocalizedMessage(),
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(RegistrationActivity.this, "Registration success!", Toast.LENGTH_SHORT).show();
+
+                                    startActivity(new Intent(RegistrationActivity.this, NavigationDrawerActivity.class));
+                                    finish();
+                                }
+                            }
+                        });
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent();
+                i.setClass(getBaseContext(), LogInActivity.class);
                 startActivity(i);
             }
         });
+    }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        progressBar.setVisibility(View.GONE);
     }
 }

@@ -4,68 +4,59 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 /**
  * Created by Luisa Gilig on 18/03/2017.
  */
 
-public class MyPostActivity extends AppCompatActivity {
-    Button btnEdit, btnDelete;
-    TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvPledged;
+public class ViewPostActivity extends AppCompatActivity {
 
+    Button btnPledged, btnCancel;
+    TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_pledge);
-
         Typeface face= Typeface.createFromAsset(getAssets(),"fonts/Raleway-Light.ttf");
-        btnEdit = (Button) findViewById(R.id.b_submit);
-        btnDelete = (Button) findViewById(R.id.b_cancel);
+        btnPledged = (Button) findViewById(R.id.b_submit);
+        btnCancel = (Button) findViewById(R.id.b_cancel);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvHospital = (TextView) findViewById(R.id.tv_hospital);
         tvAddress = (TextView) findViewById(R.id.tv_address);
         tvContactNum = (TextView) findViewById(R.id.tv_number);
         tvBloodType = (TextView) findViewById(R.id.tv_bloodtype);
         tvQuantity = (TextView) findViewById(R.id.tv_bags);
-        tvPledged = (TextView) findViewById(R.id.tv_posteddate);
+        tvDate = (TextView) findViewById(R.id.tv_posteddate);
 
-
-        btnEdit.setText("Edit");
-        btnDelete.setText("Delete");
+        btnPledged.setVisibility(View.GONE);
+        btnCancel.setVisibility(View.GONE);
         //whatever is in the db
-        tvName.setText("Luisa Gilig");
+        tvName.setText("Winnie The Pooh");
         tvName.setTypeface(face);
-        tvHospital.setText("Hospital A");
-        tvAddress.setText("2191 Something Street, Manila City");
-        tvContactNum.setText("09172134385");
-        tvBloodType.setText("O+");
+        tvHospital.setText("Chinese General Hospital");
+        tvAddress.setText("286 Blumentritt Rd, Sampaloc,Manila, Metro Manila");
+        tvContactNum.setText("09178075984");
+        tvBloodType.setText("B+");
         tvQuantity.setText("2 Bags");
-        tvPledged.setText("0 " + "have pledged to donate");
-        tvPledged.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
+        tvDate.setText("Posted on " + "February 10, 2017");
 
 
-        btnEdit.setOnClickListener(new View.OnClickListener() {
+        ((SlideButton) findViewById(R.id.unlockButton)).setSlideButtonListener(new SlideButtonListener() {
             @Override
-            public void onClick(View v) {
+            public void handleSlide() {
                 Intent i = new Intent();
-                i.setClass(getBaseContext(), EditPostActivity.class);
+                i.setClass(getBaseContext(), MyPledgeActivity.class);
                 startActivity(i);
             }
         });
 
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     @Override

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "150820614543",
+    "firebase_url": "https://bloodnet-f483b.firebaseio.com",
+    "project_id": "bloodnet-f483b",
+    "storage_bucket": "bloodnet-f483b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150820614543:android:675d3405ef581e76",
+        "android_client_info": {
+          "package_name": "edu.mobapde.bloodnet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "150820614543-5vn282kd25c5bgdv8871njc1e4e46n4p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.mobapde.bloodnet",
+            "certificate_hash": "8659efd4c0be1617a7d1c6e3f00987ae896e6c2f"
+          }
+        },
+        {
+          "client_id": "150820614543-t3t53b7qku9prv715p22ojn9rcu0f2vf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN30MOSCcAdeejmhWVGECrIcV1s6tcdbI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "150820614543-t3t53b7qku9prv715p22ojn9rcu0f2vf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
