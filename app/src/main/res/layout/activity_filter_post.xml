@@ -6,14 +6,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="edu.mobapde.bloodnet.FilterPostActivity">
-    <TextView
+
+    <com.synnapps.carouselview.CarouselView
+        android:id="@+id/carouselView"
         android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:fillColor="#FFFFFFFF"
+        app:pageColor="#00000000"
+        app:radius="6dp"
+        app:slideInterval="3000"
+        app:strokeColor="#FF777777"
+        app:strokeWidth="1dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Filter By: "
         android:layout_margin="5dp"
-        android:textColor="#000000"
-        android:textSize="16dp"
-        android:id="@+id/tv_filterby"/>
+        android:src="@drawable/filter"
+        android:id="@+id/iv_icon"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
