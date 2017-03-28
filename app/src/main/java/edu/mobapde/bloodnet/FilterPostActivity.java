@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.diegodobelo.expandingview.ExpandingItem;
+import com.diegodobelo.expandingview.ExpandingList;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,18 +30,16 @@ import edu.mobapde.bloodnet.models.Post;
 public class FilterPostActivity extends Fragment {
 
     View MyView;
-    CheckBox cbA, cbA1, cbA2,
-            cbB, cbB1, cbB2,
-            cbAB, cbAB1, cbAB2,
-            cbO, cbO1, cbO2;
     private List<Post> postsList = new ArrayList<>();
     private ArrayList<String> selection = new ArrayList<String>();
     private PostsAdapter pAdapter;
     RecyclerView rvPosts;
     CarouselView carouselView;
+    ExpandingList expandingList;
+    ExpandingItem item;
+    TextView tvTitle;
 
     int[] sampleImages = {R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4, R.drawable.image5};
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,67 +50,13 @@ public class FilterPostActivity extends Fragment {
 
         carouselView.setImageListener(imageListener);
 
-        cbA = (CheckBox) MyView.findViewById(R.id.cb_a);
-        cbA2 = (CheckBox) MyView.findViewById(R.id.cb_a2);
+        expandingList = (ExpandingList) MyView.findViewById(R.id.expanding_list_main);
+        item = expandingList.createNewItem(R.layout.expanding_layout);
+        tvTitle = (TextView) item.findViewById(R.id.title);
+        item.createSubItems(1);
+        View subItem = item.getSubItemView(0);
+        subItem = subItem.findViewById(R.id.sub_item);
 
-        cbB = (CheckBox) MyView.findViewById(R.id.cb_b);
-        cbB2 = (CheckBox) MyView.findViewById(R.id.cb_b2);
-
-        if(cbB.isChecked()){
-            cbB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Toast.makeText(getActivity(), "Check changed", Toast.LENGTH_SHORT);
-                }
-            });
-        }
-
-        if(cbB2.isChecked()){
-            cbB2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Toast.makeText(getActivity(), "Check changed", Toast.LENGTH_SHORT);
-                }
-            });
-        }
-        cbAB = (CheckBox) MyView.findViewById(R.id.cb_ab);
-        cbAB2 = (CheckBox) MyView.findViewById(R.id.cb_ab2);
-
-        if(cbAB.isChecked()){
-            cbAB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Toast.makeText(getActivity(), "Check changed", Toast.LENGTH_SHORT);
-                }
-            });
-        }
-        if(cbAB2.isChecked()){
-            cbAB2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Toast.makeText(getActivity(), "Check changed", Toast.LENGTH_SHORT);
-                }
-            });
-        }
-        cbO = (CheckBox) MyView.findViewById(R.id.cb_o);
-        cbO2 = (CheckBox) MyView.findViewById(R.id.cb_o2);
-
-        if(cbO.isChecked()){
-            cbO.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Toast.makeText(getActivity(), "Check changed", Toast.LENGTH_SHORT);
-                }
-            });
-        }
-        if(cbO2.isChecked()){
-            cbO2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Toast.makeText(getActivity(), "Check changed", Toast.LENGTH_SHORT);
-                }
-            });
-        }
         rvPosts = (RecyclerView) MyView.findViewById(R.id.rv_posts);
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         rvPosts.setLayoutManager(pLayoutManager);

@@ -18,78 +18,11 @@
         app:strokeColor="#FF777777"
         app:strokeWidth="1dp"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:src="@drawable/filter"
-        android:id="@+id/iv_icon"/>
 
-    <RelativeLayout
+    <com.diegodobelo.expandingview.ExpandingList
+        android:id="@+id/expanding_list_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-        <CheckBox
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="A"
-            android:id="@+id/cb_a"/>
-
-        <CheckBox
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="AB"
-            android:id="@+id/cb_ab"
-            android:layout_below="@+id/cb_a" />
-
-        <CheckBox
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="AB-"
-            android:layout_below="@+id/cb_a2"
-            android:layout_toRightOf="@+id/cb_ab"
-            android:id="@+id/cb_ab2"/>
-
-        <CheckBox
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="O"
-            android:layout_below="@+id/cb_b"
-            android:layout_toRightOf="@+id/cb_ab2"
-            android:id="@+id/cb_o"/>
-        <CheckBox
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="O-"
-            android:layout_below="@+id/cb_b2"
-            android:layout_toRightOf="@+id/cb_o"
-            android:id="@+id/cb_o2"/>
-
-        <CheckBox
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="B-"
-            android:id="@+id/cb_b2"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/cb_b" />
-
-
-        <CheckBox
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="B"
-            android:id="@+id/cb_b"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/cb_a2" />
-
-        <CheckBox
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="A-"
-            android:id="@+id/cb_a2"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/cb_a" />
-    </RelativeLayout>
+        android:layout_height="wrap_content"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
