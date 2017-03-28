@@ -1,13 +1,19 @@
 package edu.mobapde.bloodnet.models;
 
+import android.text.TextUtils;
+
 import java.util.Calendar;
+
+import edu.mobapde.bloodnet.utils.StringUtils;
 
 /**
  * Created by Luisa Gilig on 20/03/2017.
  */
 
 public class User {
-    private int id;
+
+
+
     private String name;
     private String bloodType;
     private String contactNum;
@@ -15,8 +21,9 @@ public class User {
     private Calendar birthdate;
 
 
+    public User(){};
+
     public User(int id, String name, String bloodType, String contactNum, String gender, Calendar birthdate) {
-        this.id = id;
         this.name = name;
         this.bloodType = bloodType;
         this.contactNum = contactNum;
@@ -24,16 +31,8 @@ public class User {
         this.birthdate = birthdate;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
-        return name;
+        return StringUtils.defaultString(name);
     }
 
     public void setName(String name) {
@@ -41,7 +40,7 @@ public class User {
     }
 
     public String getBloodType() {
-        return bloodType;
+        return StringUtils.defaultString(bloodType);
     }
 
     public void setBloodType(String bloodType) {
@@ -49,7 +48,7 @@ public class User {
     }
 
     public String getContactNum() {
-        return contactNum;
+        return StringUtils.defaultString(contactNum);
     }
 
     public void setContactNum(String contactNum) {
@@ -57,7 +56,7 @@ public class User {
     }
 
     public String getGender() {
-        return gender;
+        return StringUtils.defaultString(gender);
     }
 
     public void setGender(String gender) {

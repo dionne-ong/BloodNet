@@ -22,6 +22,8 @@ public class Post {
     private int pledgedBags;
     private GregorianCalendar datePosted;
 
+    public Post(){}
+
     public Post(int id, int userId, String patientName, String bloodType, String contactNum, String hospitalName, String hospitalAddress, int neededBags, int pledgedBags, GregorianCalendar datePosted) {
         this.id = id;
         this.userId = userId;
@@ -37,7 +39,6 @@ public class Post {
 
     public Post(int id, User user, String hospitalName, String hospitalAddress, int neededBags, int pledgedBags, GregorianCalendar datePosted){
         this.id = id;
-        this.userId = user.getId();
         this.patientName = user.getName();
         this.bloodType = user.getBloodType();
         this.contactNum = user.getContactNum();
