@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
+import edu.mobapde.bloodnet.DBObjects.DBOUser;
 import edu.mobapde.bloodnet.models.User;
 
 /**
@@ -47,7 +48,7 @@ public class MyProfile extends Fragment {
         MyView = inflater.inflate(R.layout.activity_view_profile, container, false);
         imgBarPicture = (ImageView) MyView.findViewById(R.id.img_bar_picture);
         auth = FirebaseAuth.getInstance();
-        userRef = FirebaseDatabase.getInstance().getReference().child(getResources().getString(R.string.db_user_reference));
+        userRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER);
 
         tvName = (TextView) MyView.findViewById(R.id.tv_content_name);
         tvEmail = (TextView) MyView.findViewById(R.id.tv_content_email);

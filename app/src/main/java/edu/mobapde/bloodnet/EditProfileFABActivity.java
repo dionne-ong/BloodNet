@@ -46,6 +46,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import edu.mobapde.bloodnet.DBObjects.DBOUser;
 import edu.mobapde.bloodnet.fragments.DatePickerFragment;
 import edu.mobapde.bloodnet.models.User;
 
@@ -81,7 +82,7 @@ public class EditProfileFABActivity extends AppCompatActivity
         }
         auth = FirebaseAuth.getInstance();
         userRef = FirebaseDatabase.getInstance().getReference()
-                    .child(getResources().getString(R.string.db_user_reference))
+                    .child(DBOUser.REF_USER)
                     .child(auth.getCurrentUser().getUid());
 
         etName = (EditText) findViewById(R.id.tv_content_name);

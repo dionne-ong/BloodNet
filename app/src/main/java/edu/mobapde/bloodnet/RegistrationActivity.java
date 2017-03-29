@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import edu.mobapde.bloodnet.DBObjects.DBOUser;
 import edu.mobapde.bloodnet.models.User;
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -39,7 +40,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
-        userRef = FirebaseDatabase.getInstance().getReference().child(getResources().getString(R.string.db_user_reference));
+        userRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER);
 
         TextView tv=(TextView)findViewById(R.id.tv_app_name);
         Typeface face= Typeface.createFromAsset(getAssets(),"fonts/Raleway Thin.ttf");
