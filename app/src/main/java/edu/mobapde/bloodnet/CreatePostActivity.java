@@ -12,13 +12,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,14 +24,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import edu.mobapde.bloodnet.DBObjects.DBOPost;
-import edu.mobapde.bloodnet.models.Post;
+import edu.mobapde.bloodnet.models.posts.Post;
 
 public class CreatePostActivity extends AppCompatActivity {
 

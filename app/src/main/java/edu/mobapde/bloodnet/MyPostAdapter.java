@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import edu.mobapde.bloodnet.models.Post;
+import edu.mobapde.bloodnet.models.posts.Post;
 
 /**
  * Created by Luisa Gilig on 19/03/2017.
