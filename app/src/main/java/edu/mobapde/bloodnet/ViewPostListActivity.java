@@ -40,10 +40,10 @@ public class ViewPostListActivity extends Fragment{
         rvPosts.setLayoutManager(pLayoutManager);
         rvPosts.setItemAnimator(new DefaultItemAnimator());
 
-        Post post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital B", "30 IDK St. Who Cares Ave.", 2, 0, new GregorianCalendar());
+        Post post = new Post("1", "1", "Luisa Gilig", "O+", "09178273678", "Hospital B", "30 IDK St. Who Cares Ave.", 2, 0, new GregorianCalendar().getTimeInMillis());
         postsList.add(post);
 
-        post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital B", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
+        post = new Post("1", "1", "Luisa Gilig", "O+", "09178273678", "Hospital B", "30 IDK St. Who Cares Ave.", 2, 0, new GregorianCalendar().getTimeInMillis());
         postsList.add(post);
         btnCreate  = (FloatingActionButton) MyView.findViewById(R.id.fab);
 

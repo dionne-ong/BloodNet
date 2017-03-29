@@ -19,13 +19,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import edu.mobapde.bloodnet.DBObjects.DBOUser;
+import edu.mobapde.bloodnet.models.User;
 
 public class RegistrationActivity extends AppCompatActivity {
 
     private Button btnSignUp, btnCancel;
-    private EditText etEmail, etPassword, etConfirmPassword;
-    ProgressBar progressBar;
+    private EditText etEmail, etPassword, etConfirmPassword, etName;
+    private ProgressBar progressBar;
     private FirebaseAuth auth;
+    private DatabaseReference userRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +40,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
+        userRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER);
 
         TextView tv=(TextView)findViewById(R.id.tv_app_name);
         Typeface face= Typeface.createFromAsset(getAssets(),"fonts/Raleway Thin.ttf");
@@ -43,7 +51,9 @@ public class RegistrationActivity extends AppCompatActivity {
         etEmail = (EditText) findViewById(R.id.tv_content_email);
         etPassword = (EditText) findViewById(R.id.tv_content_pw);
         etConfirmPassword = (EditText) findViewById(R.id.tv_content_confirm_pw);
+        etName = (EditText) findViewById(R.id.tv_content_name);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +103,9 @@ public class RegistrationActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(RegistrationActivity.this, "Registration success!", Toast.LENGTH_SHORT).show();
-
+                                    User u = new User();
+                                    u.setName(etName.getText().toString());
+                                    userRef.child(auth.getCurrentUser().getUid()).setValue(u);
                                     startActivity(new Intent(RegistrationActivity.this, NavigationDrawerActivity.class));
                                     finish();
                                 }

@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import edu.mobapde.bloodnet.models.Post;
@@ -40,7 +41,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostView
         holder.tvName.setText(post.getPatientName());
         holder.tvHospital.setText(post.getHospitalName());
         SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
-        holder.tvDate.setText("Posted on " + format.format(post.getDatePosted().getTime()));
+        holder.tvDate.setText("Posted on " + format.format(new Date(post.getDatePosted())));
         holder.tvNumOfPledges.setText(post.getPledgedBags() + "");
 
         holder.container.setTag(post.getId());
