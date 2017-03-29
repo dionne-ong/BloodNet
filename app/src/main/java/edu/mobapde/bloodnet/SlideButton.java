@@ -33,10 +33,10 @@ public class SlideButton extends SeekBar {
             } else
                 return false;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            if (getProgress() > 30)
+            if (getProgress() > 70)
                 handleSlide();
 
-            setProgress(0);
+            setProgress(18);
         } else
             super.onTouchEvent(event);
 

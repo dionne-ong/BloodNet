@@ -19,8 +19,8 @@ import android.widget.TextView;
 
 public class FinishedPledgeActivity extends AppCompatActivity {
     Button btnDone, btnCancel;
-    TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate;
-
+    TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate, tvSliderText;
+    SlideButton sb;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_pledge);
@@ -34,14 +34,16 @@ public class FinishedPledgeActivity extends AppCompatActivity {
         tvBloodType = (TextView) findViewById(R.id.tv_bloodtype);
         tvQuantity = (TextView) findViewById(R.id.tv_bags);
         tvDate = (TextView) findViewById(R.id.tv_posteddate);
+        sb = (SlideButton) findViewById(R.id.unlockButton);
+        tvSliderText = (TextView) findViewById(R.id.slider_text);
 
         btnCancel.setText("Donated");
         btnCancel.setTextColor(Color.parseColor("#F44336"));
         btnCancel.setEnabled(false);
-       // btnCancel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-               // LinearLayout.LayoutParams.WRAP_CONTENT));
-       // btnCancel.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_check_black_24px, 0,0,0);
+        sb.setVisibility(View.GONE);
+        tvSliderText.setVisibility(View.GONE);
         btnDone.setVisibility(View.GONE);
+
         //whatever is in the db
         tvName.setText("Someone Else");
         tvName.setTypeface(face);

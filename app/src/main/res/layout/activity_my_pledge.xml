@@ -210,6 +210,7 @@
                     android:paddingTop = "10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <edu.mobapde.bloodnet.SlideButton
                         android:id="@+id/unlockButton"
                         android:layout_width="match_parent"
@@ -219,6 +220,7 @@
                         android:background="@color/colorPrimary"
                         android:paddingBottom="5dp"
                         android:paddingTop="5dp"
+                        android:progress= "15"
                         android:progressDrawable="@android:color/transparent"
                         android:thumb="@drawable/ic_chevron_right_white_24px" />
 
@@ -230,7 +232,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:text="Slide To Pledge Your Donation"
+                        android:text="Slide To Pledge Your Blood"
                         android:textColor="#fff"
                        />
 
