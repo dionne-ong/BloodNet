@@ -39,7 +39,8 @@ public class FilterPostActivity extends Fragment {
     ExpandingItem item;
     TextView tvTitle;
 
-    int[] sampleImages = {R.drawable.image3, R.drawable.image9, R.drawable.image7, R.drawable.image10, R.drawable.image4};
+int[] sampleImages = {R.drawable.image3, R.drawable.image9, R.drawable.image7, R.drawable.image10, R.drawable.image4};
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

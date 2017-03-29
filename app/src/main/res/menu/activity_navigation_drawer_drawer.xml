@@ -4,8 +4,8 @@
     <group android:id="@+id/group0" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_allposts"
-            android:icon="@drawable/ic_home_black_24px"
-            android:title="Home" />
+            android:icon="@drawable/ic_library_books_black_24px"
+            android:title="All Posts" />
     </group>
     <group android:id="@+id/group1" android:checkableBehavior="single">
         <item

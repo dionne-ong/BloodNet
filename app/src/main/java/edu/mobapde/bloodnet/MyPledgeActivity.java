@@ -58,15 +58,15 @@ public class MyPledgeActivity extends AppCompatActivity {
         if(pledge.getDonated()){
             btnStartDonation.setText("Start Donation");
             btnCancel.setText("Cancel");
-//
-//            btnStartDonation.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent i = new Intent();
-//                    i.setClass(getBaseContext(), MainActivity.class);
-//                    startActivity(i);
-//                }
-//            });
+
+            btnStartDonation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent();
+                    i.setClass(getBaseContext(), RequirementsActivity.class);
+                    startActivity(i);
+                }
+            });
 
             btnCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -100,7 +100,7 @@ public class MyPledgeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
-                i.setClass(getBaseContext(), StepperSample.class);
+                i.setClass(getBaseContext(), RequirementsActivity.class);
                 startActivityForResult(i, REQUEST_CODE_DONATE);
             }
         });

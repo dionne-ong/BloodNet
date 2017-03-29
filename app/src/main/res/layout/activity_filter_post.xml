@@ -8,7 +8,7 @@
     tools:context="edu.mobapde.bloodnet.FilterPostActivity">
 
     <com.synnapps.carouselview.CarouselView
-        android:id = "@+id/carouselView"
+        android:id="@+id/carouselView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         app:fillColor="#FFFFFFFF"
