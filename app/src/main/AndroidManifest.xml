@@ -34,8 +34,8 @@
         <activity android:name=".ViewProfileActivity" />
         <activity
             android:name=".EditProfileFABActivity"
-            android:label="@string/title_activity_edit_profile_fab"/>
             android:label="@string/title_activity_edit_profile_fab" />
+        android:label="@string/title_activity_edit_profile_fab" />
         <activity android:name=".MyPostActivity" />
         <activity android:name=".EditPostActivity" />
         <activity android:name=".MyPledgeActivity" />
@@ -46,9 +46,7 @@
         <activity
             android:name=".NavigationDrawerActivity"
             android:label="@string/title_activity_navigation_drawer"
-            android:theme="@style/AppTheme">
-
-        </activity>
+            android:theme="@style/AppTheme"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -60,6 +58,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity android:name=".AfterRequirements"></activity>
     </application>
 
 </manifest>

@@ -2,32 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
-    android:layout_height="30dp"
+    android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:padding="0dp"
-    android:background="@drawable/rectangle">
+    android:padding="0dp" >
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/filter"
-        android:id="@+id/iv_action_icon"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_alignBottom="@+id/title"
-        android:tint="#ffffff"/>
+        android:background="@color/colorPrimary">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/iv_action_icon"
-        android:gravity="center_vertical|left"
-        android:layout_centerVertical="true"
-        android:textSize="16sp"
-        android:textColor="#ffffff"
-        android:text="Filter Type: "/>
+        <TextView
+            android:drawableLeft="@drawable/ic_filter_list_white_24px"
+            android:id="@+id/tv_filtertype"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_action_icon"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:text="Filter Type: "/>
+    </LinearLayout>
 
 
 </RelativeLayout>

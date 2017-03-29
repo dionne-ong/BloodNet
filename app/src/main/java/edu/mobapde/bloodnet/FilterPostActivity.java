@@ -1,6 +1,7 @@
 package edu.mobapde.bloodnet;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -37,9 +38,9 @@ public class FilterPostActivity extends Fragment {
     CarouselView carouselView;
     ExpandingList expandingList;
     ExpandingItem item;
-    TextView tvTitle;
+    TextView tvFilter;
 
-int[] sampleImages = {R.drawable.image3, R.drawable.image9, R.drawable.image7, R.drawable.image10, R.drawable.image4};
+    int[] sampleImages = {R.drawable.image3, R.drawable.image6, R.drawable.image7, R.drawable.image8, R.drawable.image4};
 
     @Nullable
     @Override
@@ -53,7 +54,9 @@ int[] sampleImages = {R.drawable.image3, R.drawable.image9, R.drawable.image7, R
 
         expandingList = (ExpandingList) MyView.findViewById(R.id.expanding_list_main);
         item = expandingList.createNewItem(R.layout.expanding_layout);
-        tvTitle = (TextView) item.findViewById(R.id.title);
+        Typeface face= Typeface.createFromAsset(getActivity().getAssets(),"fonts/Raleway-Light.ttf");
+        tvFilter = (TextView) item.findViewById(R.id.tv_filtertype);
+        tvFilter.setTypeface(face);
         item.createSubItems(1);
         View subItem = item.getSubItemView(0);
         subItem = subItem.findViewById(R.id.sub_item);
@@ -65,6 +68,21 @@ int[] sampleImages = {R.drawable.image3, R.drawable.image9, R.drawable.image7, R
         rvPosts.setItemAnimator(new DefaultItemAnimator());
 
         Post post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital A", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
+        postsList.add(post);
+
+        post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital A", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
+        postsList.add(post);
+
+        post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital A", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
+        postsList.add(post);
+
+        post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital A", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
+        postsList.add(post);
+
+        post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital A", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
+        postsList.add(post);
+
+        post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital A", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
         postsList.add(post);
 
         post = new Post(1, 1, "Luisa Gilig", "O+", "09178273678", "Hospital A", "30 IDK St. Who Cares Ave.", 5, 0, new GregorianCalendar());
