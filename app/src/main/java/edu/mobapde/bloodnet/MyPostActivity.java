@@ -17,7 +17,8 @@ import android.widget.TextView;
 
 public class MyPostActivity extends AppCompatActivity {
     Button btnEdit, btnDelete;
-    TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvPledged;
+    TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvPledged,tvSliderText;
+    SlideButton sb;
 
 
     @Override
@@ -35,6 +36,10 @@ public class MyPostActivity extends AppCompatActivity {
         tvBloodType = (TextView) findViewById(R.id.tv_bloodtype);
         tvQuantity = (TextView) findViewById(R.id.tv_bags);
         tvPledged = (TextView) findViewById(R.id.tv_posteddate);
+        sb = (SlideButton) findViewById(R.id.unlockButton);
+        tvSliderText = (TextView) findViewById(R.id.slider_text);
+        sb.setVisibility(View.GONE);
+        tvSliderText.setVisibility(View.GONE);
 
 
         btnEdit.setText("Edit");

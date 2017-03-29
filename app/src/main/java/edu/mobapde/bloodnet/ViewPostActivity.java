@@ -20,7 +20,6 @@ public class ViewPostActivity extends AppCompatActivity {
 
     Button btnPledged, btnCancel;
     TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_pledge);
@@ -37,6 +36,7 @@ public class ViewPostActivity extends AppCompatActivity {
 
         btnPledged.setVisibility(View.GONE);
         btnCancel.setVisibility(View.GONE);
+
         //whatever is in the db
         tvName.setText("Winnie The Pooh");
         tvName.setTypeface(face);
