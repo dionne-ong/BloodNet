@@ -1,4 +1,4 @@
-package edu.mobapde.bloodnet;
+package edu.mobapde.bloodnet.models.posts;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import edu.mobapde.bloodnet.models.Post;
+import edu.mobapde.bloodnet.R;
 
 /**
  * Created by cdejesus on 3/16/2017.

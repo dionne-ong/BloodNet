@@ -11,13 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import edu.mobapde.bloodnet.models.Post;
+import edu.mobapde.bloodnet.models.posts.Post;
 
 /**
  * Created by Luisa Gilig on 19/03/2017.

@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import edu.mobapde.bloodnet.models.Post;
+import edu.mobapde.bloodnet.models.posts.Post;
+import edu.mobapde.bloodnet.models.posts.PostsAdapter;
 
 public class FilterPostActivity extends Fragment {
 

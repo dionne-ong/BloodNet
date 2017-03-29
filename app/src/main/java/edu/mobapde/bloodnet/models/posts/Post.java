@@ -1,7 +1,9 @@
-package edu.mobapde.bloodnet.models;
+package edu.mobapde.bloodnet.models.posts;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+
+import edu.mobapde.bloodnet.models.User;
 
 /**
  * Created by Luisa Gilig on 19/03/2017.
