@@ -61,19 +61,21 @@ public class MyProfile extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User u = dataSnapshot.getValue(User.class);
-                tvName.setText(u.getName());
                 tvEmail.setText(auth.getCurrentUser().getEmail());
-                tvContact.setText(u.getContactNum());
-                SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
-                String date = "";
-                if(u.getBirthdate()!=-1){
-                    GregorianCalendar a = new GregorianCalendar();
-                    a.setTimeInMillis(u.getBirthdate());
-                    date = format.format(a.getTime());
+                if(u != null) {
+                    tvName.setText(u.getName());
+                    tvContact.setText(u.getContactNum());
+                    SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
+                    String date = "";
+                    if (u.getBirthdate() != -1) {
+                        GregorianCalendar a = new GregorianCalendar();
+                        a.setTimeInMillis(u.getBirthdate());
+                        date = format.format(a.getTime());
+                    }
+                    tvBirthdate.setText(date);
+                    tvGender.setText(u.getGender());
+                    tvBType.setText(u.getBloodType());
                 }
-                tvBirthdate.setText(date);
-                tvGender.setText(u.getGender());
-                tvBType.setText(u.getBloodType());
             }
 
             @Override
