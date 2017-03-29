@@ -8,8 +8,8 @@ import java.util.GregorianCalendar;
  */
 
 public class Post {
-    private int id;
-    private int userId;
+    private String id;
+    private String userId;
 
     private String patientName;
     private String bloodType;
@@ -20,11 +20,12 @@ public class Post {
 
     private int neededBags;
     private int pledgedBags;
-    private GregorianCalendar datePosted;
+    private long datePosted;
 
     public Post(){}
 
-    public Post(int id, int userId, String patientName, String bloodType, String contactNum, String hospitalName, String hospitalAddress, int neededBags, int pledgedBags, GregorianCalendar datePosted) {
+    public Post(String id, String userId, String patientName, String bloodType, String contactNum,
+                String hospitalName, String hospitalAddress, int neededBags, int pledgedBags, long datePosted) {
         this.id = id;
         this.userId = userId;
         this.patientName = patientName;
@@ -37,7 +38,7 @@ public class Post {
         this.datePosted = datePosted;
     }
 
-    public Post(int id, User user, String hospitalName, String hospitalAddress, int neededBags, int pledgedBags, GregorianCalendar datePosted){
+    public Post(String id, User user, String hospitalName, String hospitalAddress, int neededBags, int pledgedBags, long datePosted){
         this.id = id;
         this.patientName = user.getName();
         this.bloodType = user.getBloodType();
@@ -50,22 +51,6 @@ public class Post {
 
     }
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     public String getPatientName() {
         return patientName;
@@ -123,11 +108,27 @@ public class Post {
         this.pledgedBags = pledgedBags;
     }
 
-    public GregorianCalendar getDatePosted() {
+    public long getDatePosted() {
         return datePosted;
     }
 
-    public void setDatePosted(GregorianCalendar datePosted) {
+    public void setDatePosted(long datePosted) {
         this.datePosted = datePosted;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

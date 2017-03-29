@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import edu.mobapde.bloodnet.models.Pledge;
@@ -39,7 +40,7 @@ public class MyPledgeAdapter extends RecyclerView.Adapter<MyPledgeAdapter.MyPled
         holder.tvName.setText(pledge.getPost().getPatientName());
         holder.tvHospital.setText(pledge.getPost().getHospitalName());
         SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
-        holder.tvDate.setText("Posted on " + format.format(pledge.getPost().getDatePosted().getTime()));
+        holder.tvDate.setText("Posted on " + format.format(new Date(pledge.getPost().getDatePosted())));
         holder.tvBloodType.setText(pledge.getPost().getBloodType());
 
         holder.container.setTag(pledge.getPost().getId());
