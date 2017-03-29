@@ -48,7 +48,7 @@ public class MyPledgeAdapter extends RecyclerView.Adapter<MyPledgeAdapter.MyPled
             @Override
             public void onClick(View v) {
                 if(OnItemClickListener!=null){
-                    int id = (int) v.getTag();
+                    String id = (String) v.getTag();
                     OnItemClickListener.onItemClick(id);
                 }
 

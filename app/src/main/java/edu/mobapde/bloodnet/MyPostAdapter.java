@@ -49,7 +49,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostView
             @Override
             public void onClick(View v) {
                 if(OnItemClickListener!=null){
-                    int id = (int) v.getTag();
+                    String id = (String) v.getTag();
                     OnItemClickListener.onItemClick(id);
                 }
 
@@ -69,7 +69,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostView
     }
 
     public interface OnItemClickListener{
-        public void onItemClick(int id);
+        public void onItemClick(String id);
     }
 
     public static class MyPostViewHolder extends RecyclerView.ViewHolder{

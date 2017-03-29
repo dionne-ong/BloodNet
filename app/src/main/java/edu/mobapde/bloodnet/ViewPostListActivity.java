@@ -58,7 +58,7 @@ public class ViewPostListActivity extends Fragment{
 
         pAdapter.setOnItemClickListener(new MyPostAdapter.OnItemClickListener(){
             @Override
-            public void onItemClick(int id) {
+            public void onItemClick(String id) {
                 Intent i = new Intent();
                 //go to post
                 i.setClass(getActivity(), MyPostActivity.class);
