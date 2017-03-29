@@ -24,10 +24,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.antonioleiva.materializeyourapp.widgets.SquareImageView;
@@ -58,7 +60,9 @@ public class EditProfileFABActivity extends AppCompatActivity
     Button bSave, bCancel;
     FirebaseAuth auth;
     DatabaseReference userRef;
-    EditText etName, etEmail, etContact, etBirthdate, etGender, etBType;
+    EditText etName, etEmail, etContact, etBirthdate;
+    Spinner spGender, spBType;
+    ArrayAdapter<CharSequence> adapter, adapterB;
     Calendar birthdate;
     SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
     public static final int REQUEST_CODE_TAKE_PHOTO = 101;
@@ -85,12 +89,23 @@ public class EditProfileFABActivity extends AppCompatActivity
                     .child(DBOUser.REF_USER)
                     .child(auth.getCurrentUser().getUid());
 
+        spGender = (Spinner) findViewById(R.id.s_gender);
+        adapter = ArrayAdapter.createFromResource(this,
+                R.array.gender, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spGender.setAdapter(adapter);
+
+        spBType = (Spinner) findViewById(R.id.s_bloodtype);
+        adapterB = ArrayAdapter.createFromResource(this,
+                R.array.bloodtype, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spBType.setAdapter(adapterB);
+
+
         etName = (EditText) findViewById(R.id.tv_content_name);
         etEmail = (EditText) findViewById(R.id.tv_content_email);
         etContact = (EditText) findViewById(R.id.tv_content_num);
         etBirthdate = (EditText) findViewById(R.id.tv_content_bday);
-        etGender = (EditText) findViewById(R.id.tv_content_gender);
-        etBType = (EditText) findViewById(R.id.tv_content_btype);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -105,8 +120,18 @@ public class EditProfileFABActivity extends AppCompatActivity
                     date = format.format(birthdate.getTime());
                 }
                 etBirthdate.setText(date);
-                etGender.setText(u.getGender());
-                etBType.setText(u.getBloodType());
+                for(int i=0; i<adapter.getCount(); i++){
+                    if(adapter.getItem(i).equals(u.getGender())){
+                        spGender.setSelection(i);
+                    }
+                }
+                for(int i=0; i<adapterB.getCount(); i++){
+                    if(adapterB.getItem(i).equals(u.getBloodType())){
+                        spBType.setSelection(i);
+                    }
+                }
+               // etGender.setText(u.getGender());
+               // etBType.setText(u.getBloodType());
             }
 
             @Override
@@ -138,9 +163,9 @@ public class EditProfileFABActivity extends AppCompatActivity
                 if(birthdate!=null) {
                     newData.setBirthdate(birthdate.getTimeInMillis());
                 }
-                newData.setBloodType(etBType.getText().toString());
+                newData.setBloodType(spBType.getSelectedItem().toString());
                 newData.setContactNum(etContact.getText().toString());
-                newData.setGender(etGender.getText().toString());
+                newData.setGender(spGender.getSelectedItem().toString());
                 Log.i("DB", "[FIREBASE] "+newData.toString());
                 userRef.setValue(newData, new DatabaseReference.CompletionListener() {
                     @Override

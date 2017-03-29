@@ -7,6 +7,7 @@
     android:padding="15dp"
     android:layout_marginLeft="10dp"
     android:id="@+id/sub_item">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,26 +19,29 @@
             android:text="Blood Type:"
             android:id="@+id/tv_title_btype"
             android:textSize="16sp"/>
-        <CheckBox
-            android:layout_width="wrap_content"
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="A"
-            android:id="@+id/cb_A"/>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="B"
-            android:id="@+id/cb_B"/>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="O"
-            android:id="@+id/cb_O"/>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AB"
-            android:id="@+id/cb_AB"/>
+            android:orientation="horizontal"
+            android:id="@+id/rg_type">
+            <RadioButton android:id="@+id/rb_A"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A"/>
+            <RadioButton android:id="@+id/rb_B"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B"/>
+            <RadioButton android:id="@+id/rb_O"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="O"/>
+            <RadioButton android:id="@+id/rb_AB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AB"/>
+        </RadioGroup>
     </LinearLayout>
 
     <LinearLayout
@@ -53,15 +57,19 @@
             android:id="@+id/tv_title_rhfactor"
             android:textSize="16sp"
              />
-        <CheckBox
-            android:layout_width="wrap_content"
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="+"
-            android:id="@+id/cb_pos"/>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-"
-            android:id="@+id/cb_neg"/>
+            android:orientation="horizontal"
+            android:id="@+id/rg_sign">
+            <RadioButton android:id="@+id/rb_pos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+"/>
+            <RadioButton android:id="@+id/rb_neg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"/>
+        </RadioGroup>
     </LinearLayout>
 </LinearLayout>

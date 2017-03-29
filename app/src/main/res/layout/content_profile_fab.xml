@@ -156,11 +156,11 @@
                     android:src="@drawable/ic_accessibility_black_24px"
                     android:tint="@color/textSecondaryColor" />
 
-                <EditText
-                    android:id="@+id/tv_content_gender"
+                <Spinner style="@style/Base.V7.Widget.AppCompat.EditText"
+                    android:id="@+id/s_gender"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_gender" />
+                    android:layout_height="wrap_content" />
+
 
             </LinearLayout>
 
@@ -178,11 +178,10 @@
                     android:src="@drawable/ic_opacity_black_24px"
                     android:tint="@color/textSecondaryColor" />
 
-                <EditText
-                    android:id="@+id/tv_content_btype"
+                <Spinner style="@style/Base.V7.Widget.AppCompat.EditText"
+                    android:id="@+id/s_bloodtype"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_blood_type"/>
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 

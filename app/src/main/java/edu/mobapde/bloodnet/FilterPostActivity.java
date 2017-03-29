@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,11 +52,10 @@ public class FilterPostActivity extends Fragment {
 
         carouselView = (CarouselView) MyView.findViewById(R.id.carouselView);
         carouselView.setPageCount(sampleImages.length);
-
         carouselView.setImageListener(imageListener);
-
         expandingList = (ExpandingList) MyView.findViewById(R.id.expanding_list_main);
         item = expandingList.createNewItem(R.layout.expanding_layout);
+
         Typeface face= Typeface.createFromAsset(getActivity().getAssets(),"fonts/Raleway-Light.ttf");
         tvFilter = (TextView) item.findViewById(R.id.tv_filtertype);
         tvFilter.setTypeface(face);
@@ -62,6 +63,46 @@ public class FilterPostActivity extends Fragment {
         View subItem = item.getSubItemView(0);
         subItem = subItem.findViewById(R.id.sub_item);
 
+        RadioGroup rgType= (RadioGroup) MyView.findViewById(R.id.rg_type);
+        rgType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // checkedId is the RadioButton selected
+
+                switch(checkedId) {
+                    case R.id.rb_A:
+                        //   Case 1
+                        break;
+                    case R.id.rb_B:
+                        // Case 2
+                        break;
+                    case R.id.rb_AB:
+                        // Case 3
+                        break;
+
+                    case R.id.rb_O:
+                        // Case 4
+                        break;
+                }
+            }
+        });
+
+        RadioGroup rgSign= (RadioGroup) MyView.findViewById(R.id.rg_sign);
+        rgSign.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // checkedId is the RadioButton selected
+
+                switch(checkedId) {
+                    case R.id.rb_pos:
+                        //   Case 1
+                        break;
+                    case R.id.rb_neg:
+                        // Case 2
+                        break;
+                }
+            }
+        });
 
         rvPosts = (RecyclerView) MyView.findViewById(R.id.rv_posts);
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());

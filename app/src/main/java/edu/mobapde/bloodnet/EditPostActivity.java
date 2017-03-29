@@ -29,9 +29,10 @@ import java.util.Date;
 public class EditPostActivity extends AppCompatActivity{
 
     Button btnSave, btnCancel;
-    TextView tvName, tvLocation, tvContactNumber, tvBloodType, tvQuantity, tvPhoto, tvAddress;
+    TextView tvName, tvLocation, tvContactNumber, tvBloodType, tvQuantity, tvPhoto, tvAddress, tvSliderText;
     ImageView imgBarPicture;
     FloatingActionButton fab;
+    SlideButton sb;
     public static final int REQUEST_CODE_TAKE_PHOTO = 101;
 
     @Override
@@ -39,7 +40,8 @@ public class EditPostActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
 
-
+        sb = (SlideButton) findViewById(R.id.unlockButton);
+        tvSliderText = (TextView) findViewById(R.id.slider_text);
         btnCancel = (Button) findViewById(R.id.b_cancel);
         btnSave = (Button) findViewById(R.id.b_submit);
         tvName = (TextView) findViewById(R.id.tv_content_name);
@@ -48,6 +50,9 @@ public class EditPostActivity extends AppCompatActivity{
         tvBloodType = (TextView) findViewById(R.id.tv_content_btype);
         tvQuantity = (TextView) findViewById(R.id.tv_content_quantity);
         tvAddress = (TextView) findViewById(R.id.tv_content_address);
+
+        sb.setVisibility(View.GONE);
+        tvSliderText.setVisibility(View.GONE);
 
         //whatever is in the database
         tvName.setHint("Luisa Gilig");
