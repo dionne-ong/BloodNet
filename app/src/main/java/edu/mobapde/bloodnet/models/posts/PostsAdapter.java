@@ -47,7 +47,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
             @Override
             public void onClick(View v) {
                 if(OnItemClickListener!=null){
-                    int id = (int) v.getTag();
+                    String id = (String) v.getTag();
                     OnItemClickListener.onItemClick(id);
                 }
             }
@@ -66,7 +66,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     }
 
     public interface OnItemClickListener{
-        public void onItemClick(int id);
+        public void onItemClick(String id);
     }
 
     public static class PostViewHolder extends RecyclerView.ViewHolder{

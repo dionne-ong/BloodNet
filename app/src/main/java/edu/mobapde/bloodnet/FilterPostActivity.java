@@ -80,7 +80,7 @@ public class FilterPostActivity extends Fragment {
 
         pAdapter.setOnItemClickListener(new PostsAdapter.OnItemClickListener(){
             @Override
-            public void onItemClick(int id) {
+            public void onItemClick(String id) {
                 Intent i = new Intent();
                 //go to post
                 i.setClass(getActivity(), ViewPostActivity.class);
