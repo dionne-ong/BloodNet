@@ -81,6 +81,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
                 key  = postRef.push().getKey();
                 Post p = new Post();
+                p.setPatientName(tvName.getText().toString());
                 p.setBloodType(tvBloodType.getText().toString());
                 p.setContactNum(tvContactNumber.getText().toString());
                 p.setDatePosted(new Date().getTime());

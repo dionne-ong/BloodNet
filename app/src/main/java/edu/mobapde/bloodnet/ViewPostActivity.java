@@ -12,6 +12,18 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import edu.mobapde.bloodnet.DBObjects.DBOPost;
+import edu.mobapde.bloodnet.models.posts.Post;
+
 /**
  * Created by Luisa Gilig on 18/03/2017.
  */
@@ -20,10 +32,12 @@ public class ViewPostActivity extends AppCompatActivity {
 
     Button btnPledged, btnCancel;
     TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate;
+    DatabaseReference postRef;
+    Typeface face;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_pledge);
-        Typeface face= Typeface.createFromAsset(getAssets(),"fonts/Raleway-Light.ttf");
+        face= Typeface.createFromAsset(getAssets(),"fonts/Raleway-Light.ttf");
         btnPledged = (Button) findViewById(R.id.b_submit);
         btnCancel = (Button) findViewById(R.id.b_cancel);
         tvName = (TextView) findViewById(R.id.tv_name);
@@ -34,18 +48,46 @@ public class ViewPostActivity extends AppCompatActivity {
         tvQuantity = (TextView) findViewById(R.id.tv_bags);
         tvDate = (TextView) findViewById(R.id.tv_posteddate);
 
+        postRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.POST_REF);
+
         btnPledged.setVisibility(View.GONE);
         btnCancel.setVisibility(View.GONE);
 
-        //whatever is in the db
-        tvName.setText("Winnie The Pooh");
-        tvName.setTypeface(face);
-        tvHospital.setText("Chinese General Hospital");
-        tvAddress.setText("286 Blumentritt Rd, Sampaloc,Manila, Metro Manila");
-        tvContactNum.setText("09178075984");
-        tvBloodType.setText("B+");
-        tvQuantity.setText("2 Bags");
-        tvDate.setText("Posted on " + "February 10, 2017");
+        Intent i = getIntent();
+        String key = i.getStringExtra(DBOPost.EXTRA_POST_ID);
+        if(key != null){
+            postRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Post post = dataSnapshot.getValue(Post.class);
+                    tvAddress.setText(post.getHospitalAddress());
+                    tvName.setText(post.getPatientName());
+                    tvName.setTypeface(face);
+                    tvBloodType.setText(post.getBloodType());
+                    tvHospital.setText(post.getHospitalName());
+                    tvContactNum.setText(post.getContactNum());
+                    tvQuantity.setText(post.getNeededBags()+"");
+                    SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
+                    tvDate.setText("Posted on " + format.format(new Date(post.getDatePosted())));
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+        else{
+            //whatever is in the db
+            tvName.setText("Default Name");
+            tvName.setTypeface(face);
+            tvHospital.setText("Chinese General Hospital");
+            tvAddress.setText("286 Blumentritt Rd, Sampaloc,Manila, Metro Manila");
+            tvContactNum.setText("09178075984");
+            tvBloodType.setText("B+");
+            tvQuantity.setText("2 Bags");
+            tvDate.setText("Posted on " + "February 10, 2017");
+        }
 
 
         ((SlideButton) findViewById(R.id.unlockButton)).setSlideButtonListener(new SlideButtonListener() {

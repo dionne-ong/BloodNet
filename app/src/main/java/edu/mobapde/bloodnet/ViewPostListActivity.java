@@ -12,11 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import edu.mobapde.bloodnet.DBObjects.DBOPost;
 import edu.mobapde.bloodnet.models.posts.Post;
+import edu.mobapde.bloodnet.models.posts.PostHolder;
 
 /**
  * Created by Luisa Gilig on 19/03/2017.
@@ -39,11 +45,6 @@ public class ViewPostListActivity extends Fragment{
         rvPosts.setLayoutManager(pLayoutManager);
         rvPosts.setItemAnimator(new DefaultItemAnimator());
 
-        Post post = new Post("1", "1", "Luisa Gilig", "O+", "09178273678", "Hospital B", "30 IDK St. Who Cares Ave.", 2, 0, new GregorianCalendar().getTimeInMillis());
-        postsList.add(post);
-
-        post = new Post("1", "1", "Luisa Gilig", "O+", "09178273678", "Hospital B", "30 IDK St. Who Cares Ave.", 2, 0, new GregorianCalendar().getTimeInMillis());
-        postsList.add(post);
         btnCreate  = (FloatingActionButton) MyView.findViewById(R.id.fab);
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +55,15 @@ public class ViewPostListActivity extends Fragment{
                 startActivity(i);
             }
         });
+
+        //usual adapter
+
+        Post post = new Post("1", "1", "Luisa Gilig", "O+", "09178273678", "Hospital B", "30 IDK St. Who Cares Ave.", 2, 0, new GregorianCalendar().getTimeInMillis());
+        postsList.add(post);
+
+        post = new Post("1", "1", "Luisa Gilig", "O+", "09178273678", "Hospital B", "30 IDK St. Who Cares Ave.", 2, 0, new GregorianCalendar().getTimeInMillis());
+        postsList.add(post);
+
         pAdapter = new MyPostAdapter(postsList);
 
         pAdapter.setOnItemClickListener(new MyPostAdapter.OnItemClickListener(){
