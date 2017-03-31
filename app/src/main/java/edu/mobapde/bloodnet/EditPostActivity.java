@@ -1,6 +1,7 @@
 package edu.mobapde.bloodnet;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -9,88 +10,150 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+
+import edu.mobapde.bloodnet.DBObjects.DBOPost;
+import edu.mobapde.bloodnet.DBObjects.DBOUser;
+import edu.mobapde.bloodnet.fragments.DatePickerFragment;
+import edu.mobapde.bloodnet.models.User;
+import edu.mobapde.bloodnet.models.posts.Post;
+
+import static android.R.attr.format;
 
 /**
  * Created by Luisa Gilig on 18/03/2017.
  */
 
-public class EditPostActivity extends AppCompatActivity{
+public class EditPostActivity extends AppCompatActivity {
+
 
     Button btnSave, btnCancel;
-    TextView tvName, tvLocation, tvContactNumber, tvBloodType, tvQuantity, tvPhoto, tvAddress, tvSliderText;
+    EditText etName, etLocation, etContactNumber, etQuantity, tvPhoto, etAddress;
+    Spinner spBType;
+    ArrayAdapter<CharSequence> adapter, adapterB;
     ImageView imgBarPicture;
     FloatingActionButton fab;
-    SlideButton sb;
+    FirebaseAuth auth;
+    DatabaseReference postRef;
+
     public static final int REQUEST_CODE_TAKE_PHOTO = 101;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_post);
+        setContentView(R.layout.activity_profile_fab);
 
-        sb = (SlideButton) findViewById(R.id.unlockButton);
-        tvSliderText = (TextView) findViewById(R.id.slider_text);
-        btnCancel = (Button) findViewById(R.id.b_cancel);
-        btnSave = (Button) findViewById(R.id.b_submit);
-        tvName = (TextView) findViewById(R.id.tv_content_name);
-        tvLocation = (TextView) findViewById(R.id.tv_content_location);
-        tvContactNumber = (TextView) findViewById(R.id.tv_content_num);
-        tvBloodType = (TextView) findViewById(R.id.tv_content_btype);
-        tvQuantity = (TextView) findViewById(R.id.tv_content_quantity);
-        tvAddress = (TextView) findViewById(R.id.tv_content_address);
 
-        sb.setVisibility(View.GONE);
-        tvSliderText.setVisibility(View.GONE);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        //whatever is in the database
-        tvName.setHint("Luisa Gilig");
-        tvLocation.setHint("Hospital A");
-        tvAddress.setHint("2191 Something Street, Manila City");
-        tvContactNumber.setHint("09172134385");
-        tvBloodType.setHint("O+");
-        tvQuantity.setHint("2");
-        btnCancel.setText("Cancel");
-        btnSave.setText("Save");
+        btnSave = (Button) findViewById(R.id.btn_save);
+        btnCancel = (Button) findViewById(R.id.btn_cancel);
+        imgBarPicture = (ImageView) findViewById(R.id.img_bar_picture);
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            fab.setEnabled(false);
+            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
+        }
+        auth = FirebaseAuth.getInstance();
+        postRef = FirebaseDatabase.getInstance().getReference()
+                .child(DBOPost.POST_REF)
+                .child(auth.getCurrentUser().getUid());
+
+
+        spBType = (Spinner) findViewById(R.id.s_bloodtype);
+        adapterB = ArrayAdapter.createFromResource(this,
+                R.array.bloodtype, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spBType.setAdapter(adapterB);
+
+
+        etName = (EditText) findViewById(R.id.tv_content_name);
+
+        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                finish();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Post p = dataSnapshot.getValue(Post.class);
+                etName.setText(p.getPatientName());
+                etContactNumber.setText(p.getContactNum());
+                etLocation.setText(p.getHospitalName());
+                etAddress.setText(p.getHospitalAddress());
+                for(int i=0; i<adapterB.getCount(); i++){
+                    if(adapterB.getItem(i).equals(p.getBloodType())){
+                        spBType.setSelection(i);
+                    }
+                }
+                etQuantity.setText(p.getNeededBags());
+                // etGender.setText(u.getGender());
+                // etBType.setText(u.getBloodType());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takePicture(view);
             }
         });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Post newData = new Post();
+                newData.setPatientName(etName.getText().toString());
+                newData.setBloodType(spBType.getSelectedItem().toString());
+                newData.setContactNum(etContactNumber.getText().toString());
+                Log.i("DB", "[FIREBASE] "+newData.toString());
+                postRef.setValue(newData, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        if(databaseError!=null)
+                            Log.e("DB", "[FIREBASE] Error updating data. "+databaseError.getMessage());
+                        else{
+                            Log.i("DB", "[FIREBASE] Updates data.");
+                        }
+                    }
+                });
                 finish();
             }
         });
 
-        imgBarPicture = (ImageView) findViewById(R.id.img_bar_picture_post);
-
-        fab = (FloatingActionButton) findViewById(R.id.fab_edit_profile);
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            fab.setEnabled(false);
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
-        }
-
-        fab.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                takePicture(view);
+            public void onClick(View v) {
+                finish();
             }
         });
 
@@ -140,4 +203,11 @@ public class EditPostActivity extends AppCompatActivity{
                 "IMG_"+ timeStamp + ".jpg");
     }
 
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
 }
+

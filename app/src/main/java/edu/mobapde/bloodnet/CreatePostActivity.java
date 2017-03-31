@@ -13,9 +13,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,11 +38,13 @@ import java.util.HashMap;
 import edu.mobapde.bloodnet.DBObjects.DBOPost;
 import edu.mobapde.bloodnet.models.posts.Post;
 
+
 public class CreatePostActivity extends AppCompatActivity {
 
     Button btnCreate, btnCancel;
-    EditText tvName, tvLocation, tvContactNumber, tvBloodType, tvQuantity, tvPhoto, tvAddress;
-
+    EditText etName, etLocation, etContactNumber, etQuantity, tvPhoto, etAddress;
+    Spinner spBType;
+    ArrayAdapter<CharSequence> adapter, adapterA;
     ImageView imgBarPicture;
     FloatingActionButton fab;
     public static final int REQUEST_CODE_TAKE_PHOTO = 101;
@@ -56,25 +61,31 @@ public class CreatePostActivity extends AppCompatActivity {
 
         btnCancel = (Button) findViewById(R.id.b_cancel);
         btnCreate = (Button) findViewById(R.id.b_submit);
-        tvName = (EditText) findViewById(R.id.tv_content_name);
-        tvLocation = (EditText) findViewById(R.id.tv_content_location);
-        tvContactNumber = (EditText) findViewById(R.id.tv_content_num);
-        tvBloodType = (EditText) findViewById(R.id.tv_content_btype);
-        tvQuantity = (EditText) findViewById(R.id.tv_content_quantity);
-        tvAddress = (EditText) findViewById(R.id.tv_content_address);
+        etName = (EditText) findViewById(R.id.tv_content_name);
+        etLocation = (EditText) findViewById(R.id.tv_content_location);
+        etContactNumber = (EditText) findViewById(R.id.tv_content_num);
+        etQuantity = (EditText) findViewById(R.id.tv_content_quantity);
+        etAddress = (EditText) findViewById(R.id.tv_content_address);
 
         Ref = FirebaseDatabase.getInstance().getReference();
         postRef = Ref.child(DBOPost.POST_REF);
 
 
-        tvName.setHint("Patient Name");
-        tvLocation.setHint("Name of Hospital");
-        tvContactNumber.setHint("Contact Number");
-        tvBloodType.setHint("Blood Type");
-        tvQuantity.setHint("Number of Bags Needed");
-        tvAddress.setHint("Hospital Address");
+        etName.setHint("Patient Name");
+        etLocation.setHint("Name of Hospital");
+        etContactNumber.setHint("Contact Number");
+        etQuantity.setHint("Number of Bags Needed");
+        etAddress.setHint("Hospital Address");
         btnCancel.setText("Cancel");
         btnCreate.setText("Create");
+
+
+        spBType = (Spinner) findViewById(R.id.s_bloodtype);
+        adapterA = ArrayAdapter.createFromResource(this,
+                R.array.bloodtype, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spBType.setAdapter(adapterA);
+
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,14 +99,15 @@ public class CreatePostActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 key  = postRef.push().getKey();
+
                 p = new Post();
-                p.setPatientName(tvName.getText().toString());
-                p.setBloodType(tvBloodType.getText().toString());
-                p.setContactNum(tvContactNumber.getText().toString());
+                p.setPatientName(etName.getText().toString());
+                p.setContactNum(etContactNumber.getText().toString());
                 p.setDatePosted(new Date().getTime());
-                p.setHospitalName(tvLocation.getText().toString());
-                p.setHospitalAddress(tvAddress.getText().toString());
-                p.setNeededBags(Integer.parseInt(tvQuantity.getText().toString()));
+                p.setBloodType(spBType.getSelectedItem().toString());
+                p.setHospitalName(etLocation.getText().toString());
+                p.setHospitalAddress(etAddress.getText().toString());
+                p.setNeededBags(Integer.parseInt(etQuantity.getText().toString()));
                 p.setPledgedBags(0);
                 p.setId(key);
                 p.setUserId(FirebaseAuth.getInstance().getCurrentUser().getUid());
