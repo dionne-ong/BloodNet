@@ -21,12 +21,16 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 import edu.mobapde.bloodnet.DBObjects.DBOPost;
 import edu.mobapde.bloodnet.models.posts.Post;
@@ -40,8 +44,10 @@ public class CreatePostActivity extends AppCompatActivity {
     FloatingActionButton fab;
     public static final int REQUEST_CODE_TAKE_PHOTO = 101;
 
-    DatabaseReference postRef;
+    DatabaseReference postRef, Ref;
     String key;
+    Post p;
+    HashMap<String, Boolean> map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +63,9 @@ public class CreatePostActivity extends AppCompatActivity {
         tvQuantity = (EditText) findViewById(R.id.tv_content_quantity);
         tvAddress = (EditText) findViewById(R.id.tv_content_address);
 
-        postRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.POST_REF);
+        Ref = FirebaseDatabase.getInstance().getReference();
+        postRef = Ref.child(DBOPost.POST_REF);
+
 
         tvName.setHint("Patient Name");
         tvLocation.setHint("Name of Hospital");
@@ -80,7 +88,7 @@ public class CreatePostActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 key  = postRef.push().getKey();
-                Post p = new Post();
+                p = new Post();
                 p.setPatientName(tvName.getText().toString());
                 p.setBloodType(tvBloodType.getText().toString());
                 p.setContactNum(tvContactNumber.getText().toString());
@@ -96,16 +104,41 @@ public class CreatePostActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            Intent i = new Intent();
-                            i.putExtra(DBOPost.EXTRA_POST_ID, key);
-                            i.setClass(getBaseContext(), MyPostActivity.class);
-                            startActivity(i);
-                            finish();
+
+
+                            map = new HashMap<String, Boolean>();
+                            Ref = FirebaseDatabase.getInstance().getReference().child(p.getBloodType());
+                            Ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                    if(map == null){
+                                        map = new HashMap<String, Boolean>();
+                                    }
+
+                                    map.put(p.getId(), true);
+                                    Ref.setValue(map);
+
+                                    Intent i = new Intent();
+                                    i.putExtra(DBOPost.EXTRA_POST_ID, key);
+                                    i.setClass(getBaseContext(), MyPostActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
                         }else{
                             Toast.makeText(getBaseContext(), "Create post failed.", Toast.LENGTH_SHORT);
                         }
                     }
                 });
+
+
 
             }
         });
