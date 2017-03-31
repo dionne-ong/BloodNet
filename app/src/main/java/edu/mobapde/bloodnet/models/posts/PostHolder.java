@@ -24,7 +24,7 @@ public class PostHolder extends RecyclerView.ViewHolder{
                 super(itemView);
                 container = (LinearLayout) itemView.findViewById(R.id.container);
                 tvName = (TextView) itemView.findViewById(R.id.tv_name_p);
-                tvBtype = (TextView) itemView.findViewById(R.id.tv_btype_p);
+                tvBtype = (TextView) itemView.findViewById(R.id.tv_data);
                 tvDatePost = (TextView) itemView.findViewById(R.id.tv_datepost_p);
                 tvHospital = (TextView) itemView.findViewById(R.id.tv_hospital_p);
         }
@@ -37,13 +37,17 @@ public class PostHolder extends RecyclerView.ViewHolder{
             return container;
         }
 
-        public void setPost(Post post){
+        public void setPost(Post post, boolean isMine){
             this.post = post;
 
             setName(post.getPatientName());
             setDate(post.getDatePosted());
             setTvHospital(post.getHospitalName());
-            setType(post.getBloodType());
+            if(!isMine){
+                setType(post.getBloodType());
+            }else{
+                setType(post.getPledgedBags()+"");
+            }
 
 
             //listener set on ENTIRE ROW, you may set on individual components within a row.
@@ -64,7 +68,7 @@ public class PostHolder extends RecyclerView.ViewHolder{
         }
 
         public void setName(String name){
-            tvName.setText(name);
+             tvName.setText(name);
         }
 
         public void setType(String type){

@@ -36,6 +36,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import edu.mobapde.bloodnet.DBObjects.DBOPost;
+import edu.mobapde.bloodnet.DBObjects.DBOUser;
 import edu.mobapde.bloodnet.models.posts.Post;
 
 
@@ -55,7 +56,7 @@ public class CreatePostActivity extends AppCompatActivity {
     HashMap<String, Boolean> map;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
 
@@ -90,7 +91,7 @@ public class CreatePostActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               finish();
+                finish();
             }
         });
 
@@ -98,7 +99,7 @@ public class CreatePostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                key  = postRef.push().getKey();
+                key = postRef.push().getKey();
 
                 p = new Post();
                 p.setPatientName(etName.getText().toString());
@@ -115,7 +116,7 @@ public class CreatePostActivity extends AppCompatActivity {
                 postRef.child(key).setValue(p).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
 
 
                             map = new HashMap<String, Boolean>();
@@ -124,32 +125,54 @@ public class CreatePostActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     map = (HashMap<String, Boolean>) dataSnapshot.getValue();
-                                    if(map == null){
+                                    if (map == null) {
                                         map = new HashMap<String, Boolean>();
                                     }
 
                                     map.put(p.getId(), true);
                                     Ref.setValue(map);
 
-                                    Intent i = new Intent();
-                                    i.putExtra(DBOPost.EXTRA_POST_ID, key);
-                                    i.setClass(getBaseContext(), MyPostActivity.class);
-                                    startActivity(i);
-                                    finish();
+                                    DatabaseReference userPost = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_POST);
+                                    final DatabaseReference reference = userPost.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                                    userPost.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            HashMap<String, Boolean> newMap = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                            if (newMap == null) {
+                                                newMap = new HashMap<String, Boolean>();
+                                            }
+                                            newMap.put(p.getId(), true);
+                                            reference.setValue(newMap);
+
+
+                                            Intent i = new Intent();
+                                            i.putExtra(DBOPost.EXTRA_POST_ID, key);
+                                            i.setClass(getBaseContext(), MyPostActivity.class);
+                                            startActivity(i);
+                                            finish();
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
                                 }
 
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
 
                                 }
-                            });
+                            })
+                            ;
 
-                        }else{
+                        } else {
                             Toast.makeText(getBaseContext(), "Create post failed.", Toast.LENGTH_SHORT);
                         }
                     }
                 });
-
 
 
             }
@@ -161,7 +184,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             fab.setEnabled(false);
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         }
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -202,19 +225,19 @@ public class CreatePostActivity extends AppCompatActivity {
         }
     }
 
-    private static File getOutputMediaFile(){
+    private static File getOutputMediaFile() {
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), "CameraDemo");
 
-        if (!mediaStorageDir.exists()){
-            if (!mediaStorageDir.mkdirs()){
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
                 return null;
             }
         }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         return new File(mediaStorageDir.getPath() + File.separator +
-                "IMG_"+ timeStamp + ".jpg");
+                "IMG_" + timeStamp + ".jpg");
     }
 
 }

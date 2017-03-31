@@ -15,5 +15,6 @@ import edu.mobapde.bloodnet.models.User;
 public class DBOUser{
 
     public static final String REF_USER = "users";
+    public static final String REF_USER_POST = "user-post";
 
 }

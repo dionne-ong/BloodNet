@@ -128,7 +128,7 @@ public class FilterPostActivity extends Fragment {
         mAdapter = new FirebaseRecyclerAdapter<Post, PostHolder>(Post.class, R.layout.list_item_post, PostHolder.class, mRef) {
             @Override
             public void populateViewHolder(PostHolder postViewHolder, Post post, int position) {
-                postViewHolder.setPost(post);
+                postViewHolder.setPost(post, false);
             }
 
             @Override

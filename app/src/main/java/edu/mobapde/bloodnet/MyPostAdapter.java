@@ -81,7 +81,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.MyPostView
             tvName = (TextView) itemView.findViewById(R.id.tv_name_p);
             tvHospital = (TextView) itemView.findViewById(R.id.tv_hospital_p);
             tvDate = (TextView) itemView.findViewById(R.id.tv_datepost_p);
-            tvNumOfPledges = (TextView) itemView.findViewById(R.id.tv_numofpledges_p);
+            tvNumOfPledges = (TextView) itemView.findViewById(R.id.tv_data);
 
         }
     }

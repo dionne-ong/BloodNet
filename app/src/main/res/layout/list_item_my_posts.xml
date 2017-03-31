@@ -53,7 +53,7 @@
             android:text = "4"
             android:textSize="43dp"
             android:textColor="@color/colorPrimary"
-            android:id="@+id/tv_numofpledges_p"/>
+            android:id="@+id/tv_data"/>
 
         <TextView
             android:layout_width="wrap_content"
