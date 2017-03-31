@@ -56,7 +56,7 @@ public class EditPostActivity extends AppCompatActivity {
     Button btnSave, btnCancel;
     EditText etName, etLocation, etContactNumber, etQuantity, tvPhoto, etAddress;
     Spinner spBType;
-    ArrayAdapter<CharSequence> adapter, adapterB;
+    ArrayAdapter<CharSequence> adapterB;
     ImageView imgBarPicture;
     FloatingActionButton fab;
     FirebaseAuth auth;
@@ -84,14 +84,13 @@ public class EditPostActivity extends AppCompatActivity {
         }
         auth = FirebaseAuth.getInstance();
         postRef = FirebaseDatabase.getInstance().getReference()
-                .child(DBOPost.POST_REF)
-                .child(auth.getCurrentUser().getUid());
+                .child(DBOPost.POST_REF);
 
 
         spBType = (Spinner) findViewById(R.id.s_bloodtype);
         adapterB = ArrayAdapter.createFromResource(this,
                 R.array.bloodtype, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterB.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spBType.setAdapter(adapterB);
 
 

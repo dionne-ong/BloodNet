@@ -44,7 +44,7 @@ public class CreatePostActivity extends AppCompatActivity {
     Button btnCreate, btnCancel;
     EditText etName, etLocation, etContactNumber, etQuantity, tvPhoto, etAddress;
     Spinner spBType;
-    ArrayAdapter<CharSequence> adapter, adapterA;
+    ArrayAdapter<CharSequence> adapterA;
     ImageView imgBarPicture;
     FloatingActionButton fab;
     public static final int REQUEST_CODE_TAKE_PHOTO = 101;
@@ -83,7 +83,7 @@ public class CreatePostActivity extends AppCompatActivity {
         spBType = (Spinner) findViewById(R.id.s_bloodtype);
         adapterA = ArrayAdapter.createFromResource(this,
                 R.array.bloodtype, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spBType.setAdapter(adapterA);
 
 

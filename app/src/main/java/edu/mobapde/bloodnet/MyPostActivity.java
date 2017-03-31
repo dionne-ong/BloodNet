@@ -11,6 +11,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import edu.mobapde.bloodnet.DBObjects.DBOPost;
+
+import static android.R.attr.key;
+
 /**
  * Created by Luisa Gilig on 18/03/2017.
  */
@@ -19,7 +27,8 @@ public class MyPostActivity extends AppCompatActivity {
     Button btnEdit, btnDelete;
     TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvPledged,tvSliderText;
     SlideButton sb;
-
+    FirebaseAuth auth;
+    DatabaseReference postRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,9 @@ public class MyPostActivity extends AppCompatActivity {
         sb.setVisibility(View.GONE);
         tvSliderText.setVisibility(View.GONE);
 
+        auth = FirebaseAuth.getInstance();
+        postRef = FirebaseDatabase.getInstance().getReference()
+                .child(DBOPost.POST_REF);
 
         btnEdit.setText("Edit");
         btnDelete.setText("Delete");
@@ -68,7 +80,7 @@ public class MyPostActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                postRef.child(getIntent().getStringExtra(DBOPost.EXTRA_POST_ID)).removeValue();
             }
         });
     }

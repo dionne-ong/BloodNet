@@ -124,6 +124,7 @@ public class FilterPostActivity extends Fragment {
         rvPosts.setItemAnimator(new DefaultItemAnimator());
 
         // get default posts
+        mRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.A_POSITIVE);
         mAdapter = new FirebaseRecyclerAdapter<Post, PostHolder>(Post.class, R.layout.list_item_post, PostHolder.class, mRef) {
             @Override
             public void populateViewHolder(PostHolder postViewHolder, Post post, int position) {

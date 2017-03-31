@@ -99,7 +99,7 @@ public class EditProfileFABActivity extends AppCompatActivity
         spBType = (Spinner) findViewById(R.id.s_bloodtype);
         adapterB = ArrayAdapter.createFromResource(this,
                 R.array.bloodtype, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterB.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spBType.setAdapter(adapterB);
 
 
