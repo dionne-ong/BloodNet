@@ -2,6 +2,7 @@ package edu.mobapde.bloodnet;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -68,11 +69,29 @@ public class FilterPostActivity extends Fragment {
         Typeface face= Typeface.createFromAsset(getActivity().getAssets(),"fonts/Raleway-Light.ttf");
         tvFilter = (TextView) item.findViewById(R.id.tv_filtertype);
         tvFilter.setTypeface(face);
+
         item.createSubItems(1);
         View subItem = item.getSubItemView(0);
         subItem = subItem.findViewById(R.id.sub_item);
 
-        RadioGroup rgType= (RadioGroup) MyView.findViewById(R.id.rg_type);
+        final RadioGroup rgType= (RadioGroup) MyView.findViewById(R.id.rg_type);
+        final RadioGroup rgSign= (RadioGroup) MyView.findViewById(R.id.rg_sign);
+        final String[] sign = new String[1];
+        final String[] type = new String[1];
+
+        rgSign.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                switch(checkedId){
+                    case R.id.rb_pos:
+                        sign[0] = "+";
+                        break;
+                    case R.id.rb_neg:
+                        sign[0] = "-";
+                        break;
+                }
+            }
+        });
         rgType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -80,34 +99,17 @@ public class FilterPostActivity extends Fragment {
 
                 switch(checkedId) {
                     case R.id.rb_A:
-                        //   Case 1
+                            mRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.A_POSITIVE);
                         break;
                     case R.id.rb_B:
-                        // Case 2
+                            mRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.B_POSITIVE);
                         break;
                     case R.id.rb_AB:
-                        // Case 3
+                            mRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.AB_POSITIVE);
                         break;
 
                     case R.id.rb_O:
-                        // Case 4
-                        break;
-                }
-            }
-        });
-
-        RadioGroup rgSign= (RadioGroup) MyView.findViewById(R.id.rg_sign);
-        rgSign.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // checkedId is the RadioButton selected
-
-                switch(checkedId) {
-                    case R.id.rb_pos:
-                        //   Case 1
-                        break;
-                    case R.id.rb_neg:
-                        // Case 2
+                            mRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.O_POSITIVE);
                         break;
                 }
             }
@@ -121,7 +123,7 @@ public class FilterPostActivity extends Fragment {
         rvPosts.setLayoutManager(pLayoutManager);
         rvPosts.setItemAnimator(new DefaultItemAnimator());
 
-        mRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.POST_REF);
+        // get default posts
         mAdapter = new FirebaseRecyclerAdapter<Post, PostHolder>(Post.class, R.layout.list_item_post, PostHolder.class, mRef) {
             @Override
             public void populateViewHolder(PostHolder postViewHolder, Post post, int position) {
