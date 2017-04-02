@@ -55,12 +55,14 @@ public class EditPostActivity extends AppCompatActivity {
 
     Button btnSave, btnCancel;
     EditText etName, etLocation, etContactNumber, etQuantity, tvPhoto, etAddress;
+    String key;
     Spinner spBType;
     ArrayAdapter<CharSequence> adapterB;
     ImageView imgBarPicture;
     FloatingActionButton fab;
     FirebaseAuth auth;
     DatabaseReference postRef;
+    TextView tvNumOfPledges;
 
     public static final int REQUEST_CODE_TAKE_PHOTO = 101;
 
@@ -74,8 +76,10 @@ public class EditPostActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        btnSave = (Button) findViewById(R.id.btn_save);
-        btnCancel = (Button) findViewById(R.id.btn_cancel);
+        btnSave = (Button) findViewById(R.id.b_submit);
+        btnCancel = (Button) findViewById(R.id.b_cancel);
+        btnSave.setText("Save");
+        btnCancel.setText("Cancel");
         imgBarPicture = (ImageView) findViewById(R.id.img_bar_picture);
         fab = (FloatingActionButton) findViewById(R.id.fab_edit_profile);
 
@@ -101,8 +105,13 @@ public class EditPostActivity extends AppCompatActivity {
         etLocation = (EditText) findViewById(R.id.tv_content_location);
         etAddress = (EditText) findViewById(R.id.tv_content_address);
         etQuantity = (EditText) findViewById(R.id.tv_content_quantity);
+        tvNumOfPledges = (TextView) findViewById(R.id.tv_posteddate);
 
-        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        Intent i = getIntent();
+        key = i.getStringExtra(DBOPost.EXTRA_POST_ID);
+
+
+        postRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Post p = dataSnapshot.getValue(Post.class);
@@ -115,7 +124,7 @@ public class EditPostActivity extends AppCompatActivity {
                         spBType.setSelection(i);
                     }
                 }
-                etQuantity.setText(p.getNeededBags());
+                etQuantity.setText(p.getNeededBags()+"");
                 // etGender.setText(u.getGender());
                 // etBType.setText(u.getBloodType());
             }
@@ -140,8 +149,11 @@ public class EditPostActivity extends AppCompatActivity {
                 newData.setPatientName(etName.getText().toString());
                 newData.setBloodType(spBType.getSelectedItem().toString());
                 newData.setContactNum(etContactNumber.getText().toString());
+                newData.setHospitalName(etLocation.getText().toString());
+                newData.setHospitalAddress(etAddress.getText().toString());
+                newData.setNeededBags(Integer.parseInt(etQuantity.getText().toString()));
                 Log.i("DB", "[FIREBASE] "+newData.toString());
-                postRef.setValue(newData, new DatabaseReference.CompletionListener() {
+                postRef.child(key).setValue(newData, new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                         if(databaseError!=null)

@@ -83,7 +83,7 @@ public class MyPostActivity extends AppCompatActivity {
                         tvHospital.setText(post.getHospitalName());
                         tvContactNum.setText(post.getContactNum());
                         tvQuantity.setText(post.getNeededBags() + "");
-                        tvPledged.setText(post.getPledgedBags() + "");
+                        tvPledged.setText(post.getPledgedBags() + " Pledges");
                     }
                 }
 
@@ -163,7 +163,7 @@ public class MyPostActivity extends AppCompatActivity {
                                                         }
                                                     }
 
-                                                    postRef.child(post.getId()).removeValue();
+                                                    postRef.child(getIntent().getStringExtra(DBOPost.EXTRA_POST_ID)).removeValue();
                                                     Intent i = new Intent();
                                                     i.putExtra(NavigationDrawerActivity.EXTRA_VIEW_ID, R.id.nav_posts);
                                                     i.setClass(getBaseContext(), NavigationDrawerActivity.class);
