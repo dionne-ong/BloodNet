@@ -135,7 +135,7 @@ public class ViewPostActivity extends AppCompatActivity {
                                                     }
 
                                                     map.put(FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
-                                                    userPledgeRef.child(post.getId()).setValue(map);
+                                                    pledgeUserRef.child(post.getId()).setValue(map);
 
 
                                                     Intent i = new Intent();
