@@ -3,6 +3,7 @@ package edu.mobapde.bloodnet;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -11,7 +12,10 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -103,39 +107,60 @@ public class ViewPostActivity extends AppCompatActivity {
             @Override
             public void handleSlide() {
 
-                userPledgeRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                postRef.child(post.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        map = (HashMap<String, Boolean>) dataSnapshot.getValue();
-                        if (map == null) {
-                            map = new HashMap<String, Boolean>();
-                        }
-
-                        map.put(post.getId(), true);
-                        userPledgeRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(map);
-
-                        pledgeUserRef.child(post.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        post.setPledgedBags(post.getPledgedBags()+1);
+                        postRef.child(post.getId()).setValue(post).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                map = (HashMap<String, Boolean>) dataSnapshot.getValue();
-                                if (map == null) {
-                                    map = new HashMap<String, Boolean>();
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    userPledgeRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                            if (map == null) {
+                                                map = new HashMap<String, Boolean>();
+                                            }
+
+                                            map.put(post.getId(), true);
+                                            userPledgeRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(map);
+
+                                            pledgeUserRef.child(post.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                                    if (map == null) {
+                                                        map = new HashMap<String, Boolean>();
+                                                    }
+
+                                                    map.put(FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
+                                                    userPledgeRef.child(post.getId()).setValue(map);
+
+
+                                                    Intent i = new Intent();
+                                                    i.putExtra(DBOPost.EXTRA_POST_ID, post.getId());
+                                                    i.setClass(getBaseContext(), MyPledgeActivity.class);
+                                                    startActivity(i);
+                                                    finish();
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                }else{
+                                    Toast.makeText(getBaseContext(), "Error pledging blood: "+task.getException().getLocalizedMessage(), Toast.LENGTH_LONG);
                                 }
-
-                                map.put(FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
-                                userPledgeRef.child(post.getId()).setValue(map);
-
-
-                                Intent i = new Intent();
-                                i.putExtra(DBOPost.EXTRA_POST_ID, post.getId());
-                                i.setClass(getBaseContext(), MyPledgeActivity.class);
-                                startActivity(i);
-                                finish();
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
                             }
                         });
                     }
@@ -145,6 +170,7 @@ public class ViewPostActivity extends AppCompatActivity {
 
                     }
                 });
+
             }
         });
 
