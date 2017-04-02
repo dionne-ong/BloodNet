@@ -8,6 +8,7 @@ public class DBOPost {
     public static final String POST_REF = "posts";
 
     public static final String EXTRA_POST_ID = "uuid";
+    public static final String EXTRA_PLEDGE_ID = "pledge_uuid";
 
     public static final String O_POSITIVE = "O+";
 

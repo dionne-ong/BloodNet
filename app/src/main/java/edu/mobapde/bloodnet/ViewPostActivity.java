@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,8 +21,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 import edu.mobapde.bloodnet.DBObjects.DBOPost;
+import edu.mobapde.bloodnet.DBObjects.DBOUser;
 import edu.mobapde.bloodnet.models.posts.Post;
 
 /**
@@ -33,6 +36,10 @@ public class ViewPostActivity extends AppCompatActivity {
     Button btnPledged, btnCancel;
     TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate;
     DatabaseReference postRef;
+    DatabaseReference userPledgeRef;
+    DatabaseReference pledgeUserRef;
+    HashMap<String, Boolean> map;
+    Post post;
     Typeface face;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +66,7 @@ public class ViewPostActivity extends AppCompatActivity {
             postRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Post post = dataSnapshot.getValue(Post.class);
+                     post = dataSnapshot.getValue(Post.class);
                     tvAddress.setText(post.getHospitalAddress());
                     tvName.setText(post.getPatientName());
                     tvName.setTypeface(face);
@@ -90,12 +97,54 @@ public class ViewPostActivity extends AppCompatActivity {
         }
 
 
+        userPledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE);
+        pledgeUserRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_PLEDGE_USER);
         ((SlideButton) findViewById(R.id.unlockButton)).setSlideButtonListener(new SlideButtonListener() {
             @Override
             public void handleSlide() {
-                Intent i = new Intent();
-                i.setClass(getBaseContext(), RequirementsActivity.class);
-                startActivity(i);
+
+                userPledgeRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                        if (map == null) {
+                            map = new HashMap<String, Boolean>();
+                        }
+
+                        map.put(post.getId(), true);
+                        userPledgeRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(map);
+
+                        pledgeUserRef.child(post.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                if (map == null) {
+                                    map = new HashMap<String, Boolean>();
+                                }
+
+                                map.put(FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
+                                userPledgeRef.child(post.getId()).setValue(map);
+
+
+                                Intent i = new Intent();
+                                i.putExtra(DBOPost.EXTRA_POST_ID, post.getId());
+                                i.setClass(getBaseContext(), MyPledgeActivity.class);
+                                startActivity(i);
+                                finish();
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
 

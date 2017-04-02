@@ -95,6 +95,7 @@ public class ViewPostListActivity extends Fragment{
                         });
                         return viewHolder;
                     }
+
                 } ;
 
 

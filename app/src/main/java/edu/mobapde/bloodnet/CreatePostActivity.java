@@ -50,7 +50,7 @@ public class CreatePostActivity extends AppCompatActivity {
     FloatingActionButton fab;
     public static final int REQUEST_CODE_TAKE_PHOTO = 101;
 
-    DatabaseReference postRef, Ref;
+    DatabaseReference postRef, Ref, reference;
     String key;
     Post p;
     HashMap<String, Boolean> map;
@@ -133,9 +133,9 @@ public class CreatePostActivity extends AppCompatActivity {
                                     Ref.setValue(map);
 
                                     DatabaseReference userPost = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_POST);
-                                    final DatabaseReference reference = userPost.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                    reference = userPost.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-                                    userPost.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             HashMap<String, Boolean> newMap = (HashMap<String, Boolean>) dataSnapshot.getValue();
