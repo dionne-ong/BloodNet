@@ -52,12 +52,14 @@ public class RequirementsActivity extends AppCompatActivity {
                     i.putExtra("legible", true);
                     i.setClass(getBaseContext(), AfterRequirements.class);
                     startActivity(i);
+                    finish();
 
                 }else{
                     Intent i = new Intent();
                     i.putExtra("legible", false);
                     i.setClass(getBaseContext(), AfterRequirements.class);
                     startActivity(i);
+                    finish();
                 }
             }
         });

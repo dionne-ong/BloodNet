@@ -68,7 +68,7 @@ public class EditPostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_fab);
+        setContentView(R.layout.activity_create_post);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -77,6 +77,8 @@ public class EditPostActivity extends AppCompatActivity {
         btnSave = (Button) findViewById(R.id.btn_save);
         btnCancel = (Button) findViewById(R.id.btn_cancel);
         imgBarPicture = (ImageView) findViewById(R.id.img_bar_picture);
+        fab = (FloatingActionButton) findViewById(R.id.fab_edit_profile);
+
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             fab.setEnabled(false);
@@ -95,6 +97,10 @@ public class EditPostActivity extends AppCompatActivity {
 
 
         etName = (EditText) findViewById(R.id.tv_content_name);
+        etContactNumber = (EditText) findViewById(R.id.tv_content_num);
+        etLocation = (EditText) findViewById(R.id.tv_content_location);
+        etAddress = (EditText) findViewById(R.id.tv_content_address);
+        etQuantity = (EditText) findViewById(R.id.tv_content_quantity);
 
         postRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

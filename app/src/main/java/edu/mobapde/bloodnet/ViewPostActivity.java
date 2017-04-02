@@ -94,7 +94,7 @@ public class ViewPostActivity extends AppCompatActivity {
             @Override
             public void handleSlide() {
                 Intent i = new Intent();
-                i.setClass(getBaseContext(), MyPledgeActivity.class);
+                i.setClass(getBaseContext(), RequirementsActivity.class);
                 startActivity(i);
             }
         });
