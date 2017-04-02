@@ -188,6 +188,7 @@ public class FilterPostActivity extends Fragment {
         rvPosts.setLayoutManager(pLayoutManager);
         rvPosts.setItemAnimator(new DefaultItemAnimator());
 
+        mAdapter = filterAdapter.get(DBOPost.A_POSITIVE);
         rvPosts.setAdapter(filterAdapter.get(DBOPost.A_POSITIVE));
         /*
         mAdapter = new FirebaseRecyclerAdapter<Post, PostHolder>(Post.class, R.layout.list_item_post, PostHolder.class, mRef) {
