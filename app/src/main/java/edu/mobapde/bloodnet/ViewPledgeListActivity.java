@@ -16,10 +16,14 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseIndexRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import edu.mobapde.bloodnet.DBObjects.DBOPost;
@@ -41,6 +45,7 @@ public class ViewPledgeListActivity extends Fragment{
     View MyView;
     private FirebaseRecyclerAdapter mAdapter;
     private DatabaseReference mRef, keyRef, dataRef;
+    String key;
 
 
     @Nullable
@@ -74,11 +79,31 @@ public class ViewPledgeListActivity extends Fragment{
                 viewHolder.setOnClickListener(new PostHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        String key = mAdapter.getRef(position).getKey();
-                        Intent i = new Intent();
-                        i.putExtra(DBOPost.EXTRA_POST_ID, key);
-                        i.setClass(getActivity(), MyPledgeActivity.class);
-                        startActivity(i);
+                        key = mAdapter.getRef(position).getKey();
+
+                        keyRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Intent i = new Intent();
+                                i.putExtra(DBOPost.EXTRA_POST_ID, key);
+
+                                HashMap<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                Boolean isDonated = map.get(key);
+
+                                if(isDonated)
+                                    i.setClass(getActivity(), MyPledgeActivity.class);
+                                else
+                                    i.setClass(getActivity(), FinishedPledgeActivity.class);
+
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
                     }
 
                     @Override

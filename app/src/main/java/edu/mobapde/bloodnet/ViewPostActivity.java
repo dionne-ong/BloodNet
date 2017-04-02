@@ -123,7 +123,7 @@ public class ViewPostActivity extends AppCompatActivity {
                                                 map = new HashMap<String, Boolean>();
                                             }
 
-                                            map.put(post.getId(), true);
+                                            map.put(post.getId(), false);
                                             userPledgeRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(map);
 
                                             pledgeUserRef.child(post.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -134,7 +134,7 @@ public class ViewPostActivity extends AppCompatActivity {
                                                         map = new HashMap<String, Boolean>();
                                                     }
 
-                                                    map.put(FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
+                                                    map.put(FirebaseAuth.getInstance().getCurrentUser().getUid(), false);
                                                     pledgeUserRef.child(post.getId()).setValue(map);
 
 
