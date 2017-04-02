@@ -131,33 +131,36 @@ public class MyPostActivity extends AppCompatActivity {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             userMap = (HashMap<String, Boolean>) dataSnapshot.getValue();
-                                            Set keys =  userMap.keySet();
-                                            while(keys.iterator().hasNext()){
-                                                String key = (String) keys.iterator().next();
+                                            if(userMap!=null) {
+                                                Set keys = userMap.keySet();
+                                                while (keys.iterator().hasNext()) {
+                                                    String key = (String) keys.iterator().next();
 
-                                                ref.child(DBOUser.REF_USER_PLEDGE).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                                        Map<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
-                                                        map.remove(post.getId());
-                                                        ref.child(DBOUser.REF_USER_POST)
-                                                                .child(dataSnapshot.getKey())
-                                                                .setValue(map);
-                                                        userMap.put(dataSnapshot.getKey(), false);
-                                                    }
+                                                    ref.child(DBOUser.REF_USER_PLEDGE).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                                            Map<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                                            map.remove(post.getId());
+                                                            ref.child(DBOUser.REF_USER_POST)
+                                                                    .child(dataSnapshot.getKey())
+                                                                    .setValue(map);
+                                                            userMap.put(dataSnapshot.getKey(), false);
+                                                        }
 
-                                                    @Override
-                                                    public void onCancelled(DatabaseError databaseError) {
+                                                        @Override
+                                                        public void onCancelled(DatabaseError databaseError) {
 
-                                                    }
-                                                });
+                                                        }
+                                                    });
+                                                }
                                             }
-
                                             ref.child(DBOPost.POST_REF).addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                                    while(userMap.containsValue(true)){
-                                                        Log.i("DB","Still Deleting...");
+                                                    if(userMap!=null) {
+                                                        while (userMap.containsValue(true)) {
+                                                            Log.i("DB", "Still Deleting...");
+                                                        }
                                                     }
 
                                                     postRef.child(post.getId()).removeValue();
