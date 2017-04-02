@@ -64,6 +64,7 @@ public class EditProfileFABActivity extends AppCompatActivity
     Spinner spGender, spBType;
     ArrayAdapter<CharSequence> adapter, adapterB;
     Calendar birthdate;
+    User u;
     SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
     public static final int REQUEST_CODE_TAKE_PHOTO = 101;
 
@@ -110,7 +111,7 @@ public class EditProfileFABActivity extends AppCompatActivity
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User u = dataSnapshot.getValue(User.class);
+                u = dataSnapshot.getValue(User.class);
                 etName.setText(u.getName());
                 etEmail.setText(auth.getCurrentUser().getEmail());
                 etContact.setText(u.getContactNum());
@@ -159,7 +160,7 @@ public class EditProfileFABActivity extends AppCompatActivity
         bSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User newData = new User();
+                User newData = u;
                 newData.setName(etName.getText().toString());
                 if(birthdate!=null) {
                     newData.setBirthdate(birthdate.getTimeInMillis());

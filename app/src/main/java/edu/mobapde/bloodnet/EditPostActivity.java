@@ -63,6 +63,7 @@ public class EditPostActivity extends AppCompatActivity {
     FirebaseAuth auth;
     DatabaseReference postRef;
     TextView tvNumOfPledges;
+    Post p;
 
     public static final int REQUEST_CODE_TAKE_PHOTO = 101;
 
@@ -114,7 +115,7 @@ public class EditPostActivity extends AppCompatActivity {
         postRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Post p = dataSnapshot.getValue(Post.class);
+                p = dataSnapshot.getValue(Post.class);
                 etName.setText(p.getPatientName());
                 etContactNumber.setText(p.getContactNum());
                 etLocation.setText(p.getHospitalName());
@@ -145,7 +146,7 @@ public class EditPostActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Post newData = new Post();
+                Post newData = p;
                 newData.setPatientName(etName.getText().toString());
                 newData.setBloodType(spBType.getSelectedItem().toString());
                 newData.setContactNum(etContactNumber.getText().toString());
