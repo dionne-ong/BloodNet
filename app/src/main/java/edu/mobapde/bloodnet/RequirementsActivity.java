@@ -47,21 +47,17 @@ public class RequirementsActivity extends AppCompatActivity {
         btn_Ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent();
+                i.putExtra(DBOPost.EXTRA_POST_ID, key);
                 if(checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked() && checkBox5.isChecked() && checkBox6.isChecked()){
-                    Intent i = new Intent();
                     i.putExtra("legible", true);
                     i.setClass(getBaseContext(), AfterRequirements.class);
-                    i.putExtra(DBOPost.EXTRA_POST_ID, key);
-                    startActivity(i);
-                    finish();
-
                 }else{
-                    Intent i = new Intent();
                     i.putExtra("legible", false);
                     i.setClass(getBaseContext(), AfterRequirements.class);
-                    startActivity(i);
-                    finish();
                 }
+                startActivity(i);
+                finish();
             }
         });
 

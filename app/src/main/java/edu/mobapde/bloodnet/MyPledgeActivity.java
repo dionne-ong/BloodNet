@@ -28,7 +28,6 @@ import edu.mobapde.bloodnet.models.posts.Post;
 public class MyPledgeActivity extends AppCompatActivity {
 
     Button btnStartDonation, btnCancel;
-    Toolbar tbEdit;
     TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate, tvSliderText;
     Pledge pledge;
     SlideButton sb;
@@ -58,13 +57,6 @@ public class MyPledgeActivity extends AppCompatActivity {
         pledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.POST_REF);
 
         int id = getIntent().getIntExtra(Pledge.PLEDGE_EXTRA, -1);
-        if(id != -1){
-            pledge = new Pledge(1,2, true);
-        }else{
-            pledge = new Pledge(1,2, true);
-        }
-
-
         if(pledge.getDonated()){
             btnStartDonation.setText("Start Donation");
             btnCancel.setText("Cancel");
@@ -145,9 +137,7 @@ public class MyPledgeActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent();
-                i.setClass(getBaseContext(), ViewPostActivity.class);
-                startActivity(i);
+                finish();
             }
         });
     }

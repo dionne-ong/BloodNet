@@ -36,8 +36,8 @@ public class AfterRequirements extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
+                i.putExtra(DBOPost.EXTRA_POST_ID, key);
                 if(b.getBoolean("legible")){
-                    i.putExtra(DBOPost.EXTRA_POST_ID, key);
                     i.setClass(getBaseContext(), FinishedPledgeActivity.class);
 
                 }else{

@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -93,6 +94,7 @@ public class FinishedPledgeActivity extends AppCompatActivity {
                     map.put(FirebaseAuth.getInstance().getCurrentUser().getUid(), true);
                     dataSnapshot.getRef().setValue(map);
 
+
                 }
 
                 @Override
@@ -100,8 +102,28 @@ public class FinishedPledgeActivity extends AppCompatActivity {
 
                 }
             });
+            donatedRef
+                    .child(DBOPost.POST_REF)
+                    .child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Post post = dataSnapshot.getValue(Post.class);
+                    tvName.setText(post.getPatientName());
+                    tvName.setTypeface(face);
+                    tvBloodType.setText(post.getBloodType());
+                    tvHospital.setText(post.getHospitalName());
+                    tvAddress.setText(post.getHospitalAddress());
+                    tvContactNum.setText(post.getContactNum());
+                    tvQuantity.setText(post.getNeededBags()+"");
+                    SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
+                    tvDate.setText("Posted on " + format.format(new Date(post.getDatePosted())));
+                }
 
-            //set Text
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }else{
             tvName.setText("Someone Else");
             tvName.setTypeface(face);
@@ -121,6 +143,16 @@ public class FinishedPledgeActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.edit_profile_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }
