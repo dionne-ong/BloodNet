@@ -16,5 +16,7 @@ public class DBOUser{
 
     public static final String REF_USER = "users";
     public static final String REF_USER_POST = "user-post";
+    public static final String REF_USER_PLEDGE = "user-pledge";
+    public static final String REF_PLEDGE_USER = "pledge-user";
 
 }

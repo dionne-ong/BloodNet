@@ -19,6 +19,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FirebaseAuth auth;
+    public static final String EXTRA_VIEW_ID = "view_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,14 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        displayView(0);
+        Intent i = getIntent();
+
+        if(i!=null){
+            displayView(i.getIntExtra(EXTRA_VIEW_ID, 0));
+        }
+        else {
+            displayView(0);
+        }
     }
 
     @Override

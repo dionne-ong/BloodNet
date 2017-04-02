@@ -10,7 +10,7 @@ import android.widget.SeekBar;
  * Created by Luisa Gilig on 26/03/2017.
  */
 
-public class SlideButton extends SeekBar {
+public class SlideButton extends android.support.v7.widget.AppCompatSeekBar {
 
     private Drawable thumb;
     private SlideButtonListener listener;
