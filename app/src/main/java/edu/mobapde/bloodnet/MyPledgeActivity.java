@@ -34,7 +34,7 @@ public class MyPledgeActivity extends AppCompatActivity {
     SlideButton sb;
     DatabaseReference pledgeRef;
     Typeface face;
-
+    String key;
     public static final int REQUEST_CODE_DONATE = 301;
 
     @Override
@@ -97,7 +97,7 @@ public class MyPledgeActivity extends AppCompatActivity {
         } // whatever's in the db
 
         Intent i = getIntent();
-        String key = i.getStringExtra(DBOPost.EXTRA_POST_ID);
+        key = i.getStringExtra(DBOPost.EXTRA_POST_ID);
 
         if(key!=null){
             pledgeRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -136,6 +136,7 @@ public class MyPledgeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
+                i.putExtra(DBOPost.EXTRA_POST_ID, key);
                 i.setClass(getBaseContext(), RequirementsActivity.class);
                 startActivityForResult(i, REQUEST_CODE_DONATE);
             }
