@@ -127,7 +127,7 @@ public class MyPostActivity extends AppCompatActivity {
                                             .setValue(map);
 
                                     //TODO: Pledge Deletion
-                                    ref.child(DBOUser.REF_PLEDGE_USER).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    ref.child(DBOUser.REF_PLEDGE_USER).child(post.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             userMap = (HashMap<String, Boolean>) dataSnapshot.getValue();
@@ -141,7 +141,7 @@ public class MyPostActivity extends AppCompatActivity {
                                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                                             Map<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
                                                             map.remove(post.getId());
-                                                            ref.child(DBOUser.REF_USER_POST)
+                                                            ref.child(DBOUser.REF_USER_PLEDGE)
                                                                     .child(dataSnapshot.getKey())
                                                                     .setValue(map);
                                                             userMap.put(dataSnapshot.getKey(), false);
@@ -164,6 +164,8 @@ public class MyPostActivity extends AppCompatActivity {
                                                     }
 
                                                     postRef.child(getIntent().getStringExtra(DBOPost.EXTRA_POST_ID)).removeValue();
+                                                    if(userMap!=null)
+                                                        ref.child(DBOUser.REF_PLEDGE_USER).child(post.getId()).removeValue();
                                                     Intent i = new Intent();
                                                     i.putExtra(NavigationDrawerActivity.EXTRA_VIEW_ID, R.id.nav_posts);
                                                     i.setClass(getBaseContext(), NavigationDrawerActivity.class);

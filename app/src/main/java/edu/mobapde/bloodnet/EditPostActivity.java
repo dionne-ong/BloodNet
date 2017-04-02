@@ -160,10 +160,10 @@ public class EditPostActivity extends AppCompatActivity {
                             Log.e("DB", "[FIREBASE] Error updating data. "+databaseError.getMessage());
                         else{
                             Log.i("DB", "[FIREBASE] Updates data.");
+                            finish();
                         }
                     }
                 });
-                finish();
             }
         });
 

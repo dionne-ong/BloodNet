@@ -112,7 +112,7 @@ public class ViewPostActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         post.setPledgedBags(post.getPledgedBags()+1);
                         postRef.child(post.getId()).setValue(post).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
+                                @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
                                     userPledgeRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
