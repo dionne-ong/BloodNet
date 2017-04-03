@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -98,7 +99,7 @@ public class CreatePostActivity extends AppCompatActivity {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
                 key = postRef.push().getKey();
 
                 p = new Post();
@@ -112,18 +113,18 @@ public class CreatePostActivity extends AppCompatActivity {
                 p.setPledgedBags(0);
                 p.setId(key);
                 p.setUserId(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
+                Log.i("Firebase","Create: SETTING VALUE");
                 postRef.child(key).setValue(p).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
+                            Log.i("Firebase", "Create: Getting reference...");
 
-
-                            map = new HashMap<String, Boolean>();
                             Ref = FirebaseDatabase.getInstance().getReference().child(p.getBloodType());
                             Ref.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Log.i("Firebase", "Create: Retrieve blood type post");
                                     map = (HashMap<String, Boolean>) dataSnapshot.getValue();
                                     if (map == null) {
                                         map = new HashMap<String, Boolean>();
@@ -138,6 +139,8 @@ public class CreatePostActivity extends AppCompatActivity {
                                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                            Log.i("Firebase", "Create: Retrieve user-post");
                                             HashMap<String, Boolean> newMap = (HashMap<String, Boolean>) dataSnapshot.getValue();
                                             if (newMap == null) {
                                                 newMap = new HashMap<String, Boolean>();
@@ -146,6 +149,7 @@ public class CreatePostActivity extends AppCompatActivity {
                                             reference.setValue(newMap);
 
 
+                                            Log.i("Firebase", "Create: Start intent");
                                             Intent i = new Intent();
                                             i.putExtra(DBOPost.EXTRA_POST_ID, key);
                                             i.setClass(getBaseContext(), MyPostActivity.class);

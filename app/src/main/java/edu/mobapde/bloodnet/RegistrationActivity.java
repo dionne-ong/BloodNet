@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -105,6 +106,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                     Toast.makeText(RegistrationActivity.this, "Registration success!", Toast.LENGTH_SHORT).show();
                                     User u = new User();
                                     u.setName(etName.getText().toString());
+                                    Log.i("REGISTER","UUID: "+auth.getCurrentUser().getUid());
                                     userRef.child(auth.getCurrentUser().getUid()).setValue(u);
                                     startActivity(new Intent(RegistrationActivity.this, NavigationDrawerActivity.class));
                                     finish();
