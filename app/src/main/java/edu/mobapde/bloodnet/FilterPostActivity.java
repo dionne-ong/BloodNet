@@ -13,8 +13,12 @@ import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
 import com.firebase.ui.database.FirebaseIndexRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -30,12 +34,15 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
 import edu.mobapde.bloodnet.DBObjects.DBOPost;
+import edu.mobapde.bloodnet.DBObjects.DBOUser;
+import edu.mobapde.bloodnet.models.User;
 import edu.mobapde.bloodnet.models.posts.Post;
 import edu.mobapde.bloodnet.models.posts.PostHolder;
 import edu.mobapde.bloodnet.models.posts.PostsAdapter;
@@ -52,13 +59,16 @@ public class FilterPostActivity extends Fragment {
     private FirebaseRecyclerAdapter mAdapter;
     private DatabaseReference mRef;
     private HashMap<String, FirebaseIndexRecyclerAdapter> filterAdapter;
-
+    FirebaseAuth auth;
+    DatabaseReference userRef;
     int[] sampleImages = {R.drawable.image3, R.drawable.image6, R.drawable.image7, R.drawable.image8, R.drawable.image4};
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         MyView = inflater.inflate(R.layout.activity_filter_post, container, false);
+        auth = FirebaseAuth.getInstance();
+        userRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER);
 
         carouselView = (CarouselView) MyView.findViewById(R.id.carouselView);
         carouselView.setPageCount(sampleImages.length);
@@ -80,6 +90,72 @@ public class FilterPostActivity extends Fragment {
         final RadioGroup rgSign= (RadioGroup) MyView.findViewById(R.id.rg_sign);
         final String[] sign = new String[1];
         final String[] type = new String[1];
+
+
+        userRef.child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String btype = null;
+                User u = dataSnapshot.getValue(User.class);
+                if(u != null) {
+                    btype = u.getBloodType();
+                    switch(btype){
+                        case "A+":
+                            mAdapter = (filterAdapter.get(DBOPost.A_POSITIVE));
+                            rgType.check(R.id.rb_A);
+                            rgSign.check(R.id.rb_pos);
+                            break;
+                        case "A-":
+                            mAdapter = (filterAdapter.get(DBOPost.A_NEGATIVE));
+                            rgType.check(R.id.rb_A);
+                            rgSign.check(R.id.rb_neg);
+                            break;
+                        case "B+":
+                            mAdapter = (filterAdapter.get(DBOPost.B_POSITIVE));
+                            rgType.check(R.id.rb_B);
+                            rgSign.check(R.id.rb_pos);
+                            break;
+                        case "B-":
+                            mAdapter = (filterAdapter.get(DBOPost.B_NEGATIVE));
+                            rgType.check(R.id.rb_B);
+                            rgSign.check(R.id.rb_neg);
+                            break;
+                        case "AB+":
+                            mAdapter = (filterAdapter.get(DBOPost.AB_POSITIVE));
+                            rgType.check(R.id.rb_AB);
+                            rgSign.check(R.id.rb_pos);
+                            break;
+                        case "AB-":
+                            mAdapter = (filterAdapter.get(DBOPost.AB_NEGATIVE));
+                            rgType.check(R.id.rb_AB);
+                            rgSign.check(R.id.rb_neg);
+                            break;
+                        case "O+":
+                            mAdapter = (filterAdapter.get(DBOPost.O_POSITIVE));
+                            rgType.check(R.id.rb_O);
+                            rgSign.check(R.id.rb_pos);
+                            break;
+                        case "O-":
+                            mAdapter = (filterAdapter.get(DBOPost.O_NEGATIVE));
+                            rgType.check(R.id.rb_O);
+                            rgSign.check(R.id.rb_neg);
+                            break;
+                        default:
+                            mAdapter = (filterAdapter.get(DBOPost.A_POSITIVE));
+                            rgType.check(R.id.rb_A);
+                            rgSign.check(R.id.rb_pos);
+                            break;
+
+                    }
+                    rvPosts.setAdapter(mAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         rgSign.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
             @Override
