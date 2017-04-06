@@ -39,6 +39,7 @@ public class ViewPostActivity extends AppCompatActivity {
 
     Button btnPledged, btnCancel;
     TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate;
+    FirebaseAuth auth;
     DatabaseReference postRef;
     DatabaseReference userPledgeRef;
     DatabaseReference pledgeUserRef;
@@ -59,6 +60,8 @@ public class ViewPostActivity extends AppCompatActivity {
         tvQuantity = (TextView) findViewById(R.id.tv_bags);
         tvDate = (TextView) findViewById(R.id.tv_posteddate);
 
+
+        auth = FirebaseAuth.getInstance();
         postRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.POST_REF);
 
         btnPledged.setVisibility(View.GONE);
@@ -70,7 +73,7 @@ public class ViewPostActivity extends AppCompatActivity {
             postRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                     post = dataSnapshot.getValue(Post.class);
+                    post = dataSnapshot.getValue(Post.class);
                     tvAddress.setText(post.getHospitalAddress());
                     tvName.setText(post.getPatientName());
                     tvName.setTypeface(face);
@@ -80,6 +83,10 @@ public class ViewPostActivity extends AppCompatActivity {
                     tvQuantity.setText(post.getNeededBags()+"");
                     SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
                     tvDate.setText("Posted on " + format.format(new Date(post.getDatePosted())));
+
+                    if(post.getUserId().equals(auth.getCurrentUser().getUid())){
+                        btnPledged.setEnabled(false);
+                    }
                 }
 
                 @Override
@@ -99,7 +106,6 @@ public class ViewPostActivity extends AppCompatActivity {
             tvQuantity.setText("2 Bags");
             tvDate.setText("Posted on " + "February 10, 2017");
         }
-
 
         userPledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE);
         pledgeUserRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_PLEDGE_USER);
