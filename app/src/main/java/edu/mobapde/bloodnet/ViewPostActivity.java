@@ -42,7 +42,7 @@ import edu.mobapde.bloodnet.models.posts.Post;
 public class ViewPostActivity extends AppCompatActivity {
 
     Button btnPledged, btnCancel;
-    TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate;
+    TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate, tvSlide;
     FirebaseAuth auth;
     DatabaseReference postRef;
     DatabaseReference userPledgeRef;
@@ -52,6 +52,7 @@ public class ViewPostActivity extends AppCompatActivity {
     String key;
     Post post;
     Typeface face;
+    SlideButton slideButton;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -89,13 +90,15 @@ public class ViewPostActivity extends AppCompatActivity {
         tvBloodType = (TextView) findViewById(R.id.tv_bloodtype);
         tvQuantity = (TextView) findViewById(R.id.tv_bags);
         tvDate = (TextView) findViewById(R.id.tv_posteddate);
-
+        tvSlide = (TextView) findViewById(R.id.slider_text);
+        slideButton = (SlideButton) findViewById(R.id.unlockButton);
 
         auth = FirebaseAuth.getInstance();
         postRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.POST_REF);
 
         btnPledged.setVisibility(View.GONE);
         btnCancel.setVisibility(View.GONE);
+        slideButton.setVisibility(View.GONE);
 
         if(key != null){
             postRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -113,7 +116,13 @@ public class ViewPostActivity extends AppCompatActivity {
                     tvDate.setText("Posted on " + format.format(new Date(post.getDatePosted())));
 
                     if(post.getUserId().equals(auth.getCurrentUser().getUid())){
-                        btnPledged.setEnabled(false);
+
+                        tvSlide.setText("This is your post. You may not pledge.");
+                        tvSlide.setTextColor(getResources().getColor(R.color.textPrimaryColor));
+                    }else{
+                        slideButton.setVisibility(View.VISIBLE);
+                        tvSlide.setText("Slide to Pledge Your Blood");
+                        tvSlide.setTextColor(getResources().getColor(R.color.textMainColor));
                     }
                 }
 
@@ -139,7 +148,7 @@ public class ViewPostActivity extends AppCompatActivity {
         pledgeUserRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_PLEDGE_USER);
         userPledgeDateRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE_DATE);
 
-        ((SlideButton) findViewById(R.id.unlockButton)).setSlideButtonListener(new SlideButtonListener() {
+        slideButton.setSlideButtonListener(new SlideButtonListener() {
             @Override
             public void handleSlide() {
 
