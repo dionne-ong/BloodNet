@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,17 +22,18 @@ import com.google.firebase.auth.FirebaseUser;
  */
 
 public class Logout extends Fragment {
-    Button btnLogout;
+    LinearLayout layoutAccount, layoutAbout, layoutLogout;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authListener;
-
     View MyView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         MyView = inflater.inflate(R.layout.activity_logout, container, false);
         auth = FirebaseAuth.getInstance();
-        btnLogout = (Button) MyView.findViewById(R.id.b_logout);
+        layoutAccount = (LinearLayout) MyView.findViewById(R.id.b_account);
+        layoutAbout = (LinearLayout) MyView.findViewById(R.id.b_about);
+        layoutLogout = (LinearLayout) MyView.findViewById(R.id.b_logout);
         // this listener will be called when there is change in firebase user session
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -45,7 +47,25 @@ public class Logout extends Fragment {
                 }
             }
         };
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+
+        layoutAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent();
+                i.setClass(getActivity(), MyProfile.class);
+                startActivity(i);
+            }
+        });
+
+        layoutAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent();
+                i.setClass(getActivity(), AboutBloodNetActivity.class);
+                startActivity(i);
+            }
+        });
+        layoutLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 auth.signOut();

@@ -8,8 +8,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -33,8 +35,8 @@ import edu.mobapde.bloodnet.models.User;
  * Created by Luisa Gilig on 18/03/2017.
  */
 
-public class MyProfile extends Fragment {
-    View MyView;
+public class MyProfile extends AppCompatActivity{
+
     ImageView imgBarPicture;
     FloatingActionButton fab;
     FirebaseAuth auth;
@@ -44,18 +46,19 @@ public class MyProfile extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        MyView = inflater.inflate(R.layout.activity_view_profile, container, false);
-        imgBarPicture = (ImageView) MyView.findViewById(R.id.img_bar_picture);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view_profile);
+        imgBarPicture = (ImageView) findViewById(R.id.img_bar_picture);
         auth = FirebaseAuth.getInstance();
         userRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER);
 
-        tvName = (TextView) MyView.findViewById(R.id.tv_content_name);
-        tvEmail = (TextView) MyView.findViewById(R.id.tv_content_email);
-        tvContact = (TextView) MyView.findViewById(R.id.tv_content_num);
-        tvBirthdate = (TextView) MyView.findViewById(R.id.tv_content_bday);
-        tvGender = (TextView) MyView.findViewById(R.id.tv_content_gender);
-        tvBType = (TextView) MyView.findViewById(R.id.tv_content_btype);
+        tvName = (TextView) findViewById(R.id.tv_content_name);
+        tvEmail = (TextView) findViewById(R.id.tv_content_email);
+        tvContact = (TextView) findViewById(R.id.tv_content_num);
+        tvBirthdate = (TextView) findViewById(R.id.tv_content_bday);
+        tvGender = (TextView) findViewById(R.id.tv_content_gender);
+        tvBType = (TextView) findViewById(R.id.tv_content_btype);
 
         userRef.child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -84,23 +87,28 @@ public class MyProfile extends Fragment {
             }
         });
 
-        fab = (FloatingActionButton) MyView.findViewById(R.id.fab_view_profile);
+        fab = (FloatingActionButton) findViewById(R.id.fab_view_profile);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "WHAT", 200);
                 Intent i = new Intent();
-                i.setClass(getActivity(), EditProfileFABActivity.class);
+                i.setClass(getBaseContext(), EditProfileFABActivity.class);
 
                 startActivityForResult(i, REQUEST_CODE_EDIT_PROFILE);
             }
         });
 
-        
-        return MyView;
+
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.edit_profile_menu, menu);
+        return true;
+    }
 
 
 }

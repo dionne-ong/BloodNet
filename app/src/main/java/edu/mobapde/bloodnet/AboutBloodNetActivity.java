@@ -13,6 +13,7 @@ import android.widget.TextView;
 public class AboutBloodNetActivity extends AppCompatActivity {
 
     Toolbar tbEdit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
