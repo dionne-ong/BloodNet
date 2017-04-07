@@ -9,15 +9,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,6 +41,9 @@ public class MyPledgeActivity extends AppCompatActivity {
     DatabaseReference pledgeRef, postRef;
     Typeface face;
     String key, id;
+    ImageView imgBarPicture;
+    StorageReference pictureRef;
+
     public static final int REQUEST_CODE_DONATE = 301;
 
     @Override
@@ -61,6 +69,7 @@ public class MyPledgeActivity extends AppCompatActivity {
         id = getIntent().getStringExtra(DBOPost.EXTRA_POST_ID);
         btnStartDonation.setVisibility(View.INVISIBLE);
         btnCancel.setVisibility(View.INVISIBLE);
+        imgBarPicture = (ImageView) findViewById(R.id.img_bar_picture);
 
         pledgeRef.child(id).addValueEventListener(new ValueEventListener() {
             @Override
@@ -119,10 +128,20 @@ public class MyPledgeActivity extends AppCompatActivity {
         key = i.getStringExtra(DBOPost.EXTRA_POST_ID);
 
         if(key!=null){
+            pictureRef = FirebaseStorage.getInstance().getReference().child(DBOPost.REF_POST_PATIENT_PIC).child(key);
             postRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Post post = dataSnapshot.getValue(Post.class);
+
+                    if(post.isHasPic()){
+                        Glide.with(getBaseContext())
+                                .using(new FirebaseImageLoader())
+                                .load(pictureRef)
+                                .into(imgBarPicture);
+                    }
+
+                    
                     tvName.setText(post.getPatientName());
                     tvName.setTypeface(face);
                     tvBloodType.setText(post.getBloodType());

@@ -26,6 +26,8 @@ public class Post {
     private int pledgedBags;
     private long datePosted;
 
+    private boolean hasPic;
+
     public Post(){}
 
     public Post(String id, String userId, String patientName, String bloodType, String contactNum,
@@ -141,4 +143,11 @@ public class Post {
         return new Gson().toJson(this);
     }
 
+    public boolean isHasPic() {
+        return hasPic;
+    }
+
+    public void setHasPic(boolean hasPic) {
+        this.hasPic = hasPic;
+    }
 }

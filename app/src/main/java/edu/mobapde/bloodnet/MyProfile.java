@@ -18,12 +18,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
@@ -41,6 +45,7 @@ public class MyProfile extends AppCompatActivity{
     FloatingActionButton fab;
     FirebaseAuth auth;
     DatabaseReference userRef;
+    StorageReference profileRef;
     TextView tvName, tvEmail, tvContact, tvBirthdate, tvGender, tvBType;
     public static final int REQUEST_CODE_EDIT_PROFILE = 201;
 
@@ -59,11 +64,21 @@ public class MyProfile extends AppCompatActivity{
         tvBirthdate = (TextView) findViewById(R.id.tv_content_bday);
         tvGender = (TextView) findViewById(R.id.tv_content_gender);
         tvBType = (TextView) findViewById(R.id.tv_content_btype);
+        profileRef = FirebaseStorage.getInstance().getReference().child(DBOUser.REF_USER_PROFILE_PIC).child(auth.getCurrentUser().getUid());
 
         userRef.child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User u = dataSnapshot.getValue(User.class);
+
+                if(u.isHasPic()){
+                    Glide.with(getBaseContext())
+                            .using(new FirebaseImageLoader())
+                            .load(profileRef)
+                            .into(imgBarPicture);
+                }
+
+
                 tvEmail.setText(auth.getCurrentUser().getEmail());
                 if(u != null) {
                     tvName.setText(u.getName());

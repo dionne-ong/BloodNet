@@ -8,14 +8,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -41,6 +46,9 @@ public class MyPostActivity extends AppCompatActivity {
     Post post;
     Map<String, Boolean> userMap;
     String key;
+    ImageView imgBarPicture;
+    StorageReference pictureRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +69,7 @@ public class MyPostActivity extends AppCompatActivity {
         tvPledged = (TextView) findViewById(R.id.tv_posteddate);
         sb = (SlideButton) findViewById(R.id.unlockButton);
         tvSliderText = (TextView) findViewById(R.id.slider_text);
+        imgBarPicture = (ImageView) findViewById(R.id.img_bar_picture);
         sb.setVisibility(View.GONE);
         tvSliderText.setVisibility(View.GONE);
 
@@ -75,10 +84,19 @@ public class MyPostActivity extends AppCompatActivity {
         Intent i = getIntent();
         key = i.getStringExtra(DBOPost.EXTRA_POST_ID);
         if(key != null){
+            pictureRef = FirebaseStorage.getInstance().getReference().child(DBOPost.REF_POST_PATIENT_PIC).child(key);
             postRef.child(key).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     post = dataSnapshot.getValue(Post.class);
+
+                    if(post.isHasPic()){
+                        Glide.with(getBaseContext())
+                                .using(new FirebaseImageLoader())
+                                .load(pictureRef)
+                                .into(imgBarPicture);
+                    }
+
                     if(post != null) {
                         tvAddress.setText(post.getHospitalAddress());
                         tvName.setText(post.getPatientName());

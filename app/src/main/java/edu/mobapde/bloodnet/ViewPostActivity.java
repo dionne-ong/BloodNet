@@ -11,11 +11,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +27,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,6 +46,8 @@ import edu.mobapde.bloodnet.models.posts.Post;
 
 public class ViewPostActivity extends AppCompatActivity {
 
+    ImageView imgBarPicture;
+    StorageReference pictureRef;
     Button btnPledged, btnCancel;
     TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate, tvSlide;
     FirebaseAuth auth;
@@ -53,6 +60,7 @@ public class ViewPostActivity extends AppCompatActivity {
     Post post;
     Typeface face;
     SlideButton slideButton;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -92,6 +100,7 @@ public class ViewPostActivity extends AppCompatActivity {
         tvDate = (TextView) findViewById(R.id.tv_posteddate);
         tvSlide = (TextView) findViewById(R.id.slider_text);
         slideButton = (SlideButton) findViewById(R.id.unlockButton);
+        imgBarPicture = (ImageView) findViewById(R.id.img_bar_picture);
 
         auth = FirebaseAuth.getInstance();
         postRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.POST_REF);
@@ -101,10 +110,19 @@ public class ViewPostActivity extends AppCompatActivity {
         slideButton.setVisibility(View.GONE);
 
         if(key != null){
+            pictureRef = FirebaseStorage.getInstance().getReference().child(DBOPost.REF_POST_PATIENT_PIC).child(key);
             postRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     post = dataSnapshot.getValue(Post.class);
+
+                    if(post.isHasPic()){
+                        Glide.with(getBaseContext())
+                                .using(new FirebaseImageLoader())
+                                .load(pictureRef)
+                                .into(imgBarPicture);
+                    }
+
                     tvAddress.setText(post.getHospitalAddress());
                     tvName.setText(post.getPatientName());
                     tvName.setTypeface(face);

@@ -35,6 +35,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.antonioleiva.materializeyourapp.widgets.SquareImageView;
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -67,6 +69,7 @@ public class EditProfileFABActivity extends AppCompatActivity
     Button bSave, bCancel;
     FirebaseAuth auth;
     DatabaseReference userRef;
+    StorageReference profileRef;
     EditText etName, etEmail, etContact, etBirthdate;
     Spinner spGender, spBType;
     ArrayAdapter<CharSequence> adapter, adapterB;
@@ -113,6 +116,7 @@ public class EditProfileFABActivity extends AppCompatActivity
         adapterB.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spBType.setAdapter(adapterB);
 
+        profileRef = FirebaseStorage.getInstance().getReference().child(DBOUser.REF_USER_PROFILE_PIC).child(auth.getCurrentUser().getUid());
 
         etName = (EditText) findViewById(R.id.tv_content_name);
         etEmail = (EditText) findViewById(R.id.tv_content_email);
@@ -122,6 +126,14 @@ public class EditProfileFABActivity extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 u = dataSnapshot.getValue(User.class);
+
+                if(u.isHasPic()){
+                    Glide.with(getBaseContext())
+                            .using(new FirebaseImageLoader())
+                            .load(profileRef)
+                            .into(imgBarPicture);
+                }
+
                 etName.setText(u.getName());
                 etEmail.setText(auth.getCurrentUser().getEmail());
                 etContact.setText(u.getContactNum());
@@ -188,13 +200,11 @@ public class EditProfileFABActivity extends AppCompatActivity
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             // Handle unsuccessful uploads
-                            Toast.makeText(getBaseContext(), "Photo upload failed.", Toast.LENGTH_SHORT);
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                            Toast.makeText(getBaseContext(), "Photo upload success.", Toast.LENGTH_SHORT);
                         }
                     });
 

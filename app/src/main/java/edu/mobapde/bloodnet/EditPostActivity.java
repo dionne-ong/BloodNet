@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -25,12 +26,17 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -62,6 +68,7 @@ public class EditPostActivity extends AppCompatActivity {
     FloatingActionButton fab;
     FirebaseAuth auth;
     DatabaseReference postRef;
+    StorageReference postPicRef;
     TextView tvNumOfPledges;
     Post p;
 
@@ -83,6 +90,7 @@ public class EditPostActivity extends AppCompatActivity {
         btnCancel.setText("Cancel");
         imgBarPicture = (ImageView) findViewById(R.id.img_bar_picture);
         fab = (FloatingActionButton) findViewById(R.id.fab_edit_profile);
+        postPicRef = FirebaseStorage.getInstance().getReference().child(DBOPost.REF_POST_PATIENT_PIC);
 
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -154,6 +162,26 @@ public class EditPostActivity extends AppCompatActivity {
                 newData.setHospitalAddress(etAddress.getText().toString());
                 newData.setNeededBags(Integer.parseInt(etQuantity.getText().toString()));
                 Log.i("DB", "[FIREBASE] "+newData.toString());
+
+                if(newData.isHasPic()){
+
+                    UploadTask uploadTask = postPicRef.child(newData.getId()).putFile(file);
+
+                    // Register observers to listen for when the download is done or if it fails
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                        }
+                    });
+
+                }
+
                 postRef.child(key).setValue(newData, new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {

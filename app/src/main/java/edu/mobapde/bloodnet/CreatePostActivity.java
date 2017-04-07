@@ -30,6 +30,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -52,6 +55,7 @@ public class CreatePostActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_TAKE_PHOTO = 101;
 
     DatabaseReference postRef, Ref, reference;
+    StorageReference postPicRef;
     String key;
     Post p;
     HashMap<String, Boolean> map;
@@ -61,6 +65,7 @@ public class CreatePostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
 
+        p = new Post();
         btnCancel = (Button) findViewById(R.id.b_cancel);
         btnCreate = (Button) findViewById(R.id.b_submit);
         etName = (EditText) findViewById(R.id.tv_content_name);
@@ -71,7 +76,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
         Ref = FirebaseDatabase.getInstance().getReference();
         postRef = Ref.child(DBOPost.POST_REF);
-
+        postPicRef = FirebaseStorage.getInstance().getReference().child(DBOPost.REF_POST_PATIENT_PIC);
 
         etName.setHint("Patient Name");
         etLocation.setHint("Name of Hospital");
@@ -102,7 +107,6 @@ public class CreatePostActivity extends AppCompatActivity {
                 findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
                 key = postRef.push().getKey();
 
-                p = new Post();
                 p.setPatientName(etName.getText().toString());
                 p.setContactNum(etContactNumber.getText().toString());
                 p.setDatePosted(new Date().getTime());
@@ -119,7 +123,15 @@ public class CreatePostActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.i("Firebase", "Create: Getting reference...");
+                            if(p.isHasPic()){
+                                UploadTask uploadTask = postPicRef.child(key).putFile(file);
+                                uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
 
+                                    }
+                                });
+                            }
                             Ref = FirebaseDatabase.getInstance().getReference().child(p.getBloodType());
                             Ref.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -224,6 +236,7 @@ public class CreatePostActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_TAKE_PHOTO) {
             if (resultCode == RESULT_OK) {
+                p.setHasPic(true);
                 imgBarPicture.setImageURI(file);
             }
         }
