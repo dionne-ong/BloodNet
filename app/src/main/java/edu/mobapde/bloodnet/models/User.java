@@ -23,7 +23,7 @@ public class User {
     private String contactNum;
     private String gender;
     private long birthdate;
-
+    private long pledgedate;
 
     public User(){
         this.birthdate = -1;
@@ -81,5 +81,13 @@ public class User {
     @Override
     public String toString() {
         return new Gson().toJson(this);
+    }
+
+    public long getPledgedate() {
+        return pledgedate;
+    }
+
+    public void setPledgedate(long pledgedate) {
+        this.pledgedate = pledgedate;
     }
 }

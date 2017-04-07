@@ -1,9 +1,11 @@
 package edu.mobapde.bloodnet;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -23,7 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -43,6 +47,7 @@ public class ViewPostActivity extends AppCompatActivity {
     DatabaseReference postRef;
     DatabaseReference userPledgeRef;
     DatabaseReference pledgeUserRef;
+    DatabaseReference userPledgeDateRef;
     HashMap<String, Boolean> map;
     Post post;
     Typeface face;
@@ -109,6 +114,8 @@ public class ViewPostActivity extends AppCompatActivity {
 
         userPledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE);
         pledgeUserRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_PLEDGE_USER);
+        userPledgeDateRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE_DATE);
+
         ((SlideButton) findViewById(R.id.unlockButton)).setSlideButtonListener(new SlideButtonListener() {
             @Override
             public void handleSlide() {
@@ -116,59 +123,87 @@ public class ViewPostActivity extends AppCompatActivity {
                 postRef.child(post.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        post.setPledgedBags(post.getPledgedBags()+1);
-                        postRef.child(post.getId()).setValue(post).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
-                                    userPledgeRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        // get date 3 months ago
+                        Calendar dateChecker = Calendar.getInstance();
+                        dateChecker.add(dateChecker.DAY_OF_YEAR, -89);
+
+                        // get date of last user pledge
+                        String lastPledge = "1/1/2000";
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+                        Date holdDate = null;
+                        try {
+                            holdDate = sdf.parse(lastPledge);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        Calendar holdPledgedate = Calendar.getInstance();
+                        holdPledgedate.set(holdDate.getYear(), holdDate.getMonth(), holdDate.getYear());
+                        if(holdPledgedate.after(dateChecker)){
+                            AlertDialog cannotPledge = new AlertDialog.Builder(ViewPostActivity.this).create();
+                            cannotPledge.setTitle("Pledge Availability");
+                            cannotPledge.setMessage("Oops! A person will be allowed to donate again three months after the last donation.");
+                            cannotPledge.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    new DialogInterface.OnClickListener() {
                                         @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            map = (HashMap<String, Boolean>) dataSnapshot.getValue();
-                                            if (map == null) {
-                                                map = new HashMap<String, Boolean>();
-                                            }
-
-                                            map.put(post.getId(), false);
-                                            userPledgeRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(map);
-
-                                            pledgeUserRef.child(post.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                                    map = (HashMap<String, Boolean>) dataSnapshot.getValue();
-                                                    if (map == null) {
-                                                        map = new HashMap<String, Boolean>();
-                                                    }
-
-                                                    map.put(FirebaseAuth.getInstance().getCurrentUser().getUid(), false);
-                                                    pledgeUserRef.child(post.getId()).setValue(map);
-
-
-                                                    Intent i = new Intent();
-                                                    i.putExtra(DBOPost.EXTRA_POST_ID, post.getId());
-                                                    i.setClass(getBaseContext(), MyPledgeActivity.class);
-                                                    startActivity(i);
-                                                    finish();
-
-                                                }
-
-                                                @Override
-                                                public void onCancelled(DatabaseError databaseError) {
-
-                                                }
-                                            });
-                                        }
-
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
                                         }
                                     });
-                                }else{
-                                    Toast.makeText(getBaseContext(), "Error pledging blood: "+task.getException().getLocalizedMessage(), Toast.LENGTH_LONG);
+                        }else{
+                            post.setPledgedBags(post.getPledgedBags()+1);
+                            postRef.child(post.getId()).setValue(post).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        userPledgeRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                                if (map == null) {
+                                                    map = new HashMap<String, Boolean>();
+                                                }
+
+                                                map.put(post.getId(), false);
+                                                userPledgeRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(map);
+
+                                                pledgeUserRef.child(post.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                                        if (map == null) {
+                                                            map = new HashMap<String, Boolean>();
+                                                        }
+
+                                                        map.put(FirebaseAuth.getInstance().getCurrentUser().getUid(), false);
+                                                        pledgeUserRef.child(post.getId()).setValue(map);
+
+
+                                                        Intent i = new Intent();
+                                                        i.putExtra(DBOPost.EXTRA_POST_ID, post.getId());
+                                                        i.setClass(getBaseContext(), MyPledgeActivity.class);
+                                                        startActivity(i);
+                                                        finish();
+
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                            }
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    }else{
+                                        Toast.makeText(getBaseContext(), "Error pledging blood: "+ task.getException().getLocalizedMessage(), Toast.LENGTH_LONG);
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
+
                     }
 
                     @Override
