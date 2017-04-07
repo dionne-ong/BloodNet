@@ -24,9 +24,11 @@ public class User {
     private String gender;
     private long birthdate;
     private long pledgedate;
+    private boolean hasPic;
 
     public User(){
         this.birthdate = -1;
+        hasPic = false;
     };
 
     public User(String name, String bloodType, String contactNum, String gender, long birthdate) {
@@ -89,5 +91,13 @@ public class User {
 
     public void setPledgedate(long pledgedate) {
         this.pledgedate = pledgedate;
+    }
+
+    public boolean isHasPic() {
+        return hasPic;
+    }
+
+    public void setHasPic(boolean hasPic) {
+        this.hasPic = hasPic;
     }
 }

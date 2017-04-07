@@ -20,4 +20,6 @@ public class DBOUser{
     public static final String REF_PLEDGE_USER = "pledge-user";
     public static final String REF_USER_PLEDGE_DATE = "pledge-date";
 
+    public static final String REF_USER_PROFILE_PIC = "profiles";
+
 }
