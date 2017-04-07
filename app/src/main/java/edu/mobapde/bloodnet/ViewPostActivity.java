@@ -49,10 +49,35 @@ public class ViewPostActivity extends AppCompatActivity {
     DatabaseReference pledgeUserRef;
     DatabaseReference userPledgeDateRef;
     HashMap<String, Boolean> map;
+    String key;
     Post post;
     Typeface face;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent i = getIntent();
+        key = i.getStringExtra(DBOPost.EXTRA_POST_ID);
+//        userPledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//
+//        userPledgeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                HashMap<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+//                if(map.containsKey(key)){
+//                    Intent i = new Intent();
+//                    i.putExtra(DBOPost.EXTRA_POST_ID, key);
+//                    i.setClass(getBaseContext(), MyPledgeActivity.class);
+//                    startActivity(i);
+//                    finish();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
         setContentView(R.layout.activity_my_pledge);
         face= Typeface.createFromAsset(getAssets(),"fonts/Raleway-Light.ttf");
         btnPledged = (Button) findViewById(R.id.b_submit);
@@ -72,8 +97,6 @@ public class ViewPostActivity extends AppCompatActivity {
         btnPledged.setVisibility(View.GONE);
         btnCancel.setVisibility(View.GONE);
 
-        Intent i = getIntent();
-        String key = i.getStringExtra(DBOPost.EXTRA_POST_ID);
         if(key != null){
             postRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

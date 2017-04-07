@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -20,8 +21,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 import edu.mobapde.bloodnet.DBObjects.DBOPost;
+import edu.mobapde.bloodnet.DBObjects.DBOUser;
 import edu.mobapde.bloodnet.models.pledges.Pledge;
 import edu.mobapde.bloodnet.models.posts.Post;
 
@@ -29,11 +32,10 @@ public class MyPledgeActivity extends AppCompatActivity {
 
     Button btnStartDonation, btnCancel;
     TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate, tvSliderText;
-    Pledge pledge;
     SlideButton sb;
-    DatabaseReference pledgeRef;
+    DatabaseReference pledgeRef, postRef;
     Typeface face;
-    String key;
+    String key, id;
     public static final int REQUEST_CODE_DONATE = 301;
 
     @Override
@@ -54,45 +56,72 @@ public class MyPledgeActivity extends AppCompatActivity {
         face= Typeface.createFromAsset(getAssets(),"fonts/Raleway-Light.ttf");
         sb.setVisibility(View.GONE);
         tvSliderText.setVisibility(View.GONE);
-        pledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.POST_REF);
+        pledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_PLEDGE_USER);
+        postRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.POST_REF);
+        id = getIntent().getStringExtra(DBOPost.EXTRA_POST_ID);
+        btnStartDonation.setVisibility(View.INVISIBLE);
+        btnCancel.setVisibility(View.INVISIBLE);
 
-        int id = getIntent().getIntExtra(Pledge.PLEDGE_EXTRA, -1);
-        if(pledge.getDonated()){
-            btnStartDonation.setText("Start Donation");
-            btnCancel.setText("Cancel");
+        pledgeRef.child(id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                HashMap<String, Boolean> hasDonated = (HashMap<String, Boolean>)dataSnapshot.getValue();
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                if(hasDonated!=null && hasDonated.containsKey(userId)){
 
-            btnStartDonation.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent();
-                    i.setClass(getBaseContext(), RequirementsActivity.class);
-                    startActivity(i);
+                    if(!hasDonated.get(userId)){
+                        btnStartDonation.setText("Start Donation");
+                        btnCancel.setText("Cancel");
+                        btnStartDonation.setVisibility(View.VISIBLE);
+                        btnCancel.setVisibility(View.VISIBLE);
+
+                        btnStartDonation.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent i = new Intent();
+                                i.putExtra(DBOPost.EXTRA_POST_ID, id);
+                                i.setClass(getBaseContext(), RequirementsActivity.class);
+                                startActivity(i);
+                                finish();
+                            }
+                        });
+
+                        btnCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent i = new Intent();
+                                i.setClass(getBaseContext(), ViewPostActivity.class);
+                                startActivity(i);
+                            }
+                        });
+
+
+                    }else{
+                        btnCancel.setText("Donated");
+                        btnCancel.setTextColor(Color.parseColor("#F44336"));
+                        btnCancel.setEnabled(false);
+                        btnStartDonation.setVisibility(View.GONE);
+                        btnCancel.setVisibility(View.VISIBLE);
+
+                    } // whatever's in the db
+
+                }else{
+                    Toast.makeText(getBaseContext(), "Not Pledged Yet?", Toast.LENGTH_SHORT);
+                    finish();
                 }
-            });
+            }
 
-            btnCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent();
-                    i.setClass(getBaseContext(), ViewPostActivity.class);
-                    startActivity(i);
-                }
-            });
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-
-        }else{
-            btnCancel.setText("Donated");
-            btnCancel.setTextColor(Color.parseColor("#F44336"));
-            btnCancel.setEnabled(false);
-            btnStartDonation.setVisibility(View.GONE);
-
-        } // whatever's in the db
+            }
+        });
 
         Intent i = getIntent();
         key = i.getStringExtra(DBOPost.EXTRA_POST_ID);
 
         if(key!=null){
-            pledgeRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+            postRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Post post = dataSnapshot.getValue(Post.class);
@@ -130,7 +159,8 @@ public class MyPledgeActivity extends AppCompatActivity {
                 Intent i = new Intent();
                 i.putExtra(DBOPost.EXTRA_POST_ID, key);
                 i.setClass(getBaseContext(), RequirementsActivity.class);
-                startActivityForResult(i, REQUEST_CODE_DONATE);
+                startActivity(i);
+                finish();
             }
         });
 
@@ -149,22 +179,4 @@ public class MyPledgeActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode){
-            case REQUEST_CODE_DONATE:
-                if(resultCode == RESULT_OK){
-                    pledge.setDonated(false);
-                    btnCancel.setText("Donated");
-                    btnCancel.setTextColor(Color.parseColor("#F44336"));
-                    btnCancel.setEnabled(false);
-                    btnStartDonation.setVisibility(View.GONE);
-
-                }
-                break;
-            default:
-        }
-
-    }
 }

@@ -16,8 +16,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,14 +36,16 @@ public class MyPostActivity extends AppCompatActivity {
     TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvPledged,tvSliderText;
     SlideButton sb;
     FirebaseAuth auth;
-    DatabaseReference postRef, ref;
+    DatabaseReference postRef, ref, userPledgeRef;
     Typeface face;
     Post post;
     Map<String, Boolean> userMap;
+    String key;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_pledge);
+        userPledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         ref = FirebaseDatabase.getInstance().getReference();
 
@@ -69,7 +73,7 @@ public class MyPostActivity extends AppCompatActivity {
         //whatever is in the db
 
         Intent i = getIntent();
-        String key = i.getStringExtra(DBOPost.EXTRA_POST_ID);
+        key = i.getStringExtra(DBOPost.EXTRA_POST_ID);
         if(key != null){
             postRef.child(key).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -126,20 +130,26 @@ public class MyPostActivity extends AppCompatActivity {
                                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                             .setValue(map);
 
+                                    Log.i("DELETION", "DELETING USER_POST_START");
                                     //TODO: Pledge Deletion
                                     ref.child(DBOUser.REF_PLEDGE_USER).child(post.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
+                                            Log.i("DELETION", "DELETING PLEDGE_USER START");
                                             userMap = (HashMap<String, Boolean>) dataSnapshot.getValue();
                                             if(userMap!=null) {
                                                 Set keys = userMap.keySet();
-                                                while (keys.iterator().hasNext()) {
-                                                    String key = (String) keys.iterator().next();
+                                                Log.i("DELETION", "DELETING KEYSET : "+(new Gson().toJson(keys)));
+                                                Iterator i = keys.iterator();
+                                                while (i.hasNext()) {
+                                                    String key = (String) i.next();
 
+                                                    Log.i("DELETION", "DELETING USER_PLEDGE ITERATION");
                                                     ref.child(DBOUser.REF_USER_PLEDGE).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
                                                         @Override
                                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                                             Map<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                                            Log.i("DELETION", "DELETING USER_PLEDGE_START");
                                                             map.remove(post.getId());
                                                             ref.child(DBOUser.REF_USER_PLEDGE)
                                                                     .child(dataSnapshot.getKey())

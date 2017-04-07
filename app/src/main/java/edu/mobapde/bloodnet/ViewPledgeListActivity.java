@@ -63,7 +63,7 @@ public class ViewPledgeListActivity extends Fragment{
         keyRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         dataRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.POST_REF);
         mAdapter = new FirebaseIndexRecyclerAdapter<Post, PostHolder>(Post.class,
-                R.layout.list_item_my_posts,
+                R.layout.list_item_post,
                 PostHolder.class,
                 keyRef, // The Firebase location containing the list of keys to be found in dataRef.
                 dataRef)//The Firebase location to watch for data changes. Each key key found at keyRef's location represents a list item in the RecyclerView.

@@ -57,7 +57,8 @@ public class FilterPostActivity extends Fragment {
     TextView tvFilter;
 
     private FirebaseRecyclerAdapter mAdapter;
-    private DatabaseReference mRef;
+    private DatabaseReference userPledgeRef;
+    String key;
     private HashMap<String, FirebaseIndexRecyclerAdapter> filterAdapter;
     FirebaseAuth auth;
     DatabaseReference userRef;
@@ -340,11 +341,31 @@ public class FilterPostActivity extends Fragment {
                 viewHolder.setOnClickListener(new PostHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        String key = mAdapter.getRef(position).getKey();
-                        Intent i = new Intent();
-                        i.putExtra(DBOPost.EXTRA_POST_ID, key);
-                        i.setClass(getActivity(), ViewPostActivity.class);
-                        startActivity(i);
+                        key = mAdapter.getRef(position).getKey();
+                        userPledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        Log.i("TEST", "TESTING LOG CLICK");
+                        userPledgeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                HashMap<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                Intent i = new Intent();
+                                i.putExtra(DBOPost.EXTRA_POST_ID, key);
+                                if(map!= null && map.containsKey(key)){
+                                    i.setClass(getActivity(), MyPledgeActivity.class);
+
+                                }else{
+                                    i.setClass(getActivity(), ViewPostActivity.class);
+
+                                }
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
                     }
 
                     @Override
@@ -371,11 +392,30 @@ public class FilterPostActivity extends Fragment {
                 viewHolder.setOnClickListener(new PostHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        String key = mAdapter.getRef(position).getKey();
-                        Intent i = new Intent();
-                        i.putExtra(DBOPost.EXTRA_POST_ID, key);
-                        i.setClass(getActivity(), ViewPostActivity.class);
-                        startActivity(i);
+                        key = mAdapter.getRef(position).getKey();
+                        userPledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        Log.i("TEST", "TESTING LOG CLICK");
+                        userPledgeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                HashMap<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                Intent i = new Intent();
+                                i.putExtra(DBOPost.EXTRA_POST_ID, key);
+                                if(map!= null && map.containsKey(key)){
+                                    i.setClass(getActivity(), MyPledgeActivity.class);
+
+                                }else{
+                                    i.setClass(getActivity(), ViewPostActivity.class);
+
+                                }
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }
 
                     @Override
@@ -401,11 +441,30 @@ public class FilterPostActivity extends Fragment {
                 viewHolder.setOnClickListener(new PostHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        String key = mAdapter.getRef(position).getKey();
-                        Intent i = new Intent();
-                        i.putExtra(DBOPost.EXTRA_POST_ID, key);
-                        i.setClass(getActivity(), ViewPostActivity.class);
-                        startActivity(i);
+                        key = mAdapter.getRef(position).getKey();
+                        userPledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        Log.i("TEST", "TESTING LOG CLICK");
+                        userPledgeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                HashMap<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                Intent i = new Intent();
+                                i.putExtra(DBOPost.EXTRA_POST_ID, key);
+                                 if(map!= null && map.containsKey(key)){
+                                    i.setClass(getActivity(), MyPledgeActivity.class);
+
+                                }else{
+                                    i.setClass(getActivity(), ViewPostActivity.class);
+
+                                }
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }
 
                     @Override
@@ -431,11 +490,30 @@ public class FilterPostActivity extends Fragment {
                 viewHolder.setOnClickListener(new PostHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        String key = mAdapter.getRef(position).getKey();
-                        Intent i = new Intent();
-                        i.putExtra(DBOPost.EXTRA_POST_ID, key);
-                        i.setClass(getActivity(), ViewPostActivity.class);
-                        startActivity(i);
+                        key = mAdapter.getRef(position).getKey();
+                        userPledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        Log.i("TEST", "TESTING LOG CLICK");
+                        userPledgeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                HashMap<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                Intent i = new Intent();
+                                i.putExtra(DBOPost.EXTRA_POST_ID, key);
+                                if(map!= null && map.containsKey(key)){
+                                    i.setClass(getActivity(), MyPledgeActivity.class);
+
+                                }else{
+                                    i.setClass(getActivity(), ViewPostActivity.class);
+
+                                }
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }
 
                     @Override
@@ -462,11 +540,30 @@ public class FilterPostActivity extends Fragment {
                 viewHolder.setOnClickListener(new PostHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        String key = mAdapter.getRef(position).getKey();
-                        Intent i = new Intent();
-                        i.putExtra(DBOPost.EXTRA_POST_ID, key);
-                        i.setClass(getActivity(), ViewPostActivity.class);
-                        startActivity(i);
+                        key = mAdapter.getRef(position).getKey();
+                        userPledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        Log.i("TEST", "TESTING LOG CLICK");
+                        userPledgeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                HashMap<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                Intent i = new Intent();
+                                i.putExtra(DBOPost.EXTRA_POST_ID, key);
+                                if(map!= null && map.containsKey(key)){
+                                    i.setClass(getActivity(), MyPledgeActivity.class);
+
+                                }else{
+                                    i.setClass(getActivity(), ViewPostActivity.class);
+
+                                }
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }
 
                     @Override
@@ -493,11 +590,30 @@ public class FilterPostActivity extends Fragment {
                 viewHolder.setOnClickListener(new PostHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        String key = mAdapter.getRef(position).getKey();
-                        Intent i = new Intent();
-                        i.putExtra(DBOPost.EXTRA_POST_ID, key);
-                        i.setClass(getActivity(), ViewPostActivity.class);
-                        startActivity(i);
+                        key = mAdapter.getRef(position).getKey();
+                        userPledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        Log.i("TEST", "TESTING LOG CLICK");
+                        userPledgeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                HashMap<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                Intent i = new Intent();
+                                i.putExtra(DBOPost.EXTRA_POST_ID, key);
+                                if(map!= null && map.containsKey(key)){
+                                    i.setClass(getActivity(), MyPledgeActivity.class);
+
+                                }else{
+                                    i.setClass(getActivity(), ViewPostActivity.class);
+
+                                }
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }
 
                     @Override
@@ -524,11 +640,31 @@ public class FilterPostActivity extends Fragment {
                 viewHolder.setOnClickListener(new PostHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        String key = mAdapter.getRef(position).getKey();
-                        Intent i = new Intent();
-                        i.putExtra(DBOPost.EXTRA_POST_ID, key);
-                        i.setClass(getActivity(), ViewPostActivity.class);
-                        startActivity(i);
+                        key = mAdapter.getRef(position).getKey();
+                        userPledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        Log.i("TEST", "TESTING LOG CLICK");
+                        userPledgeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                HashMap<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                Intent i = new Intent();
+                                i.putExtra(DBOPost.EXTRA_POST_ID, key);
+                                if(map!= null && map.containsKey(key)){
+                                    i.setClass(getActivity(), MyPledgeActivity.class);
+
+                                }else{
+                                    i.setClass(getActivity(), ViewPostActivity.class);
+
+                                }
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
                     }
 
                     @Override
@@ -555,11 +691,30 @@ public class FilterPostActivity extends Fragment {
                 viewHolder.setOnClickListener(new PostHolder.ClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        String key = mAdapter.getRef(position).getKey();
-                        Intent i = new Intent();
-                        i.putExtra(DBOPost.EXTRA_POST_ID, key);
-                        i.setClass(getActivity(), ViewPostActivity.class);
-                        startActivity(i);
+                        key = mAdapter.getRef(position).getKey();
+                        userPledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        Log.i("TEST", "TESTING LOG CLICK");
+                        userPledgeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                HashMap<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
+                                Intent i = new Intent();
+                                i.putExtra(DBOPost.EXTRA_POST_ID, key);
+                                if(map!= null && map.containsKey(key)){
+                                    i.setClass(getActivity(), MyPledgeActivity.class);
+
+                                }else{
+                                    i.setClass(getActivity(), ViewPostActivity.class);
+
+                                }
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }
 
                     @Override

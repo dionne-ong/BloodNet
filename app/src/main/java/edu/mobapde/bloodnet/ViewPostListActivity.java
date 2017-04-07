@@ -16,8 +16,11 @@ import android.widget.Toast;
 import com.firebase.ui.database.FirebaseIndexRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -33,14 +36,11 @@ import edu.mobapde.bloodnet.models.posts.PostHolder;
  */
 
 public class ViewPostListActivity extends Fragment{
-    private List<Post> postsList = new ArrayList<>();
-    private ArrayList<String> selection = new ArrayList<String>();
     FloatingActionButton btnCreate;
-    private MyPostAdapter pAdapter;
     RecyclerView rvPosts;
     View MyView;
     private FirebaseRecyclerAdapter mAdapter;
-    private DatabaseReference mRef, keyRef, dataRef;
+    private DatabaseReference  keyRef, dataRef;
 
     @Nullable
     @Override
@@ -84,6 +84,8 @@ public class ViewPostListActivity extends Fragment{
                                 String key = mAdapter.getRef(position).getKey();
                                 Intent i = new Intent();
                                 i.putExtra(DBOPost.EXTRA_POST_ID, key);
+
+
                                 i.setClass(getActivity(), MyPostActivity.class);
                                 startActivity(i);
                             }
