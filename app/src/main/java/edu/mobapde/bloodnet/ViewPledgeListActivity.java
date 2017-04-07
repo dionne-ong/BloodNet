@@ -80,29 +80,13 @@ public class ViewPledgeListActivity extends Fragment{
                     @Override
                     public void onItemClick(View view, int position) {
                         key = mAdapter.getRef(position).getKey();
+                        Intent i = new Intent();
+                        i.putExtra(DBOPost.EXTRA_POST_ID, key);
 
-                        keyRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                Intent i = new Intent();
-                                i.putExtra(DBOPost.EXTRA_POST_ID, key);
+                        i.setClass(getActivity(), MyPledgeActivity.class);
 
-                                HashMap<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
-                                Boolean isDonated = map.get(key);
+                        startActivity(i);
 
-                                if(isDonated)
-                                    i.setClass(getActivity(), MyPledgeActivity.class);
-                                else
-                                    i.setClass(getActivity(), FinishedPledgeActivity.class);
-
-                                startActivity(i);
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
 
                     }
 

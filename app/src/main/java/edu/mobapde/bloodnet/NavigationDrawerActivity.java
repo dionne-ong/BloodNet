@@ -138,10 +138,6 @@ public class NavigationDrawerActivity extends AppCompatActivity
         String title = getString(R.string.app_name);
 
         switch (viewId) {
-            case R.id.nav_profile:
-                fragment = new MyProfile();
-                title  = "Profile";
-                break;
             case R.id.nav_posts:
                 fragment = new ViewPostListActivity();
                 title = "My Posts";
@@ -154,7 +150,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
             case R.id.nav_logout:
                 fragment = new Logout();
-                title = "Logout";
+                title = "Settings";
                 break;
 
             default:

@@ -89,9 +89,7 @@ public class MyPledgeActivity extends AppCompatActivity {
                         btnCancel.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent i = new Intent();
-                                i.setClass(getBaseContext(), ViewPostActivity.class);
-                                startActivity(i);
+                                finish();
                             }
                         });
 

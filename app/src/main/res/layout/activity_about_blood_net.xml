@@ -41,24 +41,13 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
+        android:padding="20dp"
+        android:textSize="18dp"
+        android:layout_gravity="center_vertical|right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:text="The Blood Net is a blood-donation networking application which will make it easier for those who need blood donations to find prospective blood donors. It also aims to make it easier for blood donors to keep track of what the process and requirements are in donating blood."/>
 
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_medical_cross_outline"
-            android:tint="@color/colorAccent"
-            android:contentDescription="@string/credit_medical_icons"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/credit_medical_icons"
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_marginLeft="10dp"
-            android:textAlignment="center"/>
-    </LinearLayout>
 </LinearLayout>

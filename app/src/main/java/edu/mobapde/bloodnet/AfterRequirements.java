@@ -54,7 +54,7 @@ public class AfterRequirements extends AppCompatActivity {
         pledgeUserRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                Log.i("LEGIBLE", "It is " + b.getBoolean("legible")+"");
                 HashMap<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
                 map.put(userId, b.getBoolean("legible"));
                 Log.i("PLEDGING", "Setting value in "+dataSnapshot.getRef().getKey()+" to "+(new Gson()).toJson(map));
@@ -71,7 +71,7 @@ public class AfterRequirements extends AppCompatActivity {
         userPledgeRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                Log.i("LEGIBLE", "It is " + b.getBoolean("legible")+"");
                 HashMap<String, Boolean> map = (HashMap<String, Boolean>) dataSnapshot.getValue();
                 map.put(key, b.getBoolean("legible"));
                 Log.i("PLEDGING", "Setting value in "+dataSnapshot.getRef().getKey()+" to "+(new Gson()).toJson(map));
