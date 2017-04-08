@@ -75,6 +75,8 @@ public class MyProfile extends AppCompatActivity{
                     Glide.with(getBaseContext())
                             .using(new FirebaseImageLoader())
                             .load(profileRef)
+                            .placeholder(getDrawable(R.drawable.imageerror1))
+                            .error(getDrawable(R.drawable.imageerror2))
                             .into(imgBarPicture);
                 }
 
