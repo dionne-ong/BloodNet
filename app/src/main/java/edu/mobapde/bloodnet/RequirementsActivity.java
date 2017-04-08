@@ -16,7 +16,7 @@ public class RequirementsActivity extends AppCompatActivity {
 
     Button btn_Ok, btn_Cancel;
     Toolbar tbEdit;
-    CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6;
+    CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, checkBox7;
     Pledge pledge;
     String key;
     @Override
@@ -36,6 +36,7 @@ public class RequirementsActivity extends AppCompatActivity {
         checkBox4 = (CheckBox) findViewById(R.id.checkBox4);
         checkBox5 = (CheckBox) findViewById(R.id.checkBox5);
         checkBox6 = (CheckBox) findViewById(R.id.checkBox6);
+        checkBox7 = (CheckBox) findViewById(R.id.checkBox7);
 
 
         btn_Ok = (Button) findViewById(R.id.b_submit);
@@ -49,7 +50,7 @@ public class RequirementsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent();
                 i.putExtra(DBOPost.EXTRA_POST_ID, key);
-                if(checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked() && checkBox5.isChecked() && checkBox6.isChecked()){
+                if(checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked() && checkBox5.isChecked() && checkBox6.isChecked() && checkBox7.isChecked()){
                     i.putExtra("legible", true);
                     i.setClass(getBaseContext(), AfterRequirements.class);
                 }else{
