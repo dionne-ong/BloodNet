@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,8 @@ public class RegistrationActivity extends AppCompatActivity {
     private Button btnSignUp, btnCancel;
     private EditText etEmail, etPassword, etConfirmPassword, etName;
     private ProgressBar progressBar;
+    private Spinner spBType;
+    ArrayAdapter<CharSequence> adapter;
     private FirebaseAuth auth;
     private DatabaseReference userRef;
 
@@ -55,6 +59,11 @@ public class RegistrationActivity extends AppCompatActivity {
         etName = (EditText) findViewById(R.id.tv_content_name);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        spBType = (Spinner) findViewById(R.id.s_bloodtype);
+        adapter = ArrayAdapter.createFromResource(this,
+                R.array.bloodtype, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spBType.setAdapter(adapter);
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +72,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
                 String confirm = etConfirmPassword.getText().toString().trim();
+                String btype = spBType.getSelectedItem().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
@@ -106,6 +116,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                     Toast.makeText(RegistrationActivity.this, "Registration success!", Toast.LENGTH_SHORT).show();
                                     User u = new User();
                                     u.setName(etName.getText().toString());
+                                    u.setBloodType(spBType.getSelectedItem().toString());
                                     Log.i("REGISTER","UUID: "+auth.getCurrentUser().getUid());
                                     userRef.child(auth.getCurrentUser().getUid()).setValue(u);
                                     startActivity(new Intent(RegistrationActivity.this, NavigationDrawerActivity.class));
