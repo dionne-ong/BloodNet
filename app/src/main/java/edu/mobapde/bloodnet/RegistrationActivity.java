@@ -99,6 +99,11 @@ public class RegistrationActivity extends AppCompatActivity {
                     return;
                 }
 
+                if(spBType.getSelectedItem() == null){
+                    Toast.makeText(getApplicationContext(), "Please select your blood type.", Toast.LENGTH_LONG);
+                    return;
+                }
+
                 progressBar.setVisibility(View.VISIBLE);
                 //create user
                 auth.createUserWithEmailAndPassword(email, password)
@@ -116,8 +121,12 @@ public class RegistrationActivity extends AppCompatActivity {
                                     Toast.makeText(RegistrationActivity.this, "Registration success!", Toast.LENGTH_SHORT).show();
                                     User u = new User();
                                     u.setName(etName.getText().toString());
-                                    u.setBloodType(spBType.getSelectedItem().toString());
-                                    Log.i("REGISTER","UUID: "+auth.getCurrentUser().getUid());
+                                    String bloodtype = null;
+                                    bloodtype = (String)spBType.getSelectedItem();
+                                    u.setBloodType(bloodtype);
+
+
+                                    Log.i("REGISTER","UUID: "+ auth.getCurrentUser().getUid());
                                     userRef.child(auth.getCurrentUser().getUid()).setValue(u);
                                     startActivity(new Intent(RegistrationActivity.this, NavigationDrawerActivity.class));
                                     finish();
