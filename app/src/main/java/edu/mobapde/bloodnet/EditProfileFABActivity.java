@@ -193,7 +193,7 @@ public class EditProfileFABActivity extends AppCompatActivity
                 newData.setContactNum(etContact.getText().toString());
                 newData.setGender(spGender.getSelectedItem().toString());
                 Log.i("DB", "[FIREBASE] "+newData.toString());
-                if(newData.isHasPic()){
+                if(newData.isHasPic()  && file != null){
 
                     UploadTask uploadTask = profilePics.child(auth.getCurrentUser().getUid()).putFile(file);
 

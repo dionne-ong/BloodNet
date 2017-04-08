@@ -93,8 +93,6 @@ public class EditPostActivity extends AppCompatActivity {
         imgBarPicture = (ImageView) findViewById(R.id.img_bar_picture_post);
         fab = (FloatingActionButton) findViewById(R.id.fab_edit_profile);
         postPicRef = FirebaseStorage.getInstance().getReference().child(DBOPost.REF_POST_PATIENT_PIC);
-
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             fab.setEnabled(false);
             ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
@@ -105,6 +103,7 @@ public class EditPostActivity extends AppCompatActivity {
 
 
         spBType = (Spinner) findViewById(R.id.s_bloodtype);
+        spBType.setEnabled(false);
         adapterB = ArrayAdapter.createFromResource(this,
                 R.array.bloodtype, android.R.layout.simple_spinner_item);
         adapterB.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -112,6 +111,7 @@ public class EditPostActivity extends AppCompatActivity {
 
 
         etName = (EditText) findViewById(R.id.tv_content_name);
+        etName.setEnabled(false);
         etContactNumber = (EditText) findViewById(R.id.tv_content_num);
         etLocation = (EditText) findViewById(R.id.tv_content_location);
         etAddress = (EditText) findViewById(R.id.tv_content_address);
@@ -129,7 +129,7 @@ public class EditPostActivity extends AppCompatActivity {
                 if(p.isHasPic()){
                     Glide.with(getBaseContext())
                             .using(new FirebaseImageLoader())
-                            .load(postPicRef)
+                            .load(postPicRef.child(p.getId()))
                             .placeholder(getDrawable(R.drawable.imageerror1))
                             .error(getDrawable(R.drawable.imageerror2))
                             .into(imgBarPicture);
@@ -173,7 +173,7 @@ public class EditPostActivity extends AppCompatActivity {
                 newData.setNeededBags(Integer.parseInt(etQuantity.getText().toString()));
                 Log.i("DB", "[FIREBASE] "+newData.toString());
 
-                if(newData.isHasPic()){
+                if(newData.isHasPic() && file != null){
 
                     UploadTask uploadTask = postPicRef.child(newData.getId()).putFile(file);
 

@@ -123,7 +123,7 @@ public class CreatePostActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.i("Firebase", "Create: Getting reference...");
-                            if(p.isHasPic()){
+                            if(p.isHasPic() && file != null){
                                 UploadTask uploadTask = postPicRef.child(key).putFile(file);
                                 uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                     @Override
