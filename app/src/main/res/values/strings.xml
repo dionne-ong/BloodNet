@@ -84,6 +84,7 @@
     <string name="settings_account">Account</string>
     <string name="settings_about">About</string>
     <string name="settings_logout">Logout</string>
+    <string name="no_entries_found">No entries found.</string>
 
 
 </resources>

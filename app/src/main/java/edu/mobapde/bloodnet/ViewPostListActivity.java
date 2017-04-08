@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseIndexRecyclerAdapter;
@@ -39,6 +41,8 @@ public class ViewPostListActivity extends Fragment{
     FloatingActionButton btnCreate;
     RecyclerView rvPosts;
     View MyView;
+    TextView tvError;
+    ProgressBar progressBar;
     private FirebaseRecyclerAdapter mAdapter;
     private DatabaseReference  keyRef, dataRef;
 
@@ -50,6 +54,9 @@ public class ViewPostListActivity extends Fragment{
         RecyclerView.LayoutManager pLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         rvPosts.setLayoutManager(pLayoutManager);
         rvPosts.setItemAnimator(new DefaultItemAnimator());
+
+        tvError = (TextView) MyView.findViewById(R.id.tv_error);
+        progressBar = (ProgressBar) MyView.findViewById(R.id.progressBar);
 
         btnCreate  = (FloatingActionButton) MyView.findViewById(R.id.fab);
 
@@ -98,11 +105,67 @@ public class ViewPostListActivity extends Fragment{
                         return viewHolder;
                     }
 
+                    @Override
+                    protected void onDataChanged() {
+                        super.onDataChanged();
+                        progressBar.setVisibility(View.GONE);
+                        tvError.setVisibility(View.GONE);
+                        if(mAdapter.getItemCount() == 0){
+                            tvError.setText(getString(R.string.no_entries_found));
+                            tvError.setVisibility(View.VISIBLE);
+                        }else{
+                            tvError.setText("");
+                            tvError.setVisibility(View.GONE);
+                        }
+                    }
+
                 } ;
 
 
         rvPosts.setAdapter(mAdapter);
+        mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
+            }
 
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                super.onItemRangeRemoved(positionStart, itemCount);
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
+            }
+        });
         return MyView;
     }
 
