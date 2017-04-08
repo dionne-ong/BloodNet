@@ -94,6 +94,8 @@ public class MyPostActivity extends AppCompatActivity {
                         Glide.with(getBaseContext())
                                 .using(new FirebaseImageLoader())
                                 .load(pictureRef)
+                                .placeholder(getDrawable(R.drawable.imageerror1))
+                                .error(getDrawable(R.drawable.imageerror2))
                                 .into(imgBarPicture);
                     }
 
