@@ -82,8 +82,7 @@ public class MyPledgeActivity extends AppCompatActivity {
                         btnStartDonation.setText("Start Donation");
                         btnCancel.setText("Cancel");
                         btnStartDonation.setVisibility(View.VISIBLE);
-                        btnCancel.setVisibility(View.VISIBLE);
-
+                        btnCancel.setVisibility(View.GONE);
                         btnStartDonation.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -95,12 +94,6 @@ public class MyPledgeActivity extends AppCompatActivity {
                             }
                         });
 
-                        btnCancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                finish();
-                            }
-                        });
 
 
                     }else{
