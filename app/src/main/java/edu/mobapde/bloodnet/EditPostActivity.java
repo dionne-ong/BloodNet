@@ -26,6 +26,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -88,7 +90,7 @@ public class EditPostActivity extends AppCompatActivity {
         btnCancel = (Button) findViewById(R.id.b_cancel);
         btnSave.setText("Save");
         btnCancel.setText("Cancel");
-        imgBarPicture = (ImageView) findViewById(R.id.img_bar_picture);
+        imgBarPicture = (ImageView) findViewById(R.id.img_bar_picture_post);
         fab = (FloatingActionButton) findViewById(R.id.fab_edit_profile);
         postPicRef = FirebaseStorage.getInstance().getReference().child(DBOPost.REF_POST_PATIENT_PIC);
 
@@ -124,6 +126,14 @@ public class EditPostActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 p = dataSnapshot.getValue(Post.class);
+                if(p.isHasPic()){
+                    Glide.with(getBaseContext())
+                            .using(new FirebaseImageLoader())
+                            .load(postPicRef)
+                            .placeholder(getDrawable(R.drawable.imageerror1))
+                            .error(getDrawable(R.drawable.imageerror2))
+                            .into(imgBarPicture);
+                }
                 etName.setText(p.getPatientName());
                 etContactNumber.setText(p.getContactNum());
                 etLocation.setText(p.getHospitalName());
@@ -229,6 +239,7 @@ public class EditPostActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_TAKE_PHOTO) {
             if (resultCode == RESULT_OK) {
+                p.setHasPic(true);
                 imgBarPicture.setImageURI(file);
             }
         }
