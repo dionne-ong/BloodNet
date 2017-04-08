@@ -63,8 +63,28 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_test">Test</string>
 
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="bloodtype">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>O+</item>
+        <item>O-</item>
+    </string-array>
+
     <!-- Database Strings -->
     <string name="db_user_reference">users</string>
+    <string name="settings_account">Account</string>
+    <string name="settings_about">About</string>
+    <string name="settings_logout">Logout</string>
+    <string name="no_entries_found">No entries found.</string>
 
 
 </resources>

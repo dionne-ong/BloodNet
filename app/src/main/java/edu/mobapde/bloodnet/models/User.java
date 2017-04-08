@@ -23,10 +23,12 @@ public class User {
     private String contactNum;
     private String gender;
     private long birthdate;
-
+    private long pledgedate;
+    private boolean hasPic;
 
     public User(){
         this.birthdate = -1;
+        hasPic = false;
     };
 
     public User(String name, String bloodType, String contactNum, String gender, long birthdate) {
@@ -81,5 +83,21 @@ public class User {
     @Override
     public String toString() {
         return new Gson().toJson(this);
+    }
+
+    public long getPledgedate() {
+        return pledgedate;
+    }
+
+    public void setPledgedate(long pledgedate) {
+        this.pledgedate = pledgedate;
+    }
+
+    public boolean isHasPic() {
+        return hasPic;
+    }
+
+    public void setHasPic(boolean hasPic) {
+        this.hasPic = hasPic;
     }
 }

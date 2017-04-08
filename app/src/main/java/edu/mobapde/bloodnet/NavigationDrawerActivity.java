@@ -10,15 +10,31 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
+
+import edu.mobapde.bloodnet.DBObjects.DBOUser;
+import edu.mobapde.bloodnet.models.User;
 
 public class NavigationDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FirebaseAuth auth;
+    public static final String EXTRA_VIEW_ID = "view_id";
+    TextView tvName, tvEmail;
+    DatabaseReference userRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +48,6 @@ public class NavigationDrawerActivity extends AppCompatActivity
             startActivity(new Intent(NavigationDrawerActivity.this, LogInActivity.class));
             finish();
         }
-
         setContentView(R.layout.activity_navigation_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -44,7 +59,18 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        displayView(0);
+        Intent i = getIntent();
+
+        userRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER);
+
+        if(i!=null){
+            displayView(i.getIntExtra(EXTRA_VIEW_ID, 0));
+        }
+        else {
+            displayView(0);
+        }
+
+
     }
 
     @Override
@@ -61,6 +87,26 @@ public class NavigationDrawerActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.navigation_drawer, menu);
+
+        tvName = (TextView) findViewById(R.id.tv_name);
+        tvEmail = (TextView) findViewById(R.id.tv_email);
+
+        userRef.child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User u = dataSnapshot.getValue(User.class);
+                Log.i("Firebase", "Getting data... "+u);
+                if(u != null) {
+                    tvEmail.setText(auth.getCurrentUser().getEmail());
+                    tvName.setText(u.getName());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         return true;
     }
 
@@ -92,10 +138,6 @@ public class NavigationDrawerActivity extends AppCompatActivity
         String title = getString(R.string.app_name);
 
         switch (viewId) {
-            case R.id.nav_profile:
-                fragment = new MyProfile();
-                title  = "Profile";
-                break;
             case R.id.nav_posts:
                 fragment = new ViewPostListActivity();
                 title = "My Posts";
@@ -108,8 +150,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
             case R.id.nav_logout:
                 fragment = new Logout();
-                title = "Logout";
-
+                title = "Settings";
                 break;
 
             default:

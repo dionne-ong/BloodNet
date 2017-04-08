@@ -1,31 +1,48 @@
 package edu.mobapde.bloodnet;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.transition.Slide;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import edu.mobapde.bloodnet.models.Pledge;
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+
+import edu.mobapde.bloodnet.DBObjects.DBOPost;
+import edu.mobapde.bloodnet.DBObjects.DBOUser;
+import edu.mobapde.bloodnet.models.pledges.Pledge;
+import edu.mobapde.bloodnet.models.posts.Post;
 
 public class MyPledgeActivity extends AppCompatActivity {
 
     Button btnStartDonation, btnCancel;
-    Toolbar tbEdit;
     TextView tvName, tvHospital, tvAddress, tvContactNum, tvBloodType, tvQuantity, tvDate, tvSliderText;
-    Pledge pledge;
     SlideButton sb;
-
+    DatabaseReference pledgeRef, postRef;
+    Typeface face;
+    String key, id;
+    ImageView imgBarPicture;
+    StorageReference pictureRef;
 
     public static final int REQUEST_CODE_DONATE = 301;
 
@@ -44,73 +61,125 @@ public class MyPledgeActivity extends AppCompatActivity {
         tvBloodType = (TextView) findViewById(R.id.tv_bloodtype);
         tvQuantity = (TextView) findViewById(R.id.tv_bags);
         tvDate = (TextView) findViewById(R.id.tv_posteddate);
-        Typeface face= Typeface.createFromAsset(getAssets(),"fonts/Raleway-Light.ttf");
+        face= Typeface.createFromAsset(getAssets(),"fonts/Raleway-Light.ttf");
         sb.setVisibility(View.GONE);
         tvSliderText.setVisibility(View.GONE);
-        int id = getIntent().getIntExtra(Pledge.PLEDGE_EXTRA, -1);
-        if(id != -1){
-            pledge = new Pledge(1,2, true);
+        pledgeRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_PLEDGE_USER);
+        postRef = FirebaseDatabase.getInstance().getReference().child(DBOPost.POST_REF);
+        id = getIntent().getStringExtra(DBOPost.EXTRA_POST_ID);
+        btnStartDonation.setVisibility(View.INVISIBLE);
+        btnCancel.setVisibility(View.INVISIBLE);
+        imgBarPicture = (ImageView) findViewById(R.id.img_bar_picture);
+
+        pledgeRef.child(id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                HashMap<String, Boolean> hasDonated = (HashMap<String, Boolean>)dataSnapshot.getValue();
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                if(hasDonated!=null && hasDonated.containsKey(userId)){
+
+                    if(!hasDonated.get(userId)){
+                        btnStartDonation.setText("Start Donation");
+                        btnCancel.setText("Cancel");
+                        btnStartDonation.setVisibility(View.VISIBLE);
+                        btnCancel.setVisibility(View.GONE);
+                        btnStartDonation.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent i = new Intent();
+                                i.putExtra(DBOPost.EXTRA_POST_ID, id);
+                                i.setClass(getBaseContext(), RequirementsActivity.class);
+                                startActivity(i);
+                                finish();
+                            }
+                        });
+
+
+
+                    }else{
+                        btnCancel.setText("Donated");
+                        btnCancel.setTextColor(Color.parseColor("#F44336"));
+                        btnCancel.setEnabled(false);
+                        btnStartDonation.setVisibility(View.GONE);
+                        btnCancel.setVisibility(View.VISIBLE);
+
+                    } // whatever's in the db
+
+                }else{
+                    Toast.makeText(getBaseContext(), "Not Pledged Yet?", Toast.LENGTH_SHORT);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        Intent i = getIntent();
+        key = i.getStringExtra(DBOPost.EXTRA_POST_ID);
+
+        if(key!=null){
+            pictureRef = FirebaseStorage.getInstance().getReference().child(DBOPost.REF_POST_PATIENT_PIC).child(key);
+            postRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Post post = dataSnapshot.getValue(Post.class);
+
+                    if(post.isHasPic()){
+                        Glide.with(getBaseContext())
+                                .using(new FirebaseImageLoader())
+                                .load(pictureRef)
+                                .placeholder(getDrawable(R.drawable.imageerror1))
+                                .error(getDrawable(R.drawable.imageerror2))
+                                .into(imgBarPicture);
+                    }
+
+                    
+                    tvName.setText(post.getPatientName());
+                    tvName.setTypeface(face);
+                    tvBloodType.setText(post.getBloodType());
+                    tvHospital.setText(post.getHospitalName());
+                    tvAddress.setText(post.getHospitalAddress());
+                    tvContactNum.setText(post.getContactNum());
+                    tvQuantity.setText(post.getNeededBags()+"");
+                    SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
+                    tvDate.setText("Posted on " + format.format(new Date(post.getDatePosted())));
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }else{
-            pledge = new Pledge(1,2, true);
+            tvName.setText("Winnie The Pooh");
+            tvName.setTypeface(face);
+            tvHospital.setText("Chinese General Hospital");
+            tvAddress.setText("286 Blumentritt Rd, Sampaloc,Manila, Metro Manila");
+            tvContactNum.setText("09178075984");
+            tvBloodType.setText("B+");
+            tvQuantity.setText("2 Bags");
+            tvDate.setText("Posted on " + "February 10, 2017");
+
         }
-
-
-        if(pledge.getDonated()){
-            btnStartDonation.setText("Start Donation");
-            btnCancel.setText("Cancel");
-
-            btnStartDonation.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent();
-                    i.setClass(getBaseContext(), RequirementsActivity.class);
-                    startActivity(i);
-                }
-            });
-
-            btnCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent();
-                    i.setClass(getBaseContext(), ViewPostActivity.class);
-                    startActivity(i);
-                }
-            });
-
-
-        }else{
-            btnCancel.setText("Donated");
-            btnCancel.setTextColor(Color.parseColor("#F44336"));
-            btnCancel.setEnabled(false);
-            btnStartDonation.setVisibility(View.GONE);
-
-        } // whatever's in the db
-        tvName.setText("Winnie The Pooh");
-        tvName.setTypeface(face);
-        tvHospital.setText("Chinese General Hospital");
-        tvAddress.setText("286 Blumentritt Rd, Sampaloc,Manila, Metro Manila");
-        tvContactNum.setText("09178075984");
-        tvBloodType.setText("B+");
-        tvQuantity.setText("2 Bags");
-        tvDate.setText("Posted on " + "February 10, 2017");
-
-
 
         btnStartDonation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
+                i.putExtra(DBOPost.EXTRA_POST_ID, key);
                 i.setClass(getBaseContext(), RequirementsActivity.class);
-                startActivityForResult(i, REQUEST_CODE_DONATE);
+                startActivity(i);
+                finish();
             }
         });
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent();
-                i.setClass(getBaseContext(), ViewPostActivity.class);
-                startActivity(i);
+                finish();
             }
         });
     }
@@ -122,22 +191,4 @@ public class MyPledgeActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode){
-            case REQUEST_CODE_DONATE:
-                if(resultCode == RESULT_OK){
-                    pledge.setDonated(false);
-                    btnCancel.setText("Donated");
-                    btnCancel.setTextColor(Color.parseColor("#F44336"));
-                    btnCancel.setEnabled(false);
-                    btnStartDonation.setVisibility(View.GONE);
-
-                }
-                break;
-            default:
-        }
-
-    }
 }

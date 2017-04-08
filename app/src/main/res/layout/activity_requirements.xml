@@ -69,6 +69,14 @@
             android:padding="15dp"
             android:layout_marginBottom="10dp"/>
 
+        <CheckBox
+            android:text="I have not donated blood in the last 3 months."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBox7"
+            android:padding="15dp"
+            android:layout_marginBottom="10dp"/>
+
 
         <Button
             android:id="@+id/b_submit"

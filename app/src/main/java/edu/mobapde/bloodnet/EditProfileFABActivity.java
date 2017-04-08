@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,19 +25,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.antonioleiva.materializeyourapp.widgets.SquareImageView;
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,15 +69,23 @@ public class EditProfileFABActivity extends AppCompatActivity
     Button bSave, bCancel;
     FirebaseAuth auth;
     DatabaseReference userRef;
-    EditText etName, etEmail, etContact, etBirthdate, etGender, etBType;
+    StorageReference profileRef;
+    EditText etName, etEmail, etContact, etBirthdate;
+    Spinner spGender, spBType;
+    ArrayAdapter<CharSequence> adapter, adapterB;
     Calendar birthdate;
+    User u;
     SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
+    StorageReference profilePics;
     public static final int REQUEST_CODE_TAKE_PHOTO = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_fab);
+
+        profilePics = FirebaseStorage.getInstance().getReference().child(DBOUser.REF_USER_PROFILE_PIC);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -85,16 +104,38 @@ public class EditProfileFABActivity extends AppCompatActivity
                     .child(DBOUser.REF_USER)
                     .child(auth.getCurrentUser().getUid());
 
+        spGender = (Spinner) findViewById(R.id.s_gender);
+        adapter = ArrayAdapter.createFromResource(this,
+                R.array.gender, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spGender.setAdapter(adapter);
+
+        spBType = (Spinner) findViewById(R.id.s_bloodtype);
+        adapterB = ArrayAdapter.createFromResource(this,
+                R.array.bloodtype, android.R.layout.simple_spinner_item);
+        adapterB.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spBType.setAdapter(adapterB);
+
+        profileRef = FirebaseStorage.getInstance().getReference().child(DBOUser.REF_USER_PROFILE_PIC).child(auth.getCurrentUser().getUid());
+
         etName = (EditText) findViewById(R.id.tv_content_name);
         etEmail = (EditText) findViewById(R.id.tv_content_email);
         etContact = (EditText) findViewById(R.id.tv_content_num);
         etBirthdate = (EditText) findViewById(R.id.tv_content_bday);
-        etGender = (EditText) findViewById(R.id.tv_content_gender);
-        etBType = (EditText) findViewById(R.id.tv_content_btype);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User u = dataSnapshot.getValue(User.class);
+                u = dataSnapshot.getValue(User.class);
+
+                if(u.isHasPic()){
+                    Glide.with(getBaseContext())
+                            .using(new FirebaseImageLoader())
+                            .load(profileRef)
+                            .placeholder(getDrawable(R.drawable.imageerror1))
+                            .error(getDrawable(R.drawable.imageerror2))
+                            .into(imgBarPicture);
+                }
+
                 etName.setText(u.getName());
                 etEmail.setText(auth.getCurrentUser().getEmail());
                 etContact.setText(u.getContactNum());
@@ -105,8 +146,18 @@ public class EditProfileFABActivity extends AppCompatActivity
                     date = format.format(birthdate.getTime());
                 }
                 etBirthdate.setText(date);
-                etGender.setText(u.getGender());
-                etBType.setText(u.getBloodType());
+                for(int i=0; i<adapter.getCount(); i++){
+                    if(adapter.getItem(i).equals(u.getGender())){
+                        spGender.setSelection(i);
+                    }
+                }
+                for(int i=0; i<adapterB.getCount(); i++){
+                    if(adapterB.getItem(i).equals(u.getBloodType())){
+                        spBType.setSelection(i);
+                    }
+                }
+               // etGender.setText(u.getGender());
+               // etBType.setText(u.getBloodType());
             }
 
             @Override
@@ -133,15 +184,35 @@ public class EditProfileFABActivity extends AppCompatActivity
         bSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User newData = new User();
+                User newData = u;
                 newData.setName(etName.getText().toString());
                 if(birthdate!=null) {
                     newData.setBirthdate(birthdate.getTimeInMillis());
                 }
-                newData.setBloodType(etBType.getText().toString());
+                newData.setBloodType(spBType.getSelectedItem().toString());
                 newData.setContactNum(etContact.getText().toString());
-                newData.setGender(etGender.getText().toString());
+                newData.setGender(spGender.getSelectedItem().toString());
                 Log.i("DB", "[FIREBASE] "+newData.toString());
+                if(newData.isHasPic()  && file != null){
+
+                    UploadTask uploadTask = profilePics.child(auth.getCurrentUser().getUid()).putFile(file);
+
+                    // Register observers to listen for when the download is done or if it fails
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                        }
+                    });
+
+                }
+
+
                 userRef.setValue(newData, new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -189,6 +260,8 @@ public class EditProfileFABActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_TAKE_PHOTO) {
             if (resultCode == RESULT_OK) {
+                u.setHasPic(true);
+                Toast.makeText(getBaseContext(), "Trying to upload photo...", Toast.LENGTH_LONG);
                 imgBarPicture.setImageURI(file);
             }
         }

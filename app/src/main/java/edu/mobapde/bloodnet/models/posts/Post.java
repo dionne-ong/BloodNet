@@ -1,5 +1,7 @@
 package edu.mobapde.bloodnet.models.posts;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -23,6 +25,8 @@ public class Post {
     private int neededBags;
     private int pledgedBags;
     private long datePosted;
+
+    private boolean hasPic;
 
     public Post(){}
 
@@ -132,5 +136,18 @@ public class Post {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
+
+    public boolean isHasPic() {
+        return hasPic;
+    }
+
+    public void setHasPic(boolean hasPic) {
+        this.hasPic = hasPic;
     }
 }

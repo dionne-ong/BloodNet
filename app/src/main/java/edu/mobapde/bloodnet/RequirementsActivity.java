@@ -1,26 +1,24 @@
 package edu.mobapde.bloodnet;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Toast;
 
-import edu.mobapde.bloodnet.models.Pledge;
+import edu.mobapde.bloodnet.DBObjects.DBOPost;
+import edu.mobapde.bloodnet.models.pledges.Pledge;
 
 public class RequirementsActivity extends AppCompatActivity {
 
     Button btn_Ok, btn_Cancel;
     Toolbar tbEdit;
-    CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6;
+    CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, checkBox7;
     Pledge pledge;
-
+    String key;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +27,8 @@ public class RequirementsActivity extends AppCompatActivity {
         setSupportActionBar(tbEdit);
         getSupportActionBar().setTitle("Requirements");
 
-        //pledge = getExtra();
-        pledge = new Pledge(1,2, false);
+        Intent i = getIntent();
+        key = i.getStringExtra(DBOPost.EXTRA_POST_ID);
 
         checkBox1 = (CheckBox) findViewById(R.id.checkBox);
         checkBox2 = (CheckBox) findViewById(R.id.checkBox2);
@@ -38,6 +36,7 @@ public class RequirementsActivity extends AppCompatActivity {
         checkBox4 = (CheckBox) findViewById(R.id.checkBox4);
         checkBox5 = (CheckBox) findViewById(R.id.checkBox5);
         checkBox6 = (CheckBox) findViewById(R.id.checkBox6);
+        checkBox7 = (CheckBox) findViewById(R.id.checkBox7);
 
 
         btn_Ok = (Button) findViewById(R.id.b_submit);
@@ -49,19 +48,17 @@ public class RequirementsActivity extends AppCompatActivity {
         btn_Ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked() && checkBox5.isChecked() && checkBox6.isChecked()){
-                    pledge.setDonated(true);
-                    Intent i = new Intent();
+                Intent i = new Intent();
+                i.putExtra(DBOPost.EXTRA_POST_ID, key);
+                if(checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked() && checkBox4.isChecked() && checkBox5.isChecked() && checkBox6.isChecked() && checkBox7.isChecked()){
                     i.putExtra("legible", true);
                     i.setClass(getBaseContext(), AfterRequirements.class);
-                    startActivity(i);
-
                 }else{
-                    Intent i = new Intent();
                     i.putExtra("legible", false);
                     i.setClass(getBaseContext(), AfterRequirements.class);
-                    startActivity(i);
                 }
+                startActivity(i);
+                finish();
             }
         });
 

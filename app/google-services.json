@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "150820614543-vtl7qmncs3mpfvd3edpufciupdag2n05.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.mobapde.bloodnet",
+            "certificate_hash": "bfcc6b8d8be60a80471b3c538f00cc68329a7d20"
+          }
+        },
+        {
           "client_id": "150820614543-5vn282kd25c5bgdv8871njc1e4e46n4p.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -76,7 +76,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
             super(itemView);
             container = (LinearLayout) itemView.findViewById(R.id.container);
             tvName = (TextView) itemView.findViewById(R.id.tv_name_p);
-            tvBtype = (TextView) itemView.findViewById(R.id.tv_btype_p);
+            tvBtype = (TextView) itemView.findViewById(R.id.tv_data);
             tvDatePost = (TextView) itemView.findViewById(R.id.tv_datepost_p);
             tvHospital = (TextView) itemView.findViewById(R.id.tv_hospital_p);
         }

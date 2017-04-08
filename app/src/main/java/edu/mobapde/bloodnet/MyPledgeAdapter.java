@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import edu.mobapde.bloodnet.models.Pledge;
+import edu.mobapde.bloodnet.models.pledges.Pledge;
 
 /**
  * Created by Luisa Gilig on 20/03/2017.
@@ -80,7 +80,7 @@ public class MyPledgeAdapter extends RecyclerView.Adapter<MyPledgeAdapter.MyPled
             tvName = (TextView) itemView.findViewById(R.id.tv_name_p);
             tvHospital = (TextView) itemView.findViewById(R.id.tv_hospital_p);
             tvDate = (TextView) itemView.findViewById(R.id.tv_datepost_p);
-            tvBloodType = (TextView) itemView.findViewById(R.id.tv_btype_p);
+            tvBloodType = (TextView) itemView.findViewById(R.id.tv_data);
 
         }
     }
