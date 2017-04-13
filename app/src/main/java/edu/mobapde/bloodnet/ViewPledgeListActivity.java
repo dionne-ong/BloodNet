@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseIndexRecyclerAdapter;
@@ -38,13 +40,12 @@ import edu.mobapde.bloodnet.models.posts.PostHolder;
 
 public class ViewPledgeListActivity extends Fragment{
     FloatingActionButton bCreate;
-    private List<Pledge> pledgeList = new ArrayList<>();
-    private ArrayList<String> selection = new ArrayList<String>();
-    private MyPledgeAdapter pAdapter;
     RecyclerView rvPledge;
     View MyView;
     private FirebaseRecyclerAdapter mAdapter;
-    private DatabaseReference mRef, keyRef, dataRef;
+    private DatabaseReference  keyRef, dataRef;
+    TextView tvError;
+    ProgressBar progressBar;
     String key;
 
 
@@ -58,6 +59,9 @@ public class ViewPledgeListActivity extends Fragment{
         rvPledge.setItemAnimator(new DefaultItemAnimator());
         bCreate = (FloatingActionButton)MyView.findViewById(R.id.fab);
         bCreate.setVisibility(View.GONE);
+
+        tvError = (TextView) MyView.findViewById(R.id.tv_error);
+        progressBar = (ProgressBar) MyView.findViewById(R.id.progressBar);
 
         //firebase adapter
         keyRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER_PLEDGE).child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -94,15 +98,73 @@ public class ViewPledgeListActivity extends Fragment{
                     public void onItemLongClick(View view, int position) {
                         Toast.makeText(getActivity(), "Item long clicked at " + position, Toast.LENGTH_SHORT).show();
                     }
+
                 });
                 return viewHolder;
+            }
+
+            @Override
+            protected void onDataChanged() {
+                super.onDataChanged();
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
             }
 
         } ;
 
 
         rvPledge.setAdapter(mAdapter);
+        mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
+            }
 
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                super.onItemRangeRemoved(positionStart, itemCount);
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
+            }
+        });
         return MyView;
     }
 
