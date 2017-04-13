@@ -62,7 +62,7 @@ public class FilterPostActivity extends Fragment {
     private HashMap<String, FirebaseIndexRecyclerAdapter> filterAdapter;
     FirebaseAuth auth;
     DatabaseReference userRef;
-    int[] sampleImages = {R.drawable.image3, R.drawable.image6, R.drawable.image7, R.drawable.image8, R.drawable.image4};
+    int[] sampleImages = {R.drawable.imagecarousel1, R.drawable.imagecarousel2, R.drawable.imagecarousel3, R.drawable.imagecarousel4, R.drawable.image4};
 
     @Nullable
     @Override
