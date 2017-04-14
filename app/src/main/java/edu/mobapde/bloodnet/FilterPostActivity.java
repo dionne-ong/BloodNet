@@ -2,12 +2,22 @@ package edu.mobapde.bloodnet;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.diegodobelo.expandingview.ExpandingItem;
 import com.diegodobelo.expandingview.ExpandingList;
@@ -21,31 +31,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
 
 import edu.mobapde.bloodnet.DBObjects.DBOPost;
 import edu.mobapde.bloodnet.DBObjects.DBOUser;
 import edu.mobapde.bloodnet.models.User;
 import edu.mobapde.bloodnet.models.posts.Post;
 import edu.mobapde.bloodnet.models.posts.PostHolder;
-import edu.mobapde.bloodnet.models.posts.PostsAdapter;
 
 public class FilterPostActivity extends Fragment {
 
@@ -54,7 +47,11 @@ public class FilterPostActivity extends Fragment {
     CarouselView carouselView;
     ExpandingList expandingList;
     ExpandingItem item;
+    RecyclerView.AdapterDataObserver observer;
     TextView tvFilter;
+
+    TextView tvError;
+    ProgressBar progressBar;
 
     private FirebaseRecyclerAdapter mAdapter;
     private DatabaseReference userPledgeRef;
@@ -62,7 +59,7 @@ public class FilterPostActivity extends Fragment {
     private HashMap<String, FirebaseIndexRecyclerAdapter> filterAdapter;
     FirebaseAuth auth;
     DatabaseReference userRef;
-    int[] sampleImages = {R.drawable.imagecarousel1, R.drawable.imagecarousel2, R.drawable.imagecarousel3, R.drawable.imagecarousel4, R.drawable.image4};
+    int[] sampleImages = {R.drawable.ic1, R.drawable.ic6, R.drawable.ic3, R.drawable.ic4, R.drawable.ic7, R.drawable.ic8};
 
     @Nullable
     @Override
@@ -70,6 +67,9 @@ public class FilterPostActivity extends Fragment {
         MyView = inflater.inflate(R.layout.activity_filter_post, container, false);
         auth = FirebaseAuth.getInstance();
         userRef = FirebaseDatabase.getInstance().getReference().child(DBOUser.REF_USER);
+
+        tvError = (TextView) MyView.findViewById(R.id.tv_error);
+        progressBar = (ProgressBar) MyView.findViewById(R.id.progressBar);
 
         carouselView = (CarouselView) MyView.findViewById(R.id.carouselView);
         carouselView.setPageCount(sampleImages.length);
@@ -91,7 +91,49 @@ public class FilterPostActivity extends Fragment {
         final RadioGroup rgSign= (RadioGroup) MyView.findViewById(R.id.rg_sign);
         final String[] sign = new String[1];
         final String[] type = new String[1];
+        observer = new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
+            }
 
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                super.onItemRangeRemoved(positionStart, itemCount);
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
+            }
+        };
 
         userRef.child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -149,6 +191,8 @@ public class FilterPostActivity extends Fragment {
 
                     }
                     rvPosts.setAdapter(mAdapter);
+                    mAdapter.registerAdapterDataObserver(observer);
+
                 }
             }
 
@@ -161,6 +205,10 @@ public class FilterPostActivity extends Fragment {
         rgSign.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                progressBar.setVisibility(View.VISIBLE);
+                if(mAdapter != null){
+                    mAdapter.unregisterAdapterDataObserver(observer);
+                }
                 switch(checkedId){
                     case R.id.rb_pos:
                         sign[0] = "+";
@@ -198,6 +246,7 @@ public class FilterPostActivity extends Fragment {
                         break;
                 }
                 rvPosts.setAdapter(mAdapter);
+                mAdapter.registerAdapterDataObserver(observer);
             }
         });
 
@@ -209,7 +258,10 @@ public class FilterPostActivity extends Fragment {
         {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // checkedId is the RadioButton selected
-
+                progressBar.setVisibility(View.VISIBLE);
+                if(mAdapter != null){
+                    mAdapter.unregisterAdapterDataObserver(observer);
+                }
                 switch(checkedId) {
                     case R.id.rb_A:
                         switch(rgSign.getCheckedRadioButtonId()){
@@ -254,6 +306,7 @@ public class FilterPostActivity extends Fragment {
                         break;
                 }
                 rvPosts.setAdapter(mAdapter);
+                mAdapter.registerAdapterDataObserver(observer);
             }
         });
 
@@ -265,8 +318,6 @@ public class FilterPostActivity extends Fragment {
         rvPosts.setLayoutManager(pLayoutManager);
         rvPosts.setItemAnimator(new DefaultItemAnimator());
 
-        mAdapter = filterAdapter.get(DBOPost.A_POSITIVE);
-        rvPosts.setAdapter(filterAdapter.get(DBOPost.A_POSITIVE));
         /*
         mAdapter = new FirebaseRecyclerAdapter<Post, PostHolder>(Post.class, R.layout.list_item_post, PostHolder.class, mRef) {
             @Override
@@ -375,6 +426,20 @@ public class FilterPostActivity extends Fragment {
                 });
                 return viewHolder;
             }
+
+            @Override
+            public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+                super.onAttachedToRecyclerView(recyclerView);
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
+            }
         };
         filterAdapter.put(DBOPost.A_POSITIVE, adapterAP);
 
@@ -425,6 +490,26 @@ public class FilterPostActivity extends Fragment {
                 });
                 return viewHolder;
             }
+
+            @Override
+            protected void onDataChanged() {
+                super.onDataChanged();
+
+            }
+
+            @Override
+            public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+                super.onAttachedToRecyclerView(recyclerView);
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
+            }
         };
         filterAdapter.put(DBOPost.A_NEGATIVE, adapterAN);
 
@@ -474,6 +559,26 @@ public class FilterPostActivity extends Fragment {
                 });
                 return viewHolder;
             }
+
+            @Override
+            protected void onDataChanged() {
+                super.onDataChanged();
+
+            }
+
+            @Override
+            public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+                super.onAttachedToRecyclerView(recyclerView);
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
+            }
         };
         filterAdapter.put(DBOPost.B_POSITIVE, adapterBP);
 
@@ -522,6 +627,20 @@ public class FilterPostActivity extends Fragment {
                     }
                 });
                 return viewHolder;
+            }
+
+            @Override
+            public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+                super.onAttachedToRecyclerView(recyclerView);
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
             }
         };
         filterAdapter.put(DBOPost.B_NEGATIVE, adapterBN);
@@ -573,6 +692,20 @@ public class FilterPostActivity extends Fragment {
                 });
                 return viewHolder;
             }
+            @Override
+            public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+                super.onAttachedToRecyclerView(recyclerView);
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
+            }
+
         };
         filterAdapter.put(DBOPost.AB_POSITIVE, adapterABP);
 
@@ -622,6 +755,20 @@ public class FilterPostActivity extends Fragment {
                     }
                 });
                 return viewHolder;
+            }
+
+            @Override
+            public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+                super.onAttachedToRecyclerView(recyclerView);
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
             }
         };
         filterAdapter.put(DBOPost.AB_NEGATIVE, adapterABN);
@@ -674,6 +821,20 @@ public class FilterPostActivity extends Fragment {
                 });
                 return viewHolder;
             }
+
+            @Override
+            public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+                super.onAttachedToRecyclerView(recyclerView);
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
+            }
         };
         filterAdapter.put(DBOPost.O_POSITIVE, adapterOP);
 
@@ -723,6 +884,20 @@ public class FilterPostActivity extends Fragment {
                     }
                 });
                 return viewHolder;
+            }
+
+            @Override
+            public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+                super.onAttachedToRecyclerView(recyclerView);
+                progressBar.setVisibility(View.GONE);
+                tvError.setVisibility(View.GONE);
+                if(mAdapter.getItemCount() == 0){
+                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setVisibility(View.VISIBLE);
+                }else{
+                    tvError.setText("");
+                    tvError.setVisibility(View.GONE);
+                }
             }
         };
         filterAdapter.put(DBOPost.O_NEGATIVE, adapterON);

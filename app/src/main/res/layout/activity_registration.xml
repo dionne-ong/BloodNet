@@ -37,7 +37,7 @@
             android:id="@+id/iv_logo"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:src="@mipmap/temp_logo" />
+            android:src="@mipmap/ic_logo" />
 
 
         <TextView

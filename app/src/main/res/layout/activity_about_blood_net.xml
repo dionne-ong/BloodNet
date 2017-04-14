@@ -19,35 +19,145 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_height="0dp"
+        android:paddingTop="5dp"
+        android:layout_weight=".20"
+        android:orientation="horizontal"
+        android:gravity="center"
+     >
         <ImageView
             android:contentDescription="@string/image_logo"
             android:id="@+id/iv_logo"
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@mipmap/temp_logo" />
+            android:src="@mipmap/ic_logo" />
 
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textAlignment="center"
-            android:textSize="48dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="45dp"
             android:textColor="@color/colorPrimary"
             android:id="@+id/tv_app_name"/>
 
     </LinearLayout>
 
-    <TextView
-        android:padding="20dp"
-        android:textSize="18dp"
-        android:layout_gravity="center_vertical|right"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="The Blood Net is a blood-donation networking application which will make it easier for those who need blood donations to find prospective blood donors. It also aims to make it easier for blood donors to keep track of what the process and requirements are in donating blood."/>
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
+        android:orientation="vertical">
+        <TextView
+            android:paddingLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What is BloodNet?"
+            android:textSize="25dp"
+            android:textColor="@color/colorPrimaryDark"/>
+        <TextView
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textSize="18dp"
+            android:layout_gravity="center_vertical|right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Blood Net is a blood-donation networking application which will make it easier for those who need blood donations to find prospective blood donors. It also aims to make it easier for blood donors to keep track of what the process and requirements are in donating blood."/>
+
+        <TextView
+            android:paddingLeft="5dp"
+            android:paddingTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Found a bug within BloodNet?"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimaryDark"/>
+        <TextView
+            android:paddingLeft="20dp"
+            android:autoLink="email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/ldr_email"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".25"
+        android:orientation="vertical">
+
+        <TextView
+            android:paddingTop="5dp"
+            android:paddingLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Credits"
+            android:textSize="20dp"
+            android:textColor="@color/colorAccent"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/ic_hospital_buildings"
+                />
+
+            <TextView
+                android:id="@+id/tv_credithospital"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/credit_hospital"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:autoLink="web"
+                android:text="@string/credit_hospital1"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/ic_blood_transfusion"
+                />
+
+            <TextView
+                android:id="@+id/tv_creditblood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/credit_bloodbag"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:autoLink="web"
+                android:text="@string/credit_bloodbag1"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 
 </LinearLayout>

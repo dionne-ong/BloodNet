@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -13,13 +14,17 @@ import android.widget.TextView;
 public class AboutBloodNetActivity extends AppCompatActivity {
 
     Toolbar tbEdit;
-
+    TextView tvCHospital, tvCBloodBag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_blood_net);
 
         TextView tv=(TextView)findViewById(R.id.tv_app_name);
+        tvCHospital = (TextView) findViewById(R.id.tv_credithospital);
+        tvCHospital.setMovementMethod(LinkMovementMethod.getInstance());
+        tvCBloodBag = (TextView) findViewById(R.id.tv_creditblood);
+        tvCBloodBag.setMovementMethod(LinkMovementMethod.getInstance());
         Typeface face= Typeface.createFromAsset(getAssets(),"fonts/Raleway Thin.ttf");
         tv.setTypeface(face);
 
