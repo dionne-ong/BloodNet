@@ -98,7 +98,7 @@ public class FilterPostActivity extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 tvError.setVisibility(View.GONE);
                 if(mAdapter.getItemCount() == 0){
-                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setText(getActivity().getResources().getString(R.string.no_entries_found));
                     tvError.setVisibility(View.VISIBLE);
                 }else{
                     tvError.setText("");
@@ -112,7 +112,7 @@ public class FilterPostActivity extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 tvError.setVisibility(View.GONE);
                 if(mAdapter.getItemCount() == 0){
-                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setText(getActivity().getResources().getString(R.string.no_entries_found));
                     tvError.setVisibility(View.VISIBLE);
                 }else{
                     tvError.setText("");
@@ -126,7 +126,7 @@ public class FilterPostActivity extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 tvError.setVisibility(View.GONE);
                 if(mAdapter.getItemCount() == 0){
-                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setText(getActivity().getResources().getString(R.string.no_entries_found));
                     tvError.setVisibility(View.VISIBLE);
                 }else{
                     tvError.setText("");
@@ -191,7 +191,14 @@ public class FilterPostActivity extends Fragment {
 
                     }
                     rvPosts.setAdapter(mAdapter);
-                    mAdapter.registerAdapterDataObserver(observer);
+
+
+                    try {
+                        mAdapter.registerAdapterDataObserver(observer);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
 
                 }
             }
@@ -206,8 +213,14 @@ public class FilterPostActivity extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 progressBar.setVisibility(View.VISIBLE);
-                if(mAdapter != null){
-                    mAdapter.unregisterAdapterDataObserver(observer);
+
+
+                try {
+                    if(mAdapter != null){
+                        mAdapter.unregisterAdapterDataObserver(observer);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 switch(checkedId){
                     case R.id.rb_pos:
@@ -246,7 +259,11 @@ public class FilterPostActivity extends Fragment {
                         break;
                 }
                 rvPosts.setAdapter(mAdapter);
-                mAdapter.registerAdapterDataObserver(observer);
+                try {
+                    mAdapter.registerAdapterDataObserver(observer);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -259,8 +276,13 @@ public class FilterPostActivity extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // checkedId is the RadioButton selected
                 progressBar.setVisibility(View.VISIBLE);
-                if(mAdapter != null){
-                    mAdapter.unregisterAdapterDataObserver(observer);
+
+                try {
+                    if(mAdapter != null){
+                        mAdapter.unregisterAdapterDataObserver(observer);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 switch(checkedId) {
                     case R.id.rb_A:
@@ -306,7 +328,11 @@ public class FilterPostActivity extends Fragment {
                         break;
                 }
                 rvPosts.setAdapter(mAdapter);
-                mAdapter.registerAdapterDataObserver(observer);
+                try {
+                    mAdapter.registerAdapterDataObserver(observer);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -433,7 +459,7 @@ public class FilterPostActivity extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 tvError.setVisibility(View.GONE);
                 if(mAdapter.getItemCount() == 0){
-                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setText(getActivity().getResources().getString(R.string.no_entries_found));
                     tvError.setVisibility(View.VISIBLE);
                 }else{
                     tvError.setText("");
@@ -503,7 +529,7 @@ public class FilterPostActivity extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 tvError.setVisibility(View.GONE);
                 if(mAdapter.getItemCount() == 0){
-                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setText(getActivity().getResources().getString(R.string.no_entries_found));
                     tvError.setVisibility(View.VISIBLE);
                 }else{
                     tvError.setText("");
@@ -572,7 +598,7 @@ public class FilterPostActivity extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 tvError.setVisibility(View.GONE);
                 if(mAdapter.getItemCount() == 0){
-                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setText(getActivity().getResources().getString(R.string.no_entries_found));
                     tvError.setVisibility(View.VISIBLE);
                 }else{
                     tvError.setText("");
@@ -635,7 +661,7 @@ public class FilterPostActivity extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 tvError.setVisibility(View.GONE);
                 if(mAdapter.getItemCount() == 0){
-                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setText(getActivity().getResources().getString(R.string.no_entries_found));
                     tvError.setVisibility(View.VISIBLE);
                 }else{
                     tvError.setText("");
@@ -698,7 +724,7 @@ public class FilterPostActivity extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 tvError.setVisibility(View.GONE);
                 if(mAdapter.getItemCount() == 0){
-                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setText(getActivity().getResources().getString(R.string.no_entries_found));
                     tvError.setVisibility(View.VISIBLE);
                 }else{
                     tvError.setText("");
@@ -763,7 +789,7 @@ public class FilterPostActivity extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 tvError.setVisibility(View.GONE);
                 if(mAdapter.getItemCount() == 0){
-                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setText(getActivity().getResources().getString(R.string.no_entries_found));
                     tvError.setVisibility(View.VISIBLE);
                 }else{
                     tvError.setText("");
@@ -828,7 +854,7 @@ public class FilterPostActivity extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 tvError.setVisibility(View.GONE);
                 if(mAdapter.getItemCount() == 0){
-                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setText(getActivity().getResources().getString(R.string.no_entries_found));
                     tvError.setVisibility(View.VISIBLE);
                 }else{
                     tvError.setText("");
@@ -892,7 +918,7 @@ public class FilterPostActivity extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 tvError.setVisibility(View.GONE);
                 if(mAdapter.getItemCount() == 0){
-                    tvError.setText(getString(R.string.no_entries_found));
+                    tvError.setText(getActivity().getResources().getString(R.string.no_entries_found));
                     tvError.setVisibility(View.VISIBLE);
                 }else{
                     tvError.setText("");

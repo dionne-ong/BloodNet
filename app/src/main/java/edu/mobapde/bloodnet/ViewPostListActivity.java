@@ -123,49 +123,54 @@ public class ViewPostListActivity extends Fragment{
 
 
         rvPosts.setAdapter(mAdapter);
-        mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onChanged() {
-                super.onChanged();
-                progressBar.setVisibility(View.GONE);
-                tvError.setVisibility(View.GONE);
-                if(mAdapter.getItemCount() == 0){
-                    tvError.setText(getString(R.string.no_entries_found));
-                    tvError.setVisibility(View.VISIBLE);
-                }else{
-                    tvError.setText("");
-                    tvError.setVisibility(View.GONE);
-                }
-            }
 
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-                progressBar.setVisibility(View.GONE);
-                tvError.setVisibility(View.GONE);
-                if(mAdapter.getItemCount() == 0){
-                    tvError.setText(getString(R.string.no_entries_found));
-                    tvError.setVisibility(View.VISIBLE);
-                }else{
-                    tvError.setText("");
+        try {
+            mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onChanged() {
+                    super.onChanged();
+                    progressBar.setVisibility(View.GONE);
                     tvError.setVisibility(View.GONE);
+                    if(mAdapter.getItemCount() == 0){
+                        tvError.setText(getActivity().getResources().getString(R.string.no_entries_found));
+                        tvError.setVisibility(View.VISIBLE);
+                    }else{
+                        tvError.setText("");
+                        tvError.setVisibility(View.GONE);
+                    }
                 }
-            }
 
-            @Override
-            public void onItemRangeRemoved(int positionStart, int itemCount) {
-                super.onItemRangeRemoved(positionStart, itemCount);
-                progressBar.setVisibility(View.GONE);
-                tvError.setVisibility(View.GONE);
-                if(mAdapter.getItemCount() == 0){
-                    tvError.setText(getString(R.string.no_entries_found));
-                    tvError.setVisibility(View.VISIBLE);
-                }else{
-                    tvError.setText("");
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    super.onItemRangeInserted(positionStart, itemCount);
+                    progressBar.setVisibility(View.GONE);
                     tvError.setVisibility(View.GONE);
+                    if(mAdapter.getItemCount() == 0){
+                        tvError.setText(getActivity().getResources().getString(R.string.no_entries_found));
+                        tvError.setVisibility(View.VISIBLE);
+                    }else{
+                        tvError.setText("");
+                        tvError.setVisibility(View.GONE);
+                    }
                 }
-            }
-        });
+
+                @Override
+                public void onItemRangeRemoved(int positionStart, int itemCount) {
+                    super.onItemRangeRemoved(positionStart, itemCount);
+                    progressBar.setVisibility(View.GONE);
+                    tvError.setVisibility(View.GONE);
+                    if(mAdapter.getItemCount() == 0){
+                        tvError.setText(getActivity().getResources().getString(R.string.no_entries_found));
+                        tvError.setVisibility(View.VISIBLE);
+                    }else{
+                        tvError.setText("");
+                        tvError.setVisibility(View.GONE);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return MyView;
     }
 
